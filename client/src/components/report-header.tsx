@@ -32,10 +32,10 @@ export function ReportHeader({
   onPrint,
 }: ReportHeaderProps) {
   return (
-    <div className="border-b border-border pb-8 mb-8">
+    <div className="border-b border-border pb-8 mb-8 animate-fade-in">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-foreground" data-testid="text-report-title">{title}</h1>
+          <h1 className="text-3xl font-semibold text-foreground bg-gradient-to-r from-primary via-chart-2 to-chart-4 bg-clip-text text-transparent" data-testid="text-report-title">{title}</h1>
           {subtitle && <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>}
         </div>
         <div className="flex flex-wrap items-center gap-2">

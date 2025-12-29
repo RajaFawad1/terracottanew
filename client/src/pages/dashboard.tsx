@@ -3,6 +3,7 @@ import { DollarSign, TrendingUp, Users, PiggyBank } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
+import { formatNumber } from "@/lib/utils";
 
 export default function Dashboard() {
   const { user, member, isAdmin } = useAuth();
@@ -15,29 +16,47 @@ export default function Dashboard() {
     queryKey: ["/api/income-entries"],
   });
   const incomeEntries = incomeData?.entries ?? [];
-  const totalIncome = typeof incomeData?.total === "string"
-    ? parseFloat(incomeData.total)
-    : (incomeData?.total ?? 0);
+  const totalIncome =
+    typeof incomeData?.total === "string"
+      ? parseFloat(incomeData.total)
+      : incomeData?.total ?? 0;
 
   const { data: expenseData } = useQuery({
     queryKey: ["/api/expense-entries"],
   });
   const expenseEntries = expenseData?.entries ?? [];
-  const totalExpenses = typeof expenseData?.total === "string"
-    ? parseFloat(expenseData.total)
-    : (expenseData?.total ?? 0);
+  const totalExpenses =
+    typeof expenseData?.total === "string"
+      ? parseFloat(expenseData.total)
+      : expenseData?.total ?? 0;
 
-  const { data: settings } = useQuery({
-    queryKey: ["/api/settings"],
+  const { data: shareData } = useQuery({
+    queryKey: ["/api/share-price"],
   });
 
-  const totalProfit = totalIncome - totalExpenses;
+  const { data: shareTransactions = [] } = useQuery({
+    queryKey: ["/api/share-transactions"],
+  });
 
   const totalMembers = members.length;
-  const activeMembers = members.filter((m: any) => m.userId).length;
 
-  const totalContributions = members.reduce((sum: number, m: any) => sum + parseFloat(m.contributions || "0"), 0);
-  const totalShares = members.reduce((sum: number, m: any) => sum + parseFloat(m.shares || "0"), 0);
+  // Take totals from share_transactions table
+  const totalContributions = (shareTransactions as any[]).reduce(
+    (sum, tx) => sum + parseFloat(tx.contributions || "0"),
+    0
+  );
+  const totalShares = (shareTransactions as any[]).reduce(
+    (sum, tx) => sum + parseFloat(tx.shares || "0"),
+    0
+  );
+
+  const currentSharePriceRaw = shareData?.current?.sharePrice;
+  const currentSharePrice =
+    typeof currentSharePriceRaw === "number"
+      ? currentSharePriceRaw
+      : typeof currentSharePriceRaw === "string"
+      ? parseFloat(currentSharePriceRaw)
+      : 0;
 
   const currentMember = member;
   const memberShares = currentMember ? parseFloat(currentMember.shares || "0") : 0;
@@ -49,46 +68,44 @@ export default function Dashboard() {
   const memberIncome = memberIncomeEntries.reduce((sum: number, entry: any) => sum + parseFloat(entry.netAmount || "0"), 0);
   const memberExpenses = memberExpenseEntries.reduce((sum: number, entry: any) => sum + parseFloat(entry.netAmount || "0"), 0);
 
-  const currency = settings?.currency || "USD";
-
   if (isAdmin) {
     return (
-      <div className="space-y-8">
+      <div className="space-y-8 animate-fade-in">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Dashboard</h1>
+          <h1 className="text-3xl font-semibold mb-2 bg-gradient-to-r from-primary via-chart-2 to-chart-4 bg-clip-text text-transparent">Dashboard</h1>
           <p className="text-muted-foreground">Welcome back! Here's an overview of your financial performance.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <MetricCard
             title="Total Contributions"
-            value={`${currency} $${totalContributions.toLocaleString()}`}
-            change={0}
+            value={formatNumber(totalContributions, 2)}
+            change={undefined}
             changeLabel="all time"
             trend="neutral"
             icon={<DollarSign className="h-4 w-4" />}
           />
           <MetricCard
-            title="Current Profit"
-            value={`${currency} $${totalProfit.toLocaleString()}`}
-            change={0}
-            changeLabel="income - expenses"
-            trend={totalProfit >= 0 ? "up" : "down"}
-            icon={<PiggyBank className="h-4 w-4" />}
-          />
-          <MetricCard
-            title="Active Members"
-            value={activeMembers.toString()}
-            change={0}
-            changeLabel={`of ${totalMembers} total`}
+            title="Total Members"
+            value={totalMembers.toString()}
+            change={undefined}
+            changeLabel={undefined}
             trend="neutral"
             icon={<Users className="h-4 w-4" />}
           />
           <MetricCard
             title="Total Shares"
-            value={totalShares.toLocaleString()}
-            change={0}
-            changeLabel="distributed"
+            value={formatNumber(totalShares, 2)}
+            change={undefined}
+            changeLabel={undefined}
+            trend="neutral"
+            icon={<TrendingUp className="h-4 w-4" />}
+          />
+          <MetricCard
+            title="TerraCotta Share Price"
+            value={formatNumber(currentSharePrice || 0, 2)}
+            change={undefined}
+            changeLabel={undefined}
             trend="neutral"
             icon={<TrendingUp className="h-4 w-4" />}
           />
@@ -102,8 +119,8 @@ export default function Dashboard() {
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Total Income</span>
-                <span className="font-mono font-bold text-lg text-chart-4">
-                  +${totalIncome.toLocaleString()}
+                <span className="font-mono font-bold text-lg text-green-600 dark:text-green-400">
+                  +{totalIncome.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between items-center">
@@ -113,7 +130,7 @@ export default function Dashboard() {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Average per Entry</span>
                 <span className="font-mono">
-                  ${incomeEntries.length > 0 ? (totalIncome / incomeEntries.length).toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0"}
+                  {incomeEntries.length > 0 ? (totalIncome / incomeEntries.length).toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0"}
                 </span>
               </div>
             </CardContent>
@@ -126,8 +143,8 @@ export default function Dashboard() {
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Total Expenses</span>
-                <span className="font-mono font-bold text-lg text-destructive">
-                  -${totalExpenses.toLocaleString()}
+                <span className="font-mono font-bold text-lg text-red-600 dark:text-red-400">
+                  -{totalExpenses.toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between items-center">
@@ -137,7 +154,7 @@ export default function Dashboard() {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Average per Entry</span>
                 <span className="font-mono">
-                  ${expenseEntries.length > 0 ? (totalExpenses / expenseEntries.length).toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0"}
+                  {expenseEntries.length > 0 ? (totalExpenses / expenseEntries.length).toLocaleString(undefined, { maximumFractionDigits: 2 }) : "0"}
                 </span>
               </div>
             </CardContent>
@@ -172,7 +189,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-semibold mb-2">My Dashboard</h1>
+        <h1 className="text-3xl font-semibold mb-2 bg-gradient-to-r from-primary via-chart-2 to-chart-4 bg-clip-text text-transparent">My Dashboard</h1>
         <p className="text-muted-foreground">
           Welcome back, {currentMember?.firstName}! Here's your personal financial overview.
         </p>
@@ -181,35 +198,35 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <MetricCard
           title="My Contributions"
-          value={`${currency} $${parseFloat(currentMember?.contributions || "0").toLocaleString()}`}
-          change={0}
+          value={formatNumber(parseFloat(currentMember?.contributions || "0"), 2)}
+          change={undefined}
           changeLabel="total invested"
           trend="neutral"
           icon={<DollarSign className="h-4 w-4" />}
         />
         <MetricCard
           title="My Shares"
-          value={memberShares.toLocaleString()}
-          change={0}
-          changeLabel={`${sharePercentage.toFixed(2)}% of total`}
+          value={formatNumber(memberShares, 2)}
+          change={undefined}
+          changeLabel={sharePercentage > 0 ? `${formatNumber(sharePercentage, 2)}% of total` : "of total"}
           trend="neutral"
           icon={<TrendingUp className="h-4 w-4" />}
         />
         <MetricCard
           title="My Income"
-          value={`${currency} $${memberIncome.toLocaleString()}`}
-          change={0}
+          value={formatNumber(memberIncome, 2)}
+          change={undefined}
           changeLabel={`${memberIncomeEntries.length} entries`}
           trend="up"
           icon={<PiggyBank className="h-4 w-4" />}
         />
         <MetricCard
-          title="My Expenses"
-          value={`${currency} $${memberExpenses.toLocaleString()}`}
-          change={0}
-          changeLabel={`${memberExpenseEntries.length} entries`}
-          trend="down"
-          icon={<PiggyBank className="h-4 w-4" />}
+          title="TerraCotta Share Price"
+          value={formatNumber(currentSharePrice || 0, 2)}
+          change={undefined}
+          changeLabel={undefined}
+          trend="neutral"
+          icon={<TrendingUp className="h-4 w-4" />}
         />
       </div>
 
@@ -221,15 +238,9 @@ export default function Dashboard() {
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-sm text-muted-foreground">Total Income</span>
-              <span className="font-mono font-bold text-lg text-chart-4">+${memberIncome.toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Total Expenses</span>
-              <span className="font-mono font-bold text-lg text-destructive">-${memberExpenses.toLocaleString()}</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Net Profit</span>
-              <span className="font-mono font-bold text-lg">${(memberIncome - memberExpenses).toLocaleString()}</span>
+              <span className="font-mono font-bold text-lg text-green-600 dark:text-green-400">
+                +{memberIncome.toLocaleString()}
+              </span>
             </div>
           </CardContent>
         </Card>
@@ -245,7 +256,7 @@ export default function Dashboard() {
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm text-muted-foreground">Ownership Percentage</span>
-              <span className="font-mono font-bold text-lg text-primary">{sharePercentage.toFixed(2)}%</span>
+              <span className="font-mono font-bold text-lg text-primary">{sharePercentage > 0 ? `${formatNumber(sharePercentage, 2)}%` : "0%"}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm text-muted-foreground">Company Total Shares</span>
@@ -260,24 +271,24 @@ export default function Dashboard() {
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {[...memberIncomeEntries, ...memberExpenseEntries]
-              .slice(0, 5)
-              .map((entry: any, index: number) => {
-                const isIncome = entry.paymentMethodId !== undefined;
-                return (
-                  <div key={index} className="flex items-center justify-between py-3 border-b last:border-0">
+            <div className="space-y-3">
+              {memberIncomeEntries
+                .slice(0, 5)
+                .map((entry: any, index: number) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between py-3 border-b last:border-0"
+                  >
                     <div className="flex-1">
-                      <p className="font-medium text-sm">{isIncome ? "Income Entry" : "Expense Entry"}</p>
+                      <p className="font-medium text-sm">Income Entry</p>
                       <p className="text-xs text-muted-foreground">{entry.date}</p>
                     </div>
-                    <div className={`font-mono font-bold text-base ${isIncome ? "text-chart-4" : "text-destructive"}`}>
-                      {isIncome ? "+" : "-"}${parseFloat(entry.netAmount || "0").toLocaleString()}
+                    <div className="font-mono font-bold text-base text-green-600 dark:text-green-400">
+                      +{parseFloat(entry.netAmount || "0").toLocaleString()}
                     </div>
                   </div>
-                );
-              })}
-            {memberIncomeEntries.length === 0 && memberExpenseEntries.length === 0 && (
+                ))}
+            {memberIncomeEntries.length === 0 && (
               <p className="text-center text-muted-foreground py-8">No recent activity</p>
             )}
           </div>

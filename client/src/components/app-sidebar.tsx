@@ -8,10 +8,11 @@ import {
   FileSearch, 
   User, 
   LogOut,
-  ChevronLeft
+  ChevronLeft,
+  TrendingUp
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -33,20 +34,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useAuth, useLogout } from "@/hooks/useAuth";
+import { Logo } from "@/components/logo";
 
 const financialItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Transactions", url: "/transactions", icon: ArrowDownUp },
+  { title: "Transactions", url: "/transactions", icon: ArrowDownUp, adminOnly: true },
+  { title: "Share Price", url: "/share-price", icon: TrendingUp },
   { title: "Monthly Report", url: "/reports/monthly", icon: FileText },
   { title: "Annual Report", url: "/reports/annual", icon: FileText },
-  { title: "Balance Sheet", url: "/balance-sheet", icon: Scale },
+  { title: "Balance Sheet", url: "/balance-sheet", icon: Scale, adminOnly: true },
   { title: "Custom Report", url: "/reports/custom", icon: FileSearch },
 ];
 
 const managementItems = [
   { title: "Setup", url: "/setup", icon: Settings, adminOnly: true },
-  { title: "User Management", url: "/users", icon: Users, adminOnly: true },
+  { title: "User Management", url: "/users", icon: Users, adminOnly: true, hasSubMenu: true },
   { title: "Audit Trail", url: "/audit", icon: FileSearch, adminOnly: true },
+];
+
+const userManagementSubItems = [
+  { title: "Add Member", url: "/users/add-member", icon: Users },
+  { title: "Add Shares", url: "/users/add-shares", icon: TrendingUp },
 ];
 
 const settingsItems = [
@@ -55,8 +64,25 @@ const settingsItems = [
 
 export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "member" }) {
   const [location] = useLocation();
+  const { user, member } = useAuth();
+  const logout = useLogout();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+
+  const displayName = useMemo(() => {
+    const fullName = `${member?.firstName || ""} ${member?.lastName || ""}`.trim();
+    return fullName || user?.username || "User";
+  }, [member, user]);
+
+  const initials = useMemo(() => {
+    return displayName
+      .split(" ")
+      .filter(Boolean)
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  }, [displayName]);
 
   return (
     <Sidebar
@@ -75,15 +101,7 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
           (!isOpen && !isHovered) && "p-4"
         )}>
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-md bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">TC</span>
-            </div>
-            {(isOpen || isHovered) && (
-              <div>
-                <h2 className="text-base font-semibold text-sidebar-foreground">TerraCotta</h2>
-                <p className="text-xs text-muted-foreground">Investments LLC</p>
-              </div>
-            )}
+            <Logo size={isOpen || isHovered ? "md" : "sm"} showText={isOpen || isHovered} />
           </div>
         </div>
 
@@ -120,7 +138,9 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
             )}
             <SidebarGroupContent>
               <SidebarMenu className={cn("space-y-1", isOpen ? "px-3" : "px-2")}>
-                {financialItems.map((item) => {
+                {financialItems
+                  .filter((item) => userRole === "admin" || !item.adminOnly)
+                  .map((item) => {
                   const isActive = location === item.url;
                   const showContent = isOpen || isHovered;
 
@@ -129,11 +149,11 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                       <SidebarMenuButton
                         asChild
                         isActive={isActive}
-                        className={cn(
-                          "group relative transition-all duration-200",
-                          "hover:bg-accent",
+                          className={cn(
+                          "group relative transition-all duration-200 ease-in-out",
+                          "hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-sm hover:scale-[1.02]",
                           isActive
-                            ? "bg-primary text-primary-foreground"
+                            ? "bg-black dark:bg-white text-white dark:text-black shadow-md"
                             : "text-sidebar-foreground hover:text-sidebar-foreground",
                           showContent ? "rounded-md mx-2" : "rounded-full mx-auto w-12"
                         )}
@@ -173,19 +193,20 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
               <SidebarGroupContent>
                 <SidebarMenu className={cn("space-y-1", isOpen ? "px-3" : "px-2")}>
                   {managementItems.map((item) => {
-                    const isActive = location === item.url;
+                    const isActive = location === item.url || (item.hasSubMenu && userManagementSubItems.some(subItem => location === subItem.url));
                     const showContent = isOpen || isHovered;
+                    const showSubMenu = item.hasSubMenu && showContent && (isActive || isHovered);
 
                     return (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton
                           asChild
-                          isActive={isActive}
+                          isActive={isActive && !item.hasSubMenu}
                           className={cn(
-                            "group relative transition-all duration-200",
-                            "hover:bg-accent",
-                            isActive
-                              ? "bg-primary text-primary-foreground"
+                            "group relative transition-all duration-200 ease-in-out",
+                            "hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-sm hover:scale-[1.02]",
+                            isActive && !item.hasSubMenu
+                              ? "bg-black dark:bg-white text-white dark:text-black shadow-md"
                               : "text-sidebar-foreground hover:text-sidebar-foreground",
                             showContent ? "rounded-md mx-2" : "rounded-full mx-auto w-12"
                           )}
@@ -207,6 +228,38 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                             </div>
                           </Link>
                         </SidebarMenuButton>
+                        {showSubMenu && (
+                          <div className={cn("ml-4 mt-1 space-y-1", isOpen ? "px-3" : "px-2")}>
+                            {userManagementSubItems.map((subItem) => {
+                              const isSubActive = location === subItem.url;
+                              return (
+                                <SidebarMenuItem key={subItem.title}>
+                                  <SidebarMenuButton
+                                    asChild
+                                    isActive={isSubActive}
+                                    className={cn(
+                                      "group relative transition-all duration-200 ease-in-out",
+                                      "hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-sm hover:scale-[1.02]",
+                                      isSubActive
+                                        ? "bg-black dark:bg-white text-white dark:text-black shadow-md"
+                                        : "text-sidebar-foreground hover:text-sidebar-foreground",
+                                      "rounded-md mx-2"
+                                    )}
+                                  >
+                                    <Link href={subItem.url}>
+                                      <div className="flex items-center w-full px-3 py-2">
+                                        <subItem.icon className="h-3 w-3 flex-shrink-0" />
+                                        <span className="ml-3 text-xs font-medium">
+                                          {subItem.title}
+                                        </span>
+                                      </div>
+                                    </Link>
+                                  </SidebarMenuButton>
+                                </SidebarMenuItem>
+                              );
+                            })}
+                          </div>
+                        )}
                       </SidebarMenuItem>
                     );
                   })}
@@ -233,11 +286,11 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                       <SidebarMenuButton
                         asChild
                         isActive={isActive}
-                        className={cn(
-                          "group relative transition-all duration-200",
-                          "hover:bg-accent",
+                          className={cn(
+                          "group relative transition-all duration-200 ease-in-out",
+                          "hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-sm hover:scale-[1.02]",
                           isActive
-                            ? "bg-primary text-primary-foreground"
+                            ? "bg-black dark:bg-white text-white dark:text-black shadow-md"
                             : "text-sidebar-foreground hover:text-sidebar-foreground",
                           showContent ? "rounded-md mx-2" : "rounded-full mx-auto w-12"
                         )}
@@ -282,13 +335,13 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                 )}
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="" />
-                  <AvatarFallback className="text-xs bg-primary text-primary-foreground">JD</AvatarFallback>
+                  <AvatarImage src={member?.photoUrl || ""} />
+                  <AvatarFallback className="text-xs bg-primary text-primary-foreground">{initials || "U"}</AvatarFallback>
                 </Avatar>
                 {(isOpen || isHovered) && (
                   <div className="flex-1 text-left">
-                    <p className="text-sm font-medium text-sidebar-foreground">John Doe</p>
-                    <p className="text-xs text-muted-foreground capitalize">{userRole}</p>
+                    <p className="text-sm font-medium text-sidebar-foreground">{displayName}</p>
+                    <p className="text-xs text-muted-foreground capitalize">{user?.role || userRole}</p>
                   </div>
                 )}
               </Button>
@@ -301,7 +354,7 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                 <span>Profile</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">
+              <DropdownMenuItem className="text-destructive" onClick={() => logout.mutate()}>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>

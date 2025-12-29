@@ -15,6 +15,8 @@ import {
   PieChart,
   Pie,
   Cell,
+  LineChart,
+  Line,
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -36,26 +38,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { formatCurrency as formatCurrencyUtil, formatNumber } from "@/lib/utils";
 
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const monthOptions = monthNames.map((name, index) => ({
-  value: (index + 1).toString(),
-  label: name,
-}));
-
 const chartColors = [
   "hsl(var(--chart-1))",
   "hsl(var(--chart-2))",
@@ -64,44 +46,49 @@ const chartColors = [
   "hsl(var(--chart-5))",
 ];
 
-interface MonthlyReportData {
-  month: number;
+interface AnnualReportData {
   year: number;
   totalIncome: number;
   totalExpenses: number;
   incomeAfterTax: number;
-  monthsProfit: number;
-  monthsProfitGoal: number;
+  yearsProfit: number;
+  yearsProfitGoal: number;
   incomeBreakdown: Array<{ category: string; amount: number }>;
   expenseBreakdown: Array<{ category: string; amount: number }>;
+  monthlyBreakdown: Array<{
+    month: string;
+    monthNumber: number;
+    income: number;
+    expenses: number;
+    profit: number;
+  }>;
 }
 
-export default function MonthlyReport() {
+export default function AnnualReport() {
   const currentDate = new Date();
   const [year, setYear] = useState(currentDate.getFullYear().toString());
-  const [month, setMonth] = useState((currentDate.getMonth() + 1).toString());
   const { toast } = useToast();
   const printRef = useRef<HTMLDivElement>(null);
   const { user } = useAuth();
   const isAdmin = user?.role === "admin";
+  const showExpenses = isAdmin;
 
-  // Generate year options (current year and 5 years back)
+  // Generate year options (current year and 10 years back)
   const yearOptions = useMemo(() => {
     const currentYear = currentDate.getFullYear();
-    return Array.from({ length: 6 }, (_, i) => ({
+    return Array.from({ length: 11 }, (_, i) => ({
       value: (currentYear - i).toString(),
       label: (currentYear - i).toString(),
     }));
   }, []);
 
-  // Fetch monthly report data
-  const { data, isLoading, error } = useQuery<MonthlyReportData>({
-    queryKey: ["/api/monthly-report", month, year],
+  // Fetch annual report data
+  const { data, isLoading, error } = useQuery<AnnualReportData>({
+    queryKey: ["/api/annual-report", year],
     queryFn: async () => {
       const params = new URLSearchParams();
-      params.append("month", month);
       params.append("year", year);
-      const res = await apiRequest("GET", `/api/monthly-report?${params.toString()}`);
+      const res = await apiRequest("GET", `/api/annual-report?${params.toString()}`);
       return res.json();
     },
     staleTime: 0,
@@ -135,18 +122,6 @@ export default function MonthlyReport() {
     }));
   }, [data?.expenseBreakdown]);
 
-  // Prepare data for income vs expenses chart
-  const incomeVsExpensesData = useMemo(() => {
-    if (!data) return [];
-    return [
-      {
-        name: monthNames[parseInt(month) - 1],
-        income: data.incomeAfterTax,
-        expenses: data.totalExpenses,
-      },
-    ];
-  }, [data, month]);
-
   // Handle PDF export
   const handleExportPDF = () => {
     if (!data) {
@@ -162,8 +137,7 @@ export default function MonthlyReport() {
     const printWindow = window.open("", "_blank");
     if (!printWindow) return;
 
-    const monthName = monthNames[parseInt(month) - 1];
-    const reportTitle = `Monthly Report - ${monthName} ${year}`;
+    const reportTitle = `Annual Report - ${year}`;
 
     printWindow.document.write(`
       <!DOCTYPE html>
@@ -201,12 +175,12 @@ export default function MonthlyReport() {
             <div class="metric-value">${formatCurrency(data.incomeAfterTax)}</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Month's Profit</div>
-            <div class="metric-value">${formatCurrency(data.monthsProfit)}</div>
+            <div class="metric-label">Year's Profit</div>
+            <div class="metric-value">${formatCurrency(data.yearsProfit)}</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Month's Profit Goal</div>
-            <div class="metric-value">${formatCurrency(data.monthsProfitGoal)}</div>
+            <div class="metric-label">Year's Profit Goal</div>
+            <div class="metric-value">${formatCurrency(data.yearsProfitGoal)}</div>
           </div>
           <h2>Income Breakdown by Category</h2>
           <table>
@@ -242,6 +216,27 @@ export default function MonthlyReport() {
               `).join("")}
             </tbody>
           </table>
+          <h2>Monthly Breakdown</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Month</th>
+                <th>Income</th>
+                <th>Expenses</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.monthlyBreakdown.map(item => `
+                <tr>
+                  <td>${item.month}</td>
+                  <td>${formatCurrency(item.income)}</td>
+                  <td>${formatCurrency(item.expenses)}</td>
+                  <td>${formatCurrency(item.profit)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
         </body>
       </html>
     `);
@@ -262,19 +257,18 @@ export default function MonthlyReport() {
       return;
     }
 
-    const monthName = monthNames[parseInt(month) - 1];
-    const fileName = `monthly-report-${monthName}-${year}.csv`;
+    const fileName = `annual-report-${year}.csv`;
 
     // Create CSV content
     const csvRows = [
-      [`Monthly Report - ${monthName} ${year}`],
+      [`Annual Report - ${year}`],
       [],
       ["Metric", "Amount"],
       ["Total Income", formatNumber(data.totalIncome, 2)],
       ["Total Expenses", formatNumber(data.totalExpenses, 2)],
       ["Income After Tax", formatNumber(data.incomeAfterTax, 2)],
-      ["Month's Profit", formatNumber(data.monthsProfit, 2)],
-      ["Month's Profit Goal", formatNumber(data.monthsProfitGoal, 2)],
+      ["Year's Profit", formatNumber(data.yearsProfit, 2)],
+      ["Year's Profit Goal", formatNumber(data.yearsProfitGoal, 2)],
       [],
       ["Income Breakdown by Category"],
       ["Category", "Amount"],
@@ -288,6 +282,15 @@ export default function MonthlyReport() {
       ...data.expenseBreakdown.map(item => [
         item.category,
         formatNumber(item.amount, 2),
+      ]),
+      [],
+      ["Monthly Breakdown"],
+      ["Month", "Income", "Expenses", "Profit"],
+      ...data.monthlyBreakdown.map(item => [
+        item.month,
+        formatNumber(item.income, 2),
+        formatNumber(item.expenses, 2),
+        formatNumber(item.profit, 2),
       ]),
     ];
 
@@ -305,7 +308,7 @@ export default function MonthlyReport() {
 
     toast({
       title: "Export successful",
-      description: `Monthly report exported as ${fileName}`,
+      description: `Annual report exported as ${fileName}`,
     });
   };
 
@@ -327,44 +330,28 @@ export default function MonthlyReport() {
     return (
       <div className="space-y-8">
         <ReportHeader
-          title="Monthly Report"
-          subtitle="Detailed monthly financial performance and trends"
+          title="Annual Report"
+          subtitle="Comprehensive yearly financial performance and trends"
         />
         <Card>
           <CardContent className="pt-6">
-            <p className="text-destructive">Failed to load monthly report data.</p>
+            <p className="text-destructive">Failed to load annual report data.</p>
           </CardContent>
         </Card>
       </div>
     );
   }
 
-  // Member view - income only
   if (!isAdmin) {
     return (
       <div className="space-y-8" ref={printRef}>
         <ReportHeader
-          title="Monthly Report"
-          subtitle="Your monthly income performance"
+          title="Annual Report"
+          subtitle="Yearly income overview"
         />
 
-        {/* Month and Year Selectors */}
+        {/* Year Selector */}
         <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Month</span>
-            <Select value={month} onValueChange={setMonth}>
-              <SelectTrigger className="w-40">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {monthOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Year</span>
             <Select value={year} onValueChange={setYear}>
@@ -385,18 +372,17 @@ export default function MonthlyReport() {
         {isLoading ? (
           <Card>
             <CardContent className="pt-6">
-              <p className="text-muted-foreground">Loading monthly report data...</p>
+              <p className="text-muted-foreground">Loading annual report data...</p>
             </CardContent>
           </Card>
         ) : !data ? (
           <Card>
             <CardContent className="pt-6">
-              <p className="text-muted-foreground">No data available for the selected month.</p>
+              <p className="text-muted-foreground">No data available for the selected year.</p>
             </CardContent>
           </Card>
         ) : (
           <>
-            {/* Metrics Cards - Income Only */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card>
                 <CardHeader className="pb-3">
@@ -408,9 +394,7 @@ export default function MonthlyReport() {
                   <p className="text-3xl font-bold font-mono text-green-600 dark:text-green-400">
                     {formatCurrency(data.totalIncome)}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {monthNames[parseInt(month) - 1]} {year}
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
                 </CardContent>
               </Card>
               <Card>
@@ -423,24 +407,20 @@ export default function MonthlyReport() {
                   <p className="text-3xl font-bold font-mono text-green-600 dark:text-green-400">
                     {formatCurrency(data.incomeAfterTax)}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {monthNames[parseInt(month) - 1]} {year}
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
                 </CardContent>
               </Card>
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-sm uppercase tracking-wide text-muted-foreground">
-                    Month's Profit
+                    Year's Profit
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-3xl font-bold font-mono text-green-600 dark:text-green-400">
-                    {formatCurrency(data.monthsProfit)}
+                  <p className="text-3xl font-bold font-mono">
+                    {formatCurrency(data.yearsProfit)}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {monthNames[parseInt(month) - 1]} {year}
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
                 </CardContent>
               </Card>
               <Card>
@@ -451,20 +431,18 @@ export default function MonthlyReport() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-3xl font-bold font-mono">
-                    {formatCurrency(data.monthsProfitGoal)}
+                    {formatCurrency(data.yearsProfitGoal)}
                   </p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {monthNames[parseInt(month) - 1]} {year}
-                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
                 </CardContent>
               </Card>
             </div>
 
             <ChartContainer title="Monthly Income Trend">
               <ResponsiveContainer width="100%" height={350}>
-                <BarChart data={[{ name: monthNames[parseInt(month) - 1], income: data.incomeAfterTax }]}>
+                <LineChart data={data.monthlyBreakdown}>
                   <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                  <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
                   <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
                   <Tooltip
                     contentStyle={{
@@ -475,13 +453,14 @@ export default function MonthlyReport() {
                     formatter={(value: number) => formatCurrency(value)}
                   />
                   <Legend />
-                  <Bar
+                  <Line
+                    type="monotone"
                     dataKey="income"
-                    fill="#22c55e"
-                    radius={[4, 4, 0, 0]}
-                    name="Income After Tax"
+                    stroke="#22c55e"
+                    strokeWidth={3}
+                    name="Income"
                   />
-                </BarChart>
+                </LineChart>
               </ResponsiveContainer>
             </ChartContainer>
 
@@ -496,19 +475,24 @@ export default function MonthlyReport() {
                       No income data available
                     </p>
                   ) : (
-                    <div className="flex flex-wrap gap-2">
-                      {data.incomeBreakdown.map((item, index) => (
-                        <div
-                          key={index}
-                          className="px-4 py-2 bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-md"
-                        >
-                          <span className="font-medium text-green-800 dark:text-green-300">{item.category}</span>
-                          <span className="ml-2 font-mono font-bold text-green-600 dark:text-green-400">
-                            {formatCurrency(item.amount)}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Category</TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {data.incomeBreakdown.map((item, index) => (
+                          <TableRow key={index}>
+                            <TableCell className="font-medium">{item.category}</TableCell>
+                            <TableCell className="text-right font-mono font-bold text-green-600 dark:text-green-400">
+                              {formatCurrency(item.amount)}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   )}
                 </CardContent>
               </Card>
@@ -557,30 +541,15 @@ export default function MonthlyReport() {
   return (
     <div className="space-y-8" ref={printRef}>
       <ReportHeader
-        title="Monthly Report"
-        subtitle="Detailed monthly financial performance and trends"
+        title="Annual Report"
+        subtitle="Comprehensive yearly financial performance and trends"
         onExportPDF={handleExportPDF}
         onExportExcel={handleExportExcel}
         onPrint={handlePrint}
       />
 
-      {/* Month and Year Selectors */}
+      {/* Year Selector */}
       <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Month</span>
-          <Select value={month} onValueChange={setMonth}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {monthOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Year</span>
           <Select value={year} onValueChange={setYear}>
@@ -601,13 +570,13 @@ export default function MonthlyReport() {
       {isLoading ? (
         <Card>
           <CardContent className="pt-6">
-            <p className="text-muted-foreground">Loading monthly report data...</p>
+            <p className="text-muted-foreground">Loading annual report data...</p>
           </CardContent>
         </Card>
       ) : !data ? (
         <Card>
           <CardContent className="pt-6">
-            <p className="text-muted-foreground">No data available for the selected month.</p>
+            <p className="text-muted-foreground">No data available for the selected year.</p>
           </CardContent>
         </Card>
       ) : (
@@ -624,9 +593,7 @@ export default function MonthlyReport() {
                 <p className="text-3xl font-bold font-mono text-green-600 dark:text-green-400">
                   {formatCurrency(data.totalIncome)}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {monthNames[parseInt(month) - 1]} {year}
-                </p>
+                <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
               </CardContent>
             </Card>
             <Card>
@@ -639,9 +606,7 @@ export default function MonthlyReport() {
                 <p className="text-3xl font-bold font-mono text-destructive">
                   {formatCurrency(data.totalExpenses)}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {monthNames[parseInt(month) - 1]} {year}
-                </p>
+                <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
               </CardContent>
             </Card>
             <Card>
@@ -654,24 +619,20 @@ export default function MonthlyReport() {
                 <p className="text-3xl font-bold font-mono text-chart-3">
                   {formatCurrency(data.incomeAfterTax)}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {monthNames[parseInt(month) - 1]} {year}
-                </p>
+                <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm uppercase tracking-wide text-muted-foreground">
-                  Month's Profit
+                  Year's Profit
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-3xl font-bold font-mono">
-                  {formatCurrency(data.monthsProfit)}
+                  {formatCurrency(data.yearsProfit)}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {monthNames[parseInt(month) - 1]} {year}
-                </p>
+                <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
               </CardContent>
             </Card>
             <Card>
@@ -682,22 +643,20 @@ export default function MonthlyReport() {
               </CardHeader>
               <CardContent>
                 <p className="text-3xl font-bold font-mono">
-                  {formatCurrency(data.monthsProfitGoal)}
+                  {formatCurrency(data.yearsProfitGoal)}
                 </p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {monthNames[parseInt(month) - 1]} {year}
-                </p>
+                <p className="text-sm text-muted-foreground mt-1">Year {year}</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Income vs Expenses Chart */}
+          {/* Annual Income vs Expenses Chart */}
           <ChartContainer
-            title="Monthly Income vs Expenses"
+            title="Annual Income vs Expenses"
             onExport={() => handleExportExcel()}
           >
             <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={incomeVsExpensesData}>
+              <BarChart data={[{ name: year, income: data.totalIncome, expenses: data.totalExpenses }]}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} />
                 <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
@@ -712,7 +671,73 @@ export default function MonthlyReport() {
                 <Legend />
                 <Bar
                   dataKey="income"
-                  fill="hsl(var(--chart-4))"
+                  fill="#22c55e"
+                  radius={[4, 4, 0, 0]}
+                  name="Total Income"
+                />
+                <Bar
+                  dataKey="expenses"
+                  fill="#ef4444"
+                  radius={[4, 4, 0, 0]}
+                  name="Total Expenses"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+
+          {/* Annual Profit Trend Chart */}
+          <ChartContainer
+            title="Annual Profit Trend"
+            onExport={() => handleExportExcel()}
+          >
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={data.monthlyBreakdown.map(m => ({ ...m, profit: m.income - m.expenses }))}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--popover))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "6px",
+                  }}
+                  formatter={(value: number) => formatCurrency(value)}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="profit"
+                  stroke="#22c55e"
+                  strokeWidth={3}
+                  name="Monthly Profit"
+                  dot={{ fill: "#22c55e", r: 4 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+
+          {/* Monthly Income vs Expenses Chart */}
+          <ChartContainer
+            title="Monthly Income vs Expenses"
+            onExport={() => handleExportExcel()}
+          >
+            <ResponsiveContainer width="100%" height={350}>
+              <BarChart data={data.monthlyBreakdown}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--popover))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "6px",
+                  }}
+                  formatter={(value: number) => formatCurrency(value)}
+                />
+                <Legend />
+                <Bar
+                  dataKey="income"
+                  fill="#22c55e"
                   radius={[4, 4, 0, 0]}
                   name="Income After Tax"
                 />
@@ -723,6 +748,36 @@ export default function MonthlyReport() {
                   name="Expenses"
                 />
               </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+
+          {/* Monthly Profit Trend */}
+          <ChartContainer
+            title="Monthly Profit Trend"
+            onExport={() => handleExportExcel()}
+          >
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={data.monthlyBreakdown}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--popover))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "6px",
+                  }}
+                  formatter={(value: number) => formatCurrency(value)}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="profit"
+                  stroke="hsl(var(--chart-1))"
+                  strokeWidth={3}
+                  name="Profit"
+                />
+              </LineChart>
             </ResponsiveContainer>
           </ChartContainer>
 
@@ -865,3 +920,4 @@ export default function MonthlyReport() {
     </div>
   );
 }
+

@@ -43,32 +43,37 @@ export function TransactionTable({ transactions, isAdmin = false, onEdit, onDele
         <TableHeader>
           <TableRow>
             <TableHead className="text-xs uppercase tracking-wide">Date</TableHead>
-            <TableHead className="text-xs uppercase tracking-wide">Description</TableHead>
             <TableHead className="text-xs uppercase tracking-wide">Category</TableHead>
-            {isAdmin && <TableHead className="text-xs uppercase tracking-wide">Member</TableHead>}
-            <TableHead className="text-xs uppercase tracking-wide">Payment</TableHead>
+            <TableHead className="text-xs uppercase tracking-wide">Description</TableHead>
             <TableHead className="text-right text-xs uppercase tracking-wide">Amount</TableHead>
+            <TableHead className="text-xs uppercase tracking-wide">Paid With</TableHead>
             {isAdmin && <TableHead className="w-12"></TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
           {transactions.map((transaction, index) => (
-            <TableRow key={transaction.id} className={index % 2 === 0 ? "bg-muted/30" : ""} data-testid={`row-transaction-${transaction.id}`}>
+            <TableRow
+              key={transaction.id}
+              className={index % 2 === 0 ? "bg-muted/30" : ""}
+              data-testid={`row-transaction-${transaction.id}`}
+            >
               <TableCell className="text-sm">{transaction.date}</TableCell>
-              <TableCell className="font-medium">{transaction.description}</TableCell>
               <TableCell>
                 <Badge variant="secondary" className="text-xs">
                   {transaction.category}
                 </Badge>
               </TableCell>
-              {isAdmin && <TableCell className="text-sm text-muted-foreground">{transaction.member}</TableCell>}
-              <TableCell className="text-sm text-muted-foreground">{transaction.paymentMethod}</TableCell>
-              <TableCell className={cn(
+              <TableCell className="font-medium">{transaction.description}</TableCell>
+              <TableCell
+                className={cn(
                 "text-right font-mono font-bold",
                 transaction.type === "income" ? "text-chart-4" : "text-destructive"
-              )} data-testid={`text-amount-${transaction.id}`}>
+                )}
+                data-testid={`text-amount-${transaction.id}`}
+              >
                 {transaction.type === "income" ? "+" : "-"}${transaction.amount.toLocaleString()}
               </TableCell>
+              <TableCell className="text-sm text-muted-foreground">{transaction.paymentMethod}</TableCell>
               {isAdmin && (
                 <TableCell>
                   <DropdownMenu>

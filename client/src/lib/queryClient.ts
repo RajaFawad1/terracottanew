@@ -1,5 +1,12 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+const API_BASE = (import.meta as any)?.env?.VITE_API_URL || "";
+
+function withBase(path: string) {
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  return `${API_BASE}${path}`;
+}
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -12,11 +19,21 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const isFormData = typeof FormData !== "undefined" && data instanceof FormData;
+
+  const res = await fetch(withBase(url), {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
-    body: data ? JSON.stringify(data) : undefined,
+    headers: {
+      ...(!isFormData && data ? { "Content-Type": "application/json" } : {}),
+      "Cache-Control": "no-store",
+    },
+    body: data
+      ? isFormData
+        ? (data as BodyInit)
+        : JSON.stringify(data)
+      : undefined,
     credentials: "include",
+    cache: "no-store",
   });
 
   await throwIfResNotOk(res);
@@ -29,8 +46,10 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const res = await fetch(withBase(queryKey.join("/") as string), {
       credentials: "include",
+      cache: "no-store",
+      headers: { "Cache-Control": "no-store" },
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {

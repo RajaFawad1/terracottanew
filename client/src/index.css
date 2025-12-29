@@ -18,43 +18,43 @@
   --sidebar: 0 0% 96%;
   --sidebar-foreground: 0 0% 9%;
   --sidebar-border: 0 0% 92%;
-  --sidebar-primary: 25 95% 35%;
-  --sidebar-primary-foreground: 25 95% 98%;
+  --sidebar-primary: 0 0% 0%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 92%;
   --sidebar-accent-foreground: 0 0% 9%;
-  --sidebar-ring: 25 95% 35%;
+  --sidebar-ring: 0 0% 0%;
   --popover: 0 0% 94%;
   --popover-foreground: 0 0% 9%;
   --popover-border: 0 0% 90%;
-  --primary: 25 95% 35%;
-  --primary-foreground: 25 95% 98%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
   --secondary: 0 0% 91%;
   --secondary-foreground: 0 0% 9%;
-  --muted: 0 2% 89%;
-  --muted-foreground: 0 2% 35%;
-  --accent: 25 8% 88%;
-  --accent-foreground: 25 8% 12%;
+  --muted: 0 0% 89%;
+  --muted-foreground: 0 0% 35%;
+  --accent: 0 0% 88%;
+  --accent-foreground: 0 0% 12%;
   --destructive: 0 84% 42%;
   --destructive-foreground: 0 84% 98%;
   --input: 0 0% 75%;
-  --ring: 25 95% 35%;
-  --chart-1: 25 95% 35%;
-  --chart-2: 195 85% 32%;
-  --chart-3: 280 75% 38%;
-  --chart-4: 145 70% 28%;
-  --chart-5: 35 90% 40%;
-  --font-sans: 'IBM Plex Sans', sans-serif;
+  --ring: 0 0% 0%;
+  --chart-1: 0 0% 20%;
+  --chart-2: 0 0% 40%;
+  --chart-3: 0 0% 60%;
+  --chart-4: 0 0% 80%;
+  --chart-5: 0 0% 95%;
+  --font-sans: 'Inter', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-mono: 'IBM Plex Mono', 'Fira Code', 'Consolas', monospace;
   --radius: .5rem;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.1), 0px 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-sm: 0px 2px 4px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0px 4px 6px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
+  --shadow-md: 0px 10px 15px -3px hsl(0 0% 0% / 0.1), 0px 4px 6px -4px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0px 20px 25px -5px hsl(0 0% 0% / 0.1), 0px 8px 10px -6px hsl(0 0% 0% / 0.1);
+  --shadow-xl: 0px 25px 50px -12px hsl(0 0% 0% / 0.25);
+  --shadow-2xl: 0px 30px 60px -12px hsl(0 0% 0% / 0.3);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -102,39 +102,39 @@
   --sidebar: 0 0% 11%;
   --sidebar-foreground: 0 0% 98%;
   --sidebar-border: 0 0% 14%;
-  --sidebar-primary: 25 95% 45%;
-  --sidebar-primary-foreground: 25 95% 98%;
+  --sidebar-primary: 0 0% 100%;
+  --sidebar-primary-foreground: 0 0% 0%;
   --sidebar-accent: 0 0% 14%;
   --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 25 95% 45%;
+  --sidebar-ring: 0 0% 100%;
   --popover: 0 0% 13%;
   --popover-foreground: 0 0% 98%;
   --popover-border: 0 0% 16%;
-  --primary: 25 95% 35%;
-  --primary-foreground: 25 95% 98%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
   --secondary: 0 0% 16%;
   --secondary-foreground: 0 0% 98%;
-  --muted: 0 2% 15%;
-  --muted-foreground: 0 2% 75%;
-  --accent: 25 8% 15%;
-  --accent-foreground: 25 8% 92%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 75%;
+  --accent: 0 0% 15%;
+  --accent-foreground: 0 0% 92%;
   --destructive: 0 84% 35%;
   --destructive-foreground: 0 84% 98%;
   --input: 0 0% 28%;
-  --ring: 25 95% 45%;
-  --chart-1: 25 95% 65%;
-  --chart-2: 195 85% 68%;
-  --chart-3: 280 75% 72%;
-  --chart-4: 145 70% 65%;
-  --chart-5: 35 90% 70%;
-  --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
-  --shadow-sm: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 1px 2px -1px hsl(0 0% 0% / 0.00);
-  --shadow-md: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 2px 4px -1px hsl(0 0% 0% / 0.00);
-  --shadow-lg: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 4px 6px -1px hsl(0 0% 0% / 0.00);
-  --shadow-xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00), 0px 8px 10px -1px hsl(0 0% 0% / 0.00);
-  --shadow-2xl: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
+  --ring: 0 0% 100%;
+  --chart-1: 0 0% 80%;
+  --chart-2: 0 0% 60%;
+  --chart-3: 0 0% 40%;
+  --chart-4: 0 0% 20%;
+  --chart-5: 0 0% 10%;
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.1);
+  --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.2), 0px 1px 2px -1px hsl(0 0% 0% / 0.2);
+  --shadow-sm: 0px 2px 4px -1px hsl(0 0% 0% / 0.2), 0px 1px 2px -1px hsl(0 0% 0% / 0.2);
+  --shadow: 0px 4px 6px -1px hsl(0 0% 0% / 0.2), 0px 2px 4px -2px hsl(0 0% 0% / 0.2);
+  --shadow-md: 0px 10px 15px -3px hsl(0 0% 0% / 0.2), 0px 4px 6px -4px hsl(0 0% 0% / 0.2);
+  --shadow-lg: 0px 20px 25px -5px hsl(0 0% 0% / 0.2), 0px 8px 10px -6px hsl(0 0% 0% / 0.2);
+  --shadow-xl: 0px 25px 50px -12px hsl(0 0% 0% / 0.4);
+  --shadow-2xl: 0px 30px 60px -12px hsl(0 0% 0% / 0.5);
 
 /* Fallback for older browsers */
   --sidebar-primary-border: hsl(var(--sidebar-primary));
@@ -170,8 +170,87 @@
     @apply border-border;
   }
 
+  /* Scrollbar styling */
+  *::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted));
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted)) transparent;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background-image: 
+      radial-gradient(at 0% 0%, hsl(var(--primary) / 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(var(--chart-2) / 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(var(--chart-3) / 0.03) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsl(var(--chart-4) / 0.03) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, hsl(var(--chart-5) / 0.02) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-size: 200% 200%;
+    animation: gradient-shift 20s ease infinite;
+  }
+
+  .dark body {
+    background-image: 
+      radial-gradient(at 0% 0%, hsl(var(--primary) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(var(--chart-2) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsl(var(--chart-3) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsl(var(--chart-4) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 50%, hsl(var(--chart-5) / 0.03) 0px, transparent 50%);
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Smooth transitions for all interactive elements */
+  button, a, input, select, textarea {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  /* Enhanced card hover effects */
+  .shadcn-card {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .shadcn-card:hover {
+    @apply shadow-md -translate-y-0.5;
+  }
+
+  /* Better focus states */
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-primary/20 ring-offset-2;
   }
 }
 

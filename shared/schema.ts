@@ -156,7 +156,7 @@ export const incomeEntries = pgTable("income_entries", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   date: timestamp("date").notNull(),
   memberId: varchar("member_id").notNull().references(() => members.id),
-  categoryId: varchar("category_id").notNull().references(() => incomeCategories.id),
+  categoryId: varchar("category_id").references(() => incomeCategories.id),
   paymentMethodId: varchar("payment_method_id").notNull().references(() => paymentMethods.id),
   totalAmount: numeric("total_amount", { precision: 14, scale: 2 }).notNull(),
   taxPercentage: numeric("tax_percentage", { precision: 5, scale: 2 }).notNull().default("0"),
@@ -224,6 +224,28 @@ export const insertMemberSharesSnapshotSchema = createInsertSchema(memberSharesS
 export type InsertMemberSharesSnapshot = z.infer<typeof insertMemberSharesSnapshotSchema>;
 export type MemberSharesSnapshot = typeof memberSharesSnapshots.$inferSelect;
 
+// Share Transactions table (for tracking share allocations and contributions)
+export const shareTransactions = pgTable("share_transactions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  date: timestamp("date").notNull(),
+  memberId: varchar("member_id").notNull().references(() => members.id),
+  contributions: numeric("contributions", { precision: 14, scale: 2 }).notNull().default("0"),
+  shares: numeric("shares", { precision: 14, scale: 2 }).notNull().default("0"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  createdBy: varchar("created_by").references(() => users.id),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  updatedBy: varchar("updated_by").references(() => users.id),
+});
+
+export const insertShareTransactionSchema = createInsertSchema(shareTransactions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertShareTransaction = z.infer<typeof insertShareTransactionSchema>;
+export type ShareTransaction = typeof shareTransactions.$inferSelect;
+
 // Audit Events table
 export const auditEvents = pgTable("audit_events", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -244,3 +266,27 @@ export const insertAuditEventSchema = createInsertSchema(auditEvents).omit({
 
 export type InsertAuditEvent = z.infer<typeof insertAuditEventSchema>;
 export type AuditEvent = typeof auditEvents.$inferSelect;
+
+// Monthly Valuations table (for tracking monthly valuation and share price calculations)
+export const monthlyValuations = pgTable("monthly_valuations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  month: integer("month").notNull(), // 1-12
+  year: integer("year").notNull(),
+  totalInflows: numeric("total_inflows", { precision: 14, scale: 2 }).notNull().default("0"),
+  totalOutflows: numeric("total_outflows", { precision: 14, scale: 2 }).notNull().default("0"),
+  totalFlows: numeric("total_flows", { precision: 14, scale: 2 }).notNull().default("0"),
+  terracottaValuation: numeric("terracotta_valuation", { precision: 14, scale: 2 }).notNull().default("0"),
+  totalSharesPreviousMonth: numeric("total_shares_previous_month", { precision: 14, scale: 2 }).notNull().default("0"),
+  terracottaSharePrice: numeric("terracotta_share_price", { precision: 14, scale: 2 }).notNull().default("0"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
+export const insertMonthlyValuationSchema = createInsertSchema(monthlyValuations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertMonthlyValuation = z.infer<typeof insertMonthlyValuationSchema>;
+export type MonthlyValuation = typeof monthlyValuations.$inferSelect;

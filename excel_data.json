@@ -1,0 +1,4594 @@
+{
+  "members": [
+    {
+      "firstName": "Ajala",
+      "lastName": "Oladapo",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 12
+    },
+    {
+      "firstName": "Ajibola",
+      "lastName": "Temitope",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 13
+    },
+    {
+      "firstName": "Akindele",
+      "lastName": "Abiodun",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 14
+    },
+    {
+      "firstName": "Dosumu",
+      "lastName": "Olurotimi",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 15
+    },
+    {
+      "firstName": "Durojaiye",
+      "lastName": "Oluwafemi",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 16
+    },
+    {
+      "firstName": "Ilori",
+      "lastName": "Olatunji",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 17
+    },
+    {
+      "firstName": "Makinde",
+      "lastName": "Oluremi",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 18
+    },
+    {
+      "firstName": "Momodu",
+      "lastName": "Jamiu",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 19
+    },
+    {
+      "firstName": "Olomola",
+      "lastName": "Opeyemi",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 20
+    },
+    {
+      "firstName": "Olutola",
+      "lastName": "Temitope",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 21
+    },
+    {
+      "firstName": "Shoneye",
+      "lastName": "Olumuyiwa",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 22
+    },
+    {
+      "firstName": "Sule",
+      "lastName": "Dimeji",
+      "contributions": 400.0,
+      "shares": 10000.0,
+      "row": 23
+    }
+  ],
+  "incomeEntries": [
+    {
+      "date": "2023-04-25T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100001.0
+    },
+    {
+      "date": "2023-04-17T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100002.0
+    },
+    {
+      "date": "2023-03-26T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100003.0
+    },
+    {
+      "date": "2023-03-20T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100004.0
+    },
+    {
+      "date": "2023-03-08T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100005.0
+    },
+    {
+      "date": "2023-03-08T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100006.0
+    },
+    {
+      "date": "2023-03-09T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100007.0
+    },
+    {
+      "date": "2023-03-08T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100008.0
+    },
+    {
+      "date": "2023-03-11T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100009.0
+    },
+    {
+      "date": "2023-03-28T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100010.0
+    },
+    {
+      "date": "2023-03-25T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100011.0
+    },
+    {
+      "date": "2023-04-22T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100012.0
+    },
+    {
+      "date": "2023-03-10T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100013.0
+    },
+    {
+      "date": "2023-03-05T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100014.0
+    },
+    {
+      "date": "2023-04-22T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100015.0
+    },
+    {
+      "date": "2023-04-19T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100016.0
+    },
+    {
+      "date": "2023-04-07T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100017.0
+    },
+    {
+      "date": "2023-04-19T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100018.0
+    },
+    {
+      "date": "2023-04-06T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100019.0
+    },
+    {
+      "date": "2023-04-16T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100020.0
+    },
+    {
+      "date": "2023-03-28T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100021.0
+    },
+    {
+      "date": "2023-04-22T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100022.0
+    },
+    {
+      "date": "2023-05-02T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100023.0
+    },
+    {
+      "date": "2023-05-22T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100024.0
+    },
+    {
+      "date": "2023-05-22T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100025.0
+    },
+    {
+      "date": "2023-05-23T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100026.0
+    },
+    {
+      "date": "2023-05-23T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100027.0
+    },
+    {
+      "date": "2023-05-24T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100028.0
+    },
+    {
+      "date": "2023-05-26T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100029.0
+    },
+    {
+      "date": "2023-05-30T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100030.0
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100031.0
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100032.0
+    },
+    {
+      "date": "2023-06-02T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100033.0
+    },
+    {
+      "date": "2023-06-05T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100034.0
+    },
+    {
+      "date": "2023-06-06T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100035.0
+    },
+    {
+      "date": "2023-06-06T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100036.0
+    },
+    {
+      "date": "2023-06-16T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100037.0
+    },
+    {
+      "date": "2023-06-21T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100038.0
+    },
+    {
+      "date": "2023-06-21T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100039.0
+    },
+    {
+      "date": "2023-06-23T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100040.0
+    },
+    {
+      "date": "2023-06-23T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100041.0
+    },
+    {
+      "date": "2023-06-23T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100042.0
+    },
+    {
+      "date": "2023-06-26T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100043.0
+    },
+    {
+      "date": "2023-06-26T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100044.0
+    },
+    {
+      "date": "2023-06-26T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100045.0
+    },
+    {
+      "date": "2023-06-26T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100046.0
+    },
+    {
+      "date": "2023-07-05T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100047.0
+    },
+    {
+      "date": "2023-07-10T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100048.0
+    },
+    {
+      "date": "2023-07-13T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100049.0
+    },
+    {
+      "date": "2023-07-17T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100050.0
+    },
+    {
+      "date": "2023-07-17T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100051.0
+    },
+    {
+      "date": "2023-07-17T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100052.0
+    },
+    {
+      "date": "2023-07-17T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100053.0
+    },
+    {
+      "date": "2023-07-17T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100054.0
+    },
+    {
+      "date": "2023-07-31T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100055.0
+    },
+    {
+      "date": "2023-07-31T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100056.0
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100057.0
+    },
+    {
+      "date": "2023-08-04T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100058.0
+    },
+    {
+      "date": "2023-08-09T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100059.0
+    },
+    {
+      "date": "2023-08-15T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100060.0
+    },
+    {
+      "date": "2023-08-16T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100061.0
+    },
+    {
+      "date": "2023-08-16T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100062.0
+    },
+    {
+      "date": "2023-08-17T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100063.0
+    },
+    {
+      "date": "2023-08-17T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100064.0
+    },
+    {
+      "date": "2023-08-21T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100065.0
+    },
+    {
+      "date": "2023-08-22T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100066.0
+    },
+    {
+      "date": "2023-08-25T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100067.0
+    },
+    {
+      "date": "2023-08-29T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100068.0
+    },
+    {
+      "date": "2023-08-29T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100069.0
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100070.0
+    },
+    {
+      "date": "2023-09-05T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100071.0
+    },
+    {
+      "date": "2023-09-15T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100072.0
+    },
+    {
+      "date": "2023-09-15T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100073.0
+    },
+    {
+      "date": "2023-09-15T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100074.0
+    },
+    {
+      "date": "2023-09-18T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100075.0
+    },
+    {
+      "date": "2023-09-27T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100076.0
+    },
+    {
+      "date": "2023-09-29T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100077.0
+    },
+    {
+      "date": "2023-09-29T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100078.0
+    },
+    {
+      "date": "2023-09-29T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100079.0
+    },
+    {
+      "date": "2023-10-02T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100080.0
+    },
+    {
+      "date": "2023-10-02T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100081.0
+    },
+    {
+      "date": "2023-10-02T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100082.0
+    },
+    {
+      "date": "2023-10-16T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100083.0
+    },
+    {
+      "date": "2023-10-16T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100084.0
+    },
+    {
+      "date": "2023-10-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100085.0
+    },
+    {
+      "date": "2023-10-17T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100086.0
+    },
+    {
+      "date": "2023-10-18T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100087.0
+    },
+    {
+      "date": "2023-10-19T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100088.0
+    },
+    {
+      "date": "2023-10-23T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100089.0
+    },
+    {
+      "date": "2023-10-27T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100090.0
+    },
+    {
+      "date": "2023-10-30T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100091.0
+    },
+    {
+      "date": "2023-10-31T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100092.0
+    },
+    {
+      "date": "2023-10-31T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100093.0
+    },
+    {
+      "date": "2023-11-07T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100094.0
+    },
+    {
+      "date": "2023-11-10T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100095.0
+    },
+    {
+      "date": "2023-11-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100096.0
+    },
+    {
+      "date": "2023-11-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100097.0
+    },
+    {
+      "date": "2023-11-16T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100098.0
+    },
+    {
+      "date": "2023-11-20T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100099.0
+    },
+    {
+      "date": "2023-11-24T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100100.0
+    },
+    {
+      "date": "2023-11-24T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100101.0
+    },
+    {
+      "date": "2023-11-29T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100102.0
+    },
+    {
+      "date": "2023-11-30T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100103.0
+    },
+    {
+      "date": "2023-11-30T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100104.0
+    },
+    {
+      "date": "2023-11-30T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100105.0
+    },
+    {
+      "date": "2023-12-04T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100106.0
+    },
+    {
+      "date": "2023-12-15T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100107.0
+    },
+    {
+      "date": "2023-12-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100108.0
+    },
+    {
+      "date": "2023-12-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100109.0
+    },
+    {
+      "date": "2023-12-15T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100110.0
+    },
+    {
+      "date": "2023-12-18T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100111.0
+    },
+    {
+      "date": "2023-12-18T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100112.0
+    },
+    {
+      "date": "2023-12-22T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100113.0
+    },
+    {
+      "date": "2023-12-22T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100114.0
+    },
+    {
+      "date": "2023-12-31T00:00:00",
+      "memberName": null,
+      "totalAmount": 100115.0
+    },
+    {
+      "date": "2024-01-02T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100116.0
+    },
+    {
+      "date": "2024-01-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100117.0
+    },
+    {
+      "date": "2024-01-16T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100118.0
+    },
+    {
+      "date": "2024-01-17T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100119.0
+    },
+    {
+      "date": "2024-01-19T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100120.0
+    },
+    {
+      "date": "2024-01-22T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100121.0
+    },
+    {
+      "date": "2024-01-23T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100122.0
+    },
+    {
+      "date": "2024-01-25T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100123.0
+    },
+    {
+      "date": "2024-01-29T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100124.0
+    },
+    {
+      "date": "2024-01-29T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100125.0
+    },
+    {
+      "date": "2024-01-29T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100126.0
+    },
+    {
+      "date": "2024-01-31T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100127.0
+    },
+    {
+      "date": "2024-01-31T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100128.0
+    },
+    {
+      "date": "2024-01-31T00:00:00",
+      "memberName": null,
+      "totalAmount": 100129.0
+    },
+    {
+      "date": "2024-02-05T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100130.0
+    },
+    {
+      "date": "2024-02-07T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100131.0
+    },
+    {
+      "date": "2024-02-12T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100132.0
+    },
+    {
+      "date": "2024-02-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100133.0
+    },
+    {
+      "date": "2024-02-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100134.0
+    },
+    {
+      "date": "2024-02-20T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100135.0
+    },
+    {
+      "date": "2024-02-20T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100136.0
+    },
+    {
+      "date": "2024-02-22T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100137.0
+    },
+    {
+      "date": "2024-02-26T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100138.0
+    },
+    {
+      "date": "2024-02-26T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100139.0
+    },
+    {
+      "date": "2024-02-26T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100140.0
+    },
+    {
+      "date": "2024-02-27T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100141.0
+    },
+    {
+      "date": "2024-02-29T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100142.0
+    },
+    {
+      "date": "2024-02-29T00:00:00",
+      "memberName": null,
+      "totalAmount": 100143.0
+    },
+    {
+      "date": "2024-03-11T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100144.0
+    },
+    {
+      "date": "2024-03-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100145.0
+    },
+    {
+      "date": "2024-03-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100146.0
+    },
+    {
+      "date": "2024-03-18T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100147.0
+    },
+    {
+      "date": "2024-03-18T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100148.0
+    },
+    {
+      "date": "2024-03-18T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100149.0
+    },
+    {
+      "date": "2024-03-18T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100150.0
+    },
+    {
+      "date": "2024-03-19T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100151.0
+    },
+    {
+      "date": "2024-03-22T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100152.0
+    },
+    {
+      "date": "2024-03-27T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100153.0
+    },
+    {
+      "date": "2024-03-27T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100154.0
+    },
+    {
+      "date": "2024-03-28T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100155.0
+    },
+    {
+      "date": "2024-03-28T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100156.0
+    },
+    {
+      "date": "2024-03-29T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100157.0
+    },
+    {
+      "date": "2024-03-29T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100158.0
+    },
+    {
+      "date": "2024-03-30T00:00:00",
+      "memberName": null,
+      "totalAmount": 100159.0
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100160.0
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100161.0
+    },
+    {
+      "date": "2024-04-12T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100162.0
+    },
+    {
+      "date": "2024-04-15T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100163.0
+    },
+    {
+      "date": "2024-04-15T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100164.0
+    },
+    {
+      "date": "2024-04-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100165.0
+    },
+    {
+      "date": "2024-04-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100166.0
+    },
+    {
+      "date": "2024-04-17T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100167.0
+    },
+    {
+      "date": "2024-04-22T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100168.0
+    },
+    {
+      "date": "2024-04-26T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100169.0
+    },
+    {
+      "date": "2024-04-29T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100170.0
+    },
+    {
+      "date": "2024-04-29T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100171.0
+    },
+    {
+      "date": "2024-04-30T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100172.0
+    },
+    {
+      "date": "2024-04-30T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100173.0
+    },
+    {
+      "date": "2024-05-07T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100174.0
+    },
+    {
+      "date": "2024-05-15T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100175.0
+    },
+    {
+      "date": "2024-05-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100176.0
+    },
+    {
+      "date": "2024-05-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100177.0
+    },
+    {
+      "date": "2024-05-21T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100178.0
+    },
+    {
+      "date": "2024-05-23T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100179.0
+    },
+    {
+      "date": "2024-05-28T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100180.0
+    },
+    {
+      "date": "2024-05-28T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100181.0
+    },
+    {
+      "date": "2024-05-28T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100182.0
+    },
+    {
+      "date": "2024-05-28T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100183.0
+    },
+    {
+      "date": "2024-05-30T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100184.0
+    },
+    {
+      "date": "2024-05-30T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100185.0
+    },
+    {
+      "date": "2024-06-12T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100186.0
+    },
+    {
+      "date": "2024-06-14T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100187.0
+    },
+    {
+      "date": "2024-06-17T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100188.0
+    },
+    {
+      "date": "2024-06-17T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100189.0
+    },
+    {
+      "date": "2024-06-26T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100190.0
+    },
+    {
+      "date": "2024-06-27T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100191.0
+    },
+    {
+      "date": "2024-06-27T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100192.0
+    },
+    {
+      "date": "2024-06-28T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100193.0
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100194.0
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100195.0
+    },
+    {
+      "date": "2024-07-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100196.0
+    },
+    {
+      "date": "2024-07-15T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100197.0
+    },
+    {
+      "date": "2024-07-17T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100198.0
+    },
+    {
+      "date": "2024-07-19T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100199.0
+    },
+    {
+      "date": "2024-07-22T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100200.0
+    },
+    {
+      "date": "2024-07-22T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100201.0
+    },
+    {
+      "date": "2024-07-22T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100202.0
+    },
+    {
+      "date": "2024-07-22T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100203.0
+    },
+    {
+      "date": "2024-07-22T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100204.0
+    },
+    {
+      "date": "2024-07-23T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100205.0
+    },
+    {
+      "date": "2024-07-29T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100206.0
+    },
+    {
+      "date": "2024-08-12T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100207.0
+    },
+    {
+      "date": "2024-08-15T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100208.0
+    },
+    {
+      "date": "2024-08-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100209.0
+    },
+    {
+      "date": "2024-08-16T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100210.0
+    },
+    {
+      "date": "2024-08-19T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100211.0
+    },
+    {
+      "date": "2024-08-20T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100212.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100213.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100214.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100215.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100216.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100217.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100218.0
+    },
+    {
+      "date": "2024-08-30T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100219.0
+    },
+    {
+      "date": "2024-09-13T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100220.0
+    },
+    {
+      "date": "2024-09-13T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100221.0
+    },
+    {
+      "date": "2024-09-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100222.0
+    },
+    {
+      "date": "2024-09-16T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100223.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100224.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100225.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100226.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100227.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100228.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100229.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100230.0
+    },
+    {
+      "date": "2024-09-17T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100231.0
+    },
+    {
+      "date": "2024-09-30T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100232.0
+    },
+    {
+      "date": "2024-09-18T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100233.0
+    },
+    {
+      "date": "2024-10-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100234.0
+    },
+    {
+      "date": "2024-10-15T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100235.0
+    },
+    {
+      "date": "2024-10-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100236.0
+    },
+    {
+      "date": "2024-10-17T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100237.0
+    },
+    {
+      "date": "2024-10-18T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100238.0
+    },
+    {
+      "date": "2024-10-25T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100239.0
+    },
+    {
+      "date": "2024-10-28T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100240.0
+    },
+    {
+      "date": "2024-10-28T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100241.0
+    },
+    {
+      "date": "2024-10-28T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100242.0
+    },
+    {
+      "date": "2024-10-29T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100243.0
+    },
+    {
+      "date": "2024-10-30T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100244.0
+    },
+    {
+      "date": "2024-10-31T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100245.0
+    },
+    {
+      "date": "2024-11-12T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100246.0
+    },
+    {
+      "date": "2024-11-12T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100247.0
+    },
+    {
+      "date": "2024-11-12T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100248.0
+    },
+    {
+      "date": "2024-11-15T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100249.0
+    },
+    {
+      "date": "2024-11-15T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100250.0
+    },
+    {
+      "date": "2024-11-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100251.0
+    },
+    {
+      "date": "2024-11-18T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100252.0
+    },
+    {
+      "date": "2024-11-18T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100253.0
+    },
+    {
+      "date": "2024-11-18T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100254.0
+    },
+    {
+      "date": "2024-11-19T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100255.0
+    },
+    {
+      "date": "2024-11-20T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100256.0
+    },
+    {
+      "date": "2024-11-25T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100257.0
+    },
+    {
+      "date": "2024-12-02T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100258.0
+    },
+    {
+      "date": "2024-12-06T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100259.0
+    },
+    {
+      "date": "2024-12-13T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100260.0
+    },
+    {
+      "date": "2024-12-16T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100261.0
+    },
+    {
+      "date": "2024-12-16T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100262.0
+    },
+    {
+      "date": "2024-12-16T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100263.0
+    },
+    {
+      "date": "2024-12-18T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100264.0
+    },
+    {
+      "date": "2024-12-20T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100265.0
+    },
+    {
+      "date": "2024-12-23T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100266.0
+    },
+    {
+      "date": "2024-12-23T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100267.0
+    },
+    {
+      "date": "2024-12-27T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100268.0
+    },
+    {
+      "date": "2024-12-30T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100269.0
+    },
+    {
+      "date": "2025-01-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100270.0
+    },
+    {
+      "date": "2025-01-16T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100271.0
+    },
+    {
+      "date": "2025-01-17T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100272.0
+    },
+    {
+      "date": "2025-01-21T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100273.0
+    },
+    {
+      "date": "2025-01-22T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100274.0
+    },
+    {
+      "date": "2025-01-23T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100275.0
+    },
+    {
+      "date": "2025-01-23T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100276.0
+    },
+    {
+      "date": "2025-01-27T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100277.0
+    },
+    {
+      "date": "2025-01-28T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100278.0
+    },
+    {
+      "date": "2025-01-29T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100279.0
+    },
+    {
+      "date": "2025-01-31T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100280.0
+    },
+    {
+      "date": "2025-01-31T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100281.0
+    },
+    {
+      "date": "2025-02-03T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100282.0
+    },
+    {
+      "date": "2025-02-06T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100283.0
+    },
+    {
+      "date": "2025-02-14T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100284.0
+    },
+    {
+      "date": "2025-02-14T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100285.0
+    },
+    {
+      "date": "2025-02-18T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100286.0
+    },
+    {
+      "date": "2025-02-18T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100287.0
+    },
+    {
+      "date": "2025-02-18T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100288.0
+    },
+    {
+      "date": "2025-02-24T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100289.0
+    },
+    {
+      "date": "2025-02-24T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100290.0
+    },
+    {
+      "date": "2025-02-25T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100291.0
+    },
+    {
+      "date": "2025-02-28T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100292.0
+    },
+    {
+      "date": "2025-03-17T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100293.0
+    },
+    {
+      "date": "2025-03-18T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100294.0
+    },
+    {
+      "date": "2025-03-18T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100295.0
+    },
+    {
+      "date": "2025-03-20T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100296.0
+    },
+    {
+      "date": "2025-03-20T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100297.0
+    },
+    {
+      "date": "2025-03-20T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100298.0
+    },
+    {
+      "date": "2025-03-21T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100299.0
+    },
+    {
+      "date": "2025-03-22T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100300.0
+    },
+    {
+      "date": "2025-03-23T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100301.0
+    },
+    {
+      "date": "2025-03-24T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100302.0
+    },
+    {
+      "date": "2025-03-27T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100303.0
+    },
+    {
+      "date": "2025-03-28T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100304.0
+    },
+    {
+      "date": "2025-03-31T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100305.0
+    },
+    {
+      "date": "2025-04-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100306.0
+    },
+    {
+      "date": "2025-04-16T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100307.0
+    },
+    {
+      "date": "2025-04-17T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100308.0
+    },
+    {
+      "date": "2025-04-21T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100309.0
+    },
+    {
+      "date": "2025-04-24T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100310.0
+    },
+    {
+      "date": "2025-04-25T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100311.0
+    },
+    {
+      "date": "2025-04-28T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100312.0
+    },
+    {
+      "date": "2025-04-28T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100313.0
+    },
+    {
+      "date": "2025-04-28T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100314.0
+    },
+    {
+      "date": "2025-04-29T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100315.0
+    },
+    {
+      "date": "2025-04-30T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100316.0
+    },
+    {
+      "date": "2025-05-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100317.0
+    },
+    {
+      "date": "2025-05-15T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100318.0
+    },
+    {
+      "date": "2025-05-19T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100319.0
+    },
+    {
+      "date": "2025-05-19T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100320.0
+    },
+    {
+      "date": "2025-05-21T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100321.0
+    },
+    {
+      "date": "2025-05-22T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100322.0
+    },
+    {
+      "date": "2025-05-23T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100323.0
+    },
+    {
+      "date": "2025-05-28T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100324.0
+    },
+    {
+      "date": "2025-05-29T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100325.0
+    },
+    {
+      "date": "2025-05-30T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100326.0
+    },
+    {
+      "date": "2025-05-30T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100327.0
+    },
+    {
+      "date": "2025-06-02T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100328.0
+    },
+    {
+      "date": "2025-06-02T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100329.0
+    },
+    {
+      "date": "2025-06-16T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100330.0
+    },
+    {
+      "date": "2025-06-16T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100331.0
+    },
+    {
+      "date": "2025-06-16T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100332.0
+    },
+    {
+      "date": "2025-06-20T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100333.0
+    },
+    {
+      "date": "2025-06-20T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100334.0
+    },
+    {
+      "date": "2025-06-20T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100335.0
+    },
+    {
+      "date": "2025-06-23T00:00:00",
+      "memberName": "Olutola Temitope",
+      "totalAmount": 100336.0
+    },
+    {
+      "date": "2025-06-26T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100337.0
+    },
+    {
+      "date": "2025-06-26T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100338.0
+    },
+    {
+      "date": "2025-06-30T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100339.0
+    },
+    {
+      "date": "2025-06-30T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "totalAmount": 100340.0
+    },
+    {
+      "date": "2025-06-30T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100341.0
+    },
+    {
+      "date": "2025-06-30T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "totalAmount": 100342.0
+    },
+    {
+      "date": "2025-07-14T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "totalAmount": 100343.0
+    },
+    {
+      "date": "2025-07-14T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "totalAmount": 100344.0
+    },
+    {
+      "date": "2025-07-15T00:00:00",
+      "memberName": "Sule Dimeji",
+      "totalAmount": 100345.0
+    },
+    {
+      "date": "2025-07-21T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "totalAmount": 100346.0
+    },
+    {
+      "date": "2025-07-21T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "totalAmount": 100347.0
+    },
+    {
+      "date": "2025-07-21T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "totalAmount": 100348.0
+    },
+    {
+      "date": "2025-07-25T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "totalAmount": 100349.0
+    },
+    {
+      "date": "2025-07-29T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "totalAmount": 100350.0
+    },
+    {
+      "date": "2025-07-31T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "totalAmount": 100351.0
+    }
+  ],
+  "expenseEntries": [
+    {
+      "date": "2023-05-31T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-07-03T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-08-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-09-05T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-10-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-11-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-11-30T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-12-12T00:00:00",
+      "memberName": null,
+      "totalAmount": 2023.0
+    },
+    {
+      "date": "2023-12-18T00:00:00",
+      "memberName": null,
+      "totalAmount": 2150.0
+    },
+    {
+      "date": "2024-01-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-02-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-02-13T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-02-26T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-04-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-04-12T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-05-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-06-03T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-06-11T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-06-28T00:00:00",
+      "memberName": null,
+      "totalAmount": 203.0
+    },
+    {
+      "date": "2024-07-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-08-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-08-16T00:00:00",
+      "memberName": null,
+      "totalAmount": 5000.0
+    },
+    {
+      "date": "2024-08-16T00:00:00",
+      "memberName": null,
+      "totalAmount": 5000.0
+    },
+    {
+      "date": "2024-08-16T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-08-16T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-08-26T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-19T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-19T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-19T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-20T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-20T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-26T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-09-27T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-10-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-10-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-10-07T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-10-08T00:00:00",
+      "memberName": null,
+      "totalAmount": 136941.57
+    },
+    {
+      "date": "2024-10-08T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-10-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-11-04T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-11-18T00:00:00",
+      "memberName": null,
+      "totalAmount": 2892.0
+    },
+    {
+      "date": "2024-11-19T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-11-20T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-11-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-11-18T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-12-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-12-17T00:00:00",
+      "memberName": null,
+      "totalAmount": 2892.0
+    },
+    {
+      "date": "2024-12-23T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-12-23T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2024-12-24T00:00:00",
+      "memberName": null,
+      "totalAmount": 2024.0
+    },
+    {
+      "date": "2025-01-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-01-16T00:00:00",
+      "memberName": null,
+      "totalAmount": 2892.0
+    },
+    {
+      "date": "2025-01-27T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-01-17T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-01-30T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-01-29T00:00:00",
+      "memberName": null,
+      "totalAmount": 7300.0
+    },
+    {
+      "date": "2025-02-03T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-02-24T00:00:00",
+      "memberName": null,
+      "totalAmount": 2892.0
+    },
+    {
+      "date": "2025-02-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-02-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-02-28T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-03T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-05T00:00:00",
+      "memberName": null,
+      "totalAmount": 2891.12
+    },
+    {
+      "date": "2025-03-18T00:00:00",
+      "memberName": null,
+      "totalAmount": 2892.0
+    },
+    {
+      "date": "2025-03-19T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-19T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-21T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-03-04T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": null,
+      "totalAmount": 2891.12
+    },
+    {
+      "date": "2025-04-04T00:00:00",
+      "memberName": null,
+      "totalAmount": 28.8
+    },
+    {
+      "date": "2025-04-14T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-04-18T00:00:00",
+      "memberName": null,
+      "totalAmount": 2892.0
+    },
+    {
+      "date": "2025-04-23T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-04-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-04-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-04-30T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": null,
+      "totalAmount": 2891.12
+    },
+    {
+      "date": "2025-05-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-05-13T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-05-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-05-27T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-05-27T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-06-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-06-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2891.12
+    },
+    {
+      "date": "2025-06-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-06-09T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-06-16T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-06-17T00:00:00",
+      "memberName": null,
+      "totalAmount": 2891.12
+    },
+    {
+      "date": "2025-06-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-06-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": null,
+      "totalAmount": 2891.12
+    },
+    {
+      "date": "2025-07-02T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-07-14T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-07-25T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    },
+    {
+      "date": "2025-07-28T00:00:00",
+      "memberName": null,
+      "totalAmount": 2025.0
+    }
+  ],
+  "shareTransactions": [
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6218.470641
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6244.74793
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 5661.193992
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 2500.0,
+      "shares": 30255.81497
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 2000.0,
+      "shares": 25098.35666
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 1500.0,
+      "shares": 19023.61534
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 1000.0,
+      "shares": 12551.80487
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6453.055172
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6301.921125
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6603.953775
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 7032.920606
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 7111.162336
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 7167.969335
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 5857.112933
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 1000.0,
+      "shares": 12288.73725
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6435.252062
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Ajala Oladapo",
+      "memberKey": "ajala oladapo",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 1000.0,
+      "shares": 14244.57892
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 1000.0,
+      "shares": 12436.94128
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 1000.0,
+      "shares": 12489.49586
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 2500.0,
+      "shares": 28305.96996
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 600.0,
+      "shares": 7609.446136
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6275.902434
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6811.881502
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 1000.0,
+      "shares": 12906.11034
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 1000.0,
+      "shares": 12603.84225
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 600.0,
+      "shares": 7924.744531
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 600.0,
+      "shares": 8439.504727
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 7111.162336
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 800.0,
+      "shares": 11468.75094
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 800.0,
+      "shares": 9371.380693
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6002.763843
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6144.368627
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 700.0,
+      "shares": 9009.352887
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Ajibola Temitope",
+      "memberKey": "ajibola temitope",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6218.470641
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6244.74793
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 5661.193992
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 1500.0,
+      "shares": 18153.48898
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6341.205113
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 10041.44389
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 780.0,
+      "shares": 10626.53514
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 10324.88828
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 8497.346563
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 10083.0738
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 850.0,
+      "shares": 11226.72142
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 850.0,
+      "shares": 11955.96503
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 11377.85974
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 11468.75094
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 9371.380693
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6002.763843
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 9830.989803
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 800.0,
+      "shares": 10296.4033
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Akindele Abiodun",
+      "memberKey": "akindele abiodun",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 1500.0,
+      "shares": 18655.41192
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 2500.0,
+      "shares": 31223.73965
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 1500.0,
+      "shares": 16983.58198
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 1000.0,
+      "shares": 13623.763
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 1000.0,
+      "shares": 12906.11034
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6603.953775
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 7032.920606
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 1000.0,
+      "shares": 11714.22587
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 1000.0,
+      "shares": 12288.73725
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6435.252062
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Dosumu Olurotimi",
+      "memberKey": "dosumu olurotimi",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 1600.0,
+      "shares": 19983.19337
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 5661.193992
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 1500.0,
+      "shares": 18153.48898
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 1100.0,
+      "shares": 13806.98535
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 1500.0,
+      "shares": 19359.16552
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 700.0,
+      "shares": 7435.178242
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 1000.0,
+      "shares": 12603.84225
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6603.953775
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 7032.920606
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 1000.0,
+      "shares": 14335.93867
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 700.0,
+      "shares": 8199.958106
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 600.0,
+      "shares": 7203.316612
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6144.368627
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Durojaiye Oluwafemi",
+      "memberKey": "durojaiye oluwafemi",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 1000.0,
+      "shares": 12436.94128
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6244.74793
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 5500.0,
+      "shares": 62273.13392
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 1000.0,
+      "shares": 12102.32599
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 1000.0,
+      "shares": 12551.80487
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6811.881502
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6453.055172
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6301.921125
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6603.953775
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 7032.920606
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 1000.0,
+      "shares": 14335.93867
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6002.763843
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 1000.0,
+      "shares": 12288.73725
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Ilori Olatunji",
+      "memberKey": "ilori olatunji",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6218.470641
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 1500.0,
+      "shares": 18734.24379
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 3000.0,
+      "shares": 33967.16395
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6341.205113
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6275.902434
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6811.881502
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6453.055172
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6301.921125
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 750.0,
+      "shares": 9905.930663
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 750.0,
+      "shares": 10549.38091
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 7111.162336
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 7167.969335
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 650.0,
+      "shares": 7614.246813
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 650.0,
+      "shares": 7803.592996
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 650.0,
+      "shares": 7987.679215
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6435.252062
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Makinde Oluremi",
+      "memberKey": "makinde oluremi",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6218.470641
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6244.74793
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 3000.0,
+      "shares": 33967.16395
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 700.0,
+      "shares": 8877.687158
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 10041.44389
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 10899.0104
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 10324.88828
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 8497.346563
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 10083.0738
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 10566.32604
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 11252.67297
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 11377.85974
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 800.0,
+      "shares": 11468.75094
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 700.0,
+      "shares": 8199.958106
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 700.0,
+      "shares": 8403.869381
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 700.0,
+      "shares": 8602.116078
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 700.0,
+      "shares": 9009.352887
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Momodu Jamiu",
+      "memberKey": "momodu jamiu",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 1000.0,
+      "shares": 13102.88909
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 1000.0,
+      "shares": 12489.49586
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 3000.0,
+      "shares": 36306.97796
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 1500.0,
+      "shares": 18823.7675
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 1500.0,
+      "shares": 19023.61534
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 1000.0,
+      "shares": 12551.80487
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 1000.0,
+      "shares": 13623.763
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6453.055172
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6301.921125
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 9245.535286
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 9846.088848
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 9955.627271
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 10035.15707
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 8199.958106
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 8403.869381
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 8602.116078
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 700.0,
+      "shares": 9009.352887
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Olomola Opeyemi",
+      "memberKey": "olomola opeyemi",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 525.0,
+      "shares": 6905.302722
+    },
+    {
+      "date": "2023-07-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 500.0,
+      "shares": 7045.186082
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 500.0,
+      "shares": 6457.56619
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 1000.0,
+      "shares": 12557.41989
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 600.0,
+      "shares": 7861.733453
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 600.0,
+      "shares": 8546.74735
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 1000.0,
+      "shares": 12436.94128
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 1500.0,
+      "shares": 18734.24379
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 2500.0,
+      "shares": 28305.96996
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 10039.34266
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 10145.92818
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 400.0,
+      "shares": 5020.721947
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 1200.0,
+      "shares": 16348.51561
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 11357.3771
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 1000.0,
+      "shares": 11683.85152
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 11091.38118
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 500.0,
+      "shares": 7264.349153
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 600.0,
+      "shares": 9283.455199
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 12515.64571
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 12615.62603
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 10308.51876
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 10564.86436
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 800.0,
+      "shares": 10814.08878
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Olutola Temitope",
+      "memberKey": "olutola temitope",
+      "contributions": 500.0,
+      "shares": 7230.595979
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-05-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 200.0,
+      "shares": 3897.432566
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6576.478782
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 1050.0,
+      "shares": 13560.889
+    },
+    {
+      "date": "2023-09-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6912.54939
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6278.709947
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6218.470641
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6244.74793
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 5661.193992
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6341.205113
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6275.902434
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6811.881502
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6453.055172
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 800.0,
+      "shares": 8497.346563
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6301.921125
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6603.953775
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 7032.920606
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 1000.0,
+      "shares": 14222.32467
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 2000.0,
+      "shares": 28671.87734
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 800.0,
+      "shares": 9371.380693
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 700.0,
+      "shares": 8403.869381
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 800.0,
+      "shares": 9830.989803
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 800.0,
+      "shares": 10296.4033
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Shoneye Olumuyiwa",
+      "memberKey": "shoneye olumuyiwa",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    },
+    {
+      "date": "2023-04-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 400.0,
+      "shares": 10000.0
+    },
+    {
+      "date": "2023-06-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 700.0,
+      "shares": 9207.070295
+    },
+    {
+      "date": "2023-08-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 1000.0,
+      "shares": 12915.13238
+    },
+    {
+      "date": "2023-10-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 2500.0,
+      "shares": 31393.54974
+    },
+    {
+      "date": "2023-11-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6551.444544
+    },
+    {
+      "date": "2023-12-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 7122.289458
+    },
+    {
+      "date": "2024-01-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 5500.0,
+      "shares": 68403.17705
+    },
+    {
+      "date": "2024-02-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6244.74793
+    },
+    {
+      "date": "2024-03-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 5661.193992
+    },
+    {
+      "date": "2024-04-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6051.162993
+    },
+    {
+      "date": "2024-05-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6274.589165
+    },
+    {
+      "date": "2024-06-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6341.205113
+    },
+    {
+      "date": "2024-07-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6275.902434
+    },
+    {
+      "date": "2024-08-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6811.881502
+    },
+    {
+      "date": "2024-09-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 2500.0,
+      "shares": 32265.27586
+    },
+    {
+      "date": "2024-10-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 5310.841602
+    },
+    {
+      "date": "2024-11-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 10083.0738
+    },
+    {
+      "date": "2024-12-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 10566.32604
+    },
+    {
+      "date": "2025-01-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 11252.67297
+    },
+    {
+      "date": "2025-02-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 11377.85974
+    },
+    {
+      "date": "2025-03-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 11468.75094
+    },
+    {
+      "date": "2025-04-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 9371.380693
+    },
+    {
+      "date": "2025-05-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 9604.422149
+    },
+    {
+      "date": "2025-06-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 9830.989803
+    },
+    {
+      "date": "2025-07-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 800.0,
+      "shares": 10296.4033
+    },
+    {
+      "date": "2025-08-01T00:00:00",
+      "memberName": "Sule Dimeji",
+      "memberKey": "sule dimeji",
+      "contributions": 500.0,
+      "shares": 6573.269072
+    }
+  ]
+}

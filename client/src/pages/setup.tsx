@@ -19,8 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState, useEffect } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/lib/queryClient";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 const CURRENCIES = [
@@ -86,6 +86,7 @@ interface AnnualProfitGoal {
 
 export default function SetupUpdated() {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   
   // Fetch data
   const { data: settings } = useQuery<Settings>({
@@ -150,13 +151,8 @@ export default function SetupUpdated() {
   // Update settings mutation
   const updateSettings = useMutation({
     mutationFn: async (data: any) => {
-      const response = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error("Failed to update settings");
-      return response.json();
+      const res = await apiRequest("PUT", "/api/settings", data);
+      return res.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/settings"] });
@@ -167,258 +163,385 @@ export default function SetupUpdated() {
     },
   });
 
-  // Profit goal mutations
+  // Profit goal mutations with optimistic updates
   const createProfitGoal = useMutation({
     mutationFn: async (data: any) => {
-      const response = await fetch("/api/profit-goals", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error("Failed to create profit goal");
-      return response.json();
+      const res = await apiRequest("POST", "/api/profit-goals", data);
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async (newGoal) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/profit-goals"] });
+      const previousGoals = queryClient.getQueryData(["/api/profit-goals"]);
+      
+      const tempId = `temp-${Date.now()}`;
+      queryClient.setQueryData(["/api/profit-goals"], (old: ProfitGoal[] = []) => [
+        ...old,
+        { id: tempId, ...newGoal }
+      ]);
+      
+      return { previousGoals, tempId };
+    },
+    onError: (err, newGoal, context) => {
+      queryClient.setQueryData(["/api/profit-goals"], context?.previousGoals);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.setQueryData(["/api/profit-goals"], (old: ProfitGoal[] = []) => 
+        old.map(item => item.id === context?.tempId ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/profit-goals"] });
       toast({ title: "Success", description: "Profit goal created successfully" });
       setGoalAmount("");
-    },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
   const updateProfitGoal = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: any }) => {
-      const response = await fetch(`/api/profit-goals/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error("Failed to update profit goal");
-      return response.json();
+      const res = await apiRequest("PUT", `/api/profit-goals/${id}`, data);
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/profit-goals"] });
+      const previousGoals = queryClient.getQueryData(["/api/profit-goals"]);
+      
+      queryClient.setQueryData(["/api/profit-goals"], (old: ProfitGoal[] = []) => 
+        old.map(item => item.id === id ? { ...item, ...data } : item)
+      );
+      
+      return { previousGoals };
+    },
+    onError: (err, variables, context) => {
+      queryClient.setQueryData(["/api/profit-goals"], context?.previousGoals);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/profit-goals"], (old: ProfitGoal[] = []) => 
+        old.map(item => item.id === data.id ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/profit-goals"] });
       toast({ title: "Success", description: "Profit goal updated successfully" });
-    },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
   const deleteProfitGoal = useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/profit-goals/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete profit goal");
-      return response.json();
+      await apiRequest("DELETE", `/api/profit-goals/${id}`);
+      return { id };
+    },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/profit-goals"] });
+      const previousGoals = queryClient.getQueryData(["/api/profit-goals"]);
+      
+      queryClient.setQueryData(["/api/profit-goals"], (old: ProfitGoal[] = []) => 
+        old.filter(item => item.id !== id)
+      );
+      
+      return { previousGoals };
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData(["/api/profit-goals"], context?.previousGoals);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/profit-goals"] });
       toast({ title: "Success", description: "Profit goal deleted successfully" });
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
-  // Payment method mutations
+  // Payment method mutations with optimistic updates
   const createPaymentMethod = useMutation({
     mutationFn: async (name: string) => {
-      const response = await fetch("/api/payment-methods", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error("Failed to create payment method");
-      return response.json();
+      const res = await apiRequest("POST", "/api/payment-methods", { name });
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async (newPaymentMethodName) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/payment-methods"] });
+      const previousPaymentMethods = queryClient.getQueryData(["/api/payment-methods"]);
+      
+      const tempId = `temp-${Date.now()}`;
+      queryClient.setQueryData(["/api/payment-methods"], (old: PaymentMethod[] = []) => [
+        ...old,
+        { id: tempId, name: newPaymentMethodName }
+      ]);
+      
+      return { previousPaymentMethods, tempId };
+    },
+    onError: (err, newPaymentMethodName, context) => {
+      queryClient.setQueryData(["/api/payment-methods"], context?.previousPaymentMethods);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.setQueryData(["/api/payment-methods"], (old: PaymentMethod[] = []) => 
+        old.map(item => item.id === context?.tempId ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/payment-methods"] });
       toast({ title: "Success", description: "Payment method created successfully" });
       setNewPaymentMethod("");
-    },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
   const updatePaymentMethod = useMutation({
     mutationFn: async ({ id, name }: { id: string; name: string }) => {
-      const response = await fetch(`/api/payment-methods/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error("Failed to update payment method");
-      return response.json();
+      const res = await apiRequest("PUT", `/api/payment-methods/${id}`, { name });
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async ({ id, name }) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/payment-methods"] });
+      const previousPaymentMethods = queryClient.getQueryData(["/api/payment-methods"]);
+      
+      queryClient.setQueryData(["/api/payment-methods"], (old: PaymentMethod[] = []) => 
+        old.map(item => item.id === id ? { ...item, name } : item)
+      );
+      
+      return { previousPaymentMethods };
+    },
+    onError: (err, variables, context) => {
+      queryClient.setQueryData(["/api/payment-methods"], context?.previousPaymentMethods);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/payment-methods"], (old: PaymentMethod[] = []) => 
+        old.map(item => item.id === data.id ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/payment-methods"] });
       toast({ title: "Success", description: "Payment method updated successfully" });
       setEditingPaymentMethod(null);
       setEditPaymentMethodName("");
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
   const deletePaymentMethod = useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/payment-methods/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete payment method");
-      return response.json();
+      await apiRequest("DELETE", `/api/payment-methods/${id}`);
+      return { id };
+    },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/payment-methods"] });
+      const previousPaymentMethods = queryClient.getQueryData(["/api/payment-methods"]);
+      
+      queryClient.setQueryData(["/api/payment-methods"], (old: PaymentMethod[] = []) => 
+        old.filter(item => item.id !== id)
+      );
+      
+      return { previousPaymentMethods };
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData(["/api/payment-methods"], context?.previousPaymentMethods);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/payment-methods"] });
       toast({ title: "Success", description: "Payment method deleted successfully" });
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
-  // Income category mutations
+  // Income category mutations with optimistic updates
   const createIncomeCategory = useMutation({
     mutationFn: async (name: string) => {
-      const response = await fetch("/api/income-categories", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error("Failed to create income category");
-      return response.json();
+      const res = await apiRequest("POST", "/api/income-categories", { name });
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async (newCategoryName) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/income-categories"] });
+      const previousCategories = queryClient.getQueryData(["/api/income-categories"]);
+      
+      const tempId = `temp-${Date.now()}`;
+      queryClient.setQueryData(["/api/income-categories"], (old: Category[] = []) => [
+        ...old,
+        { id: tempId, name: newCategoryName }
+      ]);
+      
+      return { previousCategories, tempId };
+    },
+    onError: (err, newCategoryName, context) => {
+      queryClient.setQueryData(["/api/income-categories"], context?.previousCategories);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.setQueryData(["/api/income-categories"], (old: Category[] = []) => 
+        old.map(item => item.id === context?.tempId ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/income-categories"] });
       toast({ title: "Success", description: "Income category created successfully" });
       setNewIncomeCategory("");
-    },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
   const updateIncomeCategory = useMutation({
     mutationFn: async ({ id, name }: { id: string; name: string }) => {
-      const response = await fetch(`/api/income-categories/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error("Failed to update income category");
-      return response.json();
+      const res = await apiRequest("PUT", `/api/income-categories/${id}`, { name });
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async ({ id, name }) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/income-categories"] });
+      const previousCategories = queryClient.getQueryData(["/api/income-categories"]);
+      
+      queryClient.setQueryData(["/api/income-categories"], (old: Category[] = []) => 
+        old.map(item => item.id === id ? { ...item, name } : item)
+      );
+      
+      return { previousCategories };
+    },
+    onError: (err, variables, context) => {
+      queryClient.setQueryData(["/api/income-categories"], context?.previousCategories);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/income-categories"], (old: Category[] = []) => 
+        old.map(item => item.id === data.id ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/income-categories"] });
       toast({ title: "Success", description: "Income category updated successfully" });
       setEditingIncomeCategory(null);
       setEditIncomeCategoryName("");
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
   const deleteIncomeCategory = useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/income-categories/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete income category");
-      return response.json();
+      await apiRequest("DELETE", `/api/income-categories/${id}`);
+      return { id };
+    },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/income-categories"] });
+      const previousCategories = queryClient.getQueryData(["/api/income-categories"]);
+      
+      queryClient.setQueryData(["/api/income-categories"], (old: Category[] = []) => 
+        old.filter(item => item.id !== id)
+      );
+      
+      return { previousCategories };
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData(["/api/income-categories"], context?.previousCategories);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/income-categories"] });
       toast({ title: "Success", description: "Income category deleted successfully" });
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
-  // Expense category mutations
+  // Expense category mutations with optimistic updates
   const createExpenseCategory = useMutation({
     mutationFn: async (name: string) => {
-      const response = await fetch("/api/expense-categories", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error("Failed to create expense category");
-      return response.json();
+      const res = await apiRequest("POST", "/api/expense-categories", { name });
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async (newCategoryName) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/expense-categories"] });
+      const previousCategories = queryClient.getQueryData(["/api/expense-categories"]);
+      
+      const tempId = `temp-${Date.now()}`;
+      queryClient.setQueryData(["/api/expense-categories"], (old: Category[] = []) => [
+        ...old,
+        { id: tempId, name: newCategoryName }
+      ]);
+      
+      return { previousCategories, tempId };
+    },
+    onError: (err, newCategoryName, context) => {
+      queryClient.setQueryData(["/api/expense-categories"], context?.previousCategories);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data, variables, context) => {
+      queryClient.setQueryData(["/api/expense-categories"], (old: Category[] = []) => 
+        old.map(item => item.id === context?.tempId ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/expense-categories"] });
       toast({ title: "Success", description: "Expense category created successfully" });
       setNewExpenseCategory("");
-    },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
   const updateExpenseCategory = useMutation({
     mutationFn: async ({ id, name }: { id: string; name: string }) => {
-      const response = await fetch(`/api/expense-categories/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name }),
-      });
-      if (!response.ok) throw new Error("Failed to update expense category");
-      return response.json();
+      const res = await apiRequest("PUT", `/api/expense-categories/${id}`, { name });
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async ({ id, name }) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/expense-categories"] });
+      const previousCategories = queryClient.getQueryData(["/api/expense-categories"]);
+      
+      queryClient.setQueryData(["/api/expense-categories"], (old: Category[] = []) => 
+        old.map(item => item.id === id ? { ...item, name } : item)
+      );
+      
+      return { previousCategories };
+    },
+    onError: (err, variables, context) => {
+      queryClient.setQueryData(["/api/expense-categories"], context?.previousCategories);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/expense-categories"], (old: Category[] = []) => 
+        old.map(item => item.id === data.id ? data : item)
+      );
       queryClient.invalidateQueries({ queryKey: ["/api/expense-categories"] });
       toast({ title: "Success", description: "Expense category updated successfully" });
       setEditingExpenseCategory(null);
       setEditExpenseCategoryName("");
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
   const deleteExpenseCategory = useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/expense-categories/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete expense category");
-      return response.json();
+      await apiRequest("DELETE", `/api/expense-categories/${id}`);
+      return { id };
+    },
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/expense-categories"] });
+      const previousCategories = queryClient.getQueryData(["/api/expense-categories"]);
+      
+      queryClient.setQueryData(["/api/expense-categories"], (old: Category[] = []) => 
+        old.filter(item => item.id !== id)
+      );
+      
+      return { previousCategories };
+    },
+    onError: (err, id, context) => {
+      queryClient.setQueryData(["/api/expense-categories"], context?.previousCategories);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/expense-categories"] });
       toast({ title: "Success", description: "Expense category deleted successfully" });
     },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
-    },
   });
 
-  // Annual goal mutation
+  // Annual goal mutation with optimistic updates
   const createOrUpdateAnnualGoal = useMutation({
     mutationFn: async (amount: number) => {
-      const response = await fetch("/api/annual-profit-goal", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ goalAmount: amount, currency, year: fiscalYear }),
+      const res = await apiRequest("POST", "/api/annual-profit-goal", {
+        goalAmount: amount,
+        currency,
+        year: fiscalYear,
       });
-      if (!response.ok) throw new Error("Failed to create annual goal");
-      return response.json();
+      return res.json();
     },
-    onSuccess: () => {
+    onMutate: async (amount) => {
+      await queryClient.cancelQueries({ queryKey: ["/api/annual-profit-goal"] });
+      const previousGoal = queryClient.getQueryData(["/api/annual-profit-goal"]);
+      
+      const tempId = `temp-${Date.now()}`;
+      queryClient.setQueryData(["/api/annual-profit-goal"], { 
+        id: tempId, 
+        goalAmount: amount, 
+        currency, 
+        year: fiscalYear 
+      });
+      
+      return { previousGoal, tempId };
+    },
+    onError: (err, amount, context) => {
+      queryClient.setQueryData(["/api/annual-profit-goal"], context?.previousGoal);
+      toast({ title: "Error", description: err.message, variant: "destructive" });
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData(["/api/annual-profit-goal"], data);
       queryClient.invalidateQueries({ queryKey: ["/api/annual-profit-goal"] });
       toast({ title: "Success", description: "Annual profit goal set successfully" });
       setAnnualGoalAmount("");
-    },
-    onError: (error: Error) => {
-      toast({ title: "Error", description: error.message, variant: "destructive" });
     },
   });
 
@@ -446,10 +569,28 @@ export default function SetupUpdated() {
   };
 
   const handleEditProfitGoal = (goal: ProfitGoal) => {
-    setGoalMonth(goal.month);
-    setGoalYear(goal.year);
-    setGoalAmount(goal.goalAmount.toString());
-    deleteProfitGoal.mutate(goal.id);
+    // Store the goal being edited
+    const goalToEdit = goal;
+    // Delete the old goal first
+    deleteProfitGoal.mutate(goal.id, {
+      onSuccess: () => {
+        // After successful deletion, populate the form with the goal's data
+        setGoalMonth(goalToEdit.month);
+        setGoalYear(goalToEdit.year);
+        setGoalAmount(goalToEdit.goalAmount.toString());
+        toast({ 
+          title: "Goal loaded for editing", 
+          description: "The goal has been loaded into the form. Update the values and click 'Add Goal' to save changes." 
+        });
+      },
+      onError: (error) => {
+        toast({ 
+          title: "Error", 
+          description: "Failed to load goal for editing", 
+          variant: "destructive" 
+        });
+      }
+    });
   };
 
   const handleAddPaymentMethod = () => {
@@ -515,17 +656,17 @@ export default function SetupUpdated() {
   };
 
   // Calculate total annual goal from monthly goals
-  const totalAnnualGoal = profitGoals?.reduce((total: number, goal: ProfitGoal) => {
+  const totalAnnualGoal = (profitGoals || []).reduce((total: number, goal: ProfitGoal) => {
     if (goal.year === fiscalYear) {
       return total + goal.goalAmount;
     }
     return total;
-  }, 0) || 0;
+  }, 0);
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-semibold mb-2">Setup</h1>
+        <h1 className="text-3xl font-semibold mb-2 bg-gradient-to-r from-primary via-chart-2 to-chart-4 bg-clip-text text-transparent">Setup</h1>
         <p className="text-muted-foreground">Configure financial categories, payment methods, and system settings</p>
       </div>
 
@@ -627,7 +768,7 @@ export default function SetupUpdated() {
                   Current Annual Goal: {annualProfitGoal.currency} ${annualProfitGoal.goalAmount.toLocaleString()} for {annualProfitGoal.year}
                 </p>
               </div>
-            )}
+            ) || null}
           </CardContent>
         </Card>
 
@@ -638,7 +779,7 @@ export default function SetupUpdated() {
             <CardDescription>Set profit targets for each month</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="goal-month" className="text-xs uppercase tracking-wide">Month</Label>
                 <Select value={goalMonth.toString()} onValueChange={(v) => setGoalMonth(parseInt(v))}>
@@ -669,27 +810,37 @@ export default function SetupUpdated() {
                   </SelectContent>
                 </Select>
               </div>
-              <div>
-                <Label htmlFor="goal-amount" className="text-xs uppercase tracking-wide">Goal Amount</Label>
-                <Input
-                  id="goal-amount"
-                  type="number"
-                  placeholder="Enter amount"
-                  value={goalAmount}
-                  onChange={(e) => setGoalAmount(e.target.value)}
-                  className="mt-2"
-                  data-testid="input-goal-amount"
-                />
-              </div>
-              <div className="flex items-end">
-                <Button onClick={handleAddProfitGoal} disabled={createProfitGoal.isPending} data-testid="button-add-goal">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Goal
+              <div className="flex items-end gap-2">
+                <div className="flex-1">
+                  <Label
+                    htmlFor="goal-amount"
+                    className="text-xs uppercase tracking-wide whitespace-nowrap"
+                  >
+                    Goal Amount
+                  </Label>
+                  <Input
+                    id="goal-amount"
+                    type="number"
+                    placeholder="Enter amount"
+                    value={goalAmount}
+                    onChange={(e) => setGoalAmount(e.target.value)}
+                    className="mt-2"
+                    data-testid="input-goal-amount"
+                  />
+                </div>
+                <Button
+                  onClick={handleAddProfitGoal}
+                  disabled={createProfitGoal.isPending}
+                  className="mt-6"
+                  data-testid="button-add-goal"
+                  aria-label="Add Goal"
+                >
+                  <Plus className="h-4 w-4" />
                 </Button>
               </div>
             </div>
 
-            {profitGoals && profitGoals.length > 0 && (
+            {profitGoals && profitGoals.length > 0 ? (
               <div className="border border-border rounded-md mt-4">
                 <Table>
                   <TableHeader>
@@ -714,6 +865,7 @@ export default function SetupUpdated() {
                               variant="outline"
                               size="sm"
                               onClick={() => handleEditProfitGoal(goal)}
+                              disabled={deleteProfitGoal.isPending}
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
@@ -732,7 +884,7 @@ export default function SetupUpdated() {
                   </TableBody>
                 </Table>
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
 
@@ -759,7 +911,7 @@ export default function SetupUpdated() {
               </Button>
             </div>
 
-            {paymentMethods && paymentMethods.length > 0 && (
+            {paymentMethods && paymentMethods.length > 0 ? (
               <div className="border border-border rounded-md">
                 <Table>
                   <TableHeader>
@@ -808,6 +960,7 @@ export default function SetupUpdated() {
                                   variant="outline"
                                   size="sm"
                                   onClick={() => startEditPaymentMethod(method)}
+                                  disabled={editingPaymentMethod !== null}
                                 >
                                   <Edit className="h-4 w-4" />
                                 </Button>
@@ -828,7 +981,7 @@ export default function SetupUpdated() {
                   </TableBody>
                 </Table>
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
 
@@ -851,7 +1004,7 @@ export default function SetupUpdated() {
               </Button>
             </div>
 
-            {incomeCategories && incomeCategories.length > 0 && (
+            {incomeCategories && incomeCategories.length > 0 ? (
               <div className="border border-border rounded-md">
                 <Table>
                   <TableHeader>
@@ -900,6 +1053,7 @@ export default function SetupUpdated() {
                                   variant="outline"
                                   size="sm"
                                   onClick={() => startEditIncomeCategory(category)}
+                                  disabled={editingIncomeCategory !== null}
                                 >
                                   <Edit className="h-4 w-4" />
                                 </Button>
@@ -920,7 +1074,7 @@ export default function SetupUpdated() {
                   </TableBody>
                 </Table>
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
 
@@ -943,7 +1097,7 @@ export default function SetupUpdated() {
               </Button>
             </div>
 
-            {expenseCategories && expenseCategories.length > 0 && (
+            {expenseCategories && expenseCategories.length > 0 ? (
               <div className="border border-border rounded-md">
                 <Table>
                   <TableHeader>
@@ -992,6 +1146,7 @@ export default function SetupUpdated() {
                                   variant="outline"
                                   size="sm"
                                   onClick={() => startEditExpenseCategory(category)}
+                                  disabled={editingExpenseCategory !== null}
                                 >
                                   <Edit className="h-4 w-4" />
                                 </Button>
@@ -1012,7 +1167,7 @@ export default function SetupUpdated() {
                   </TableBody>
                 </Table>
               </div>
-            )}
+            ) : null}
           </CardContent>
         </Card>
       </div>
