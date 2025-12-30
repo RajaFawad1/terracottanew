@@ -49,7 +49,7 @@ const financialItems = [
 
 const managementItems = [
   { title: "Setup", url: "/setup", icon: Settings, adminOnly: true },
-  { title: "User Management", url: "/users", icon: Users, adminOnly: true, hasSubMenu: true },
+  { title: "User Management", icon: Users, adminOnly: true, hasSubMenu: true },
   { title: "Audit Trail", url: "/audit", icon: FileSearch, adminOnly: true },
 ];
 

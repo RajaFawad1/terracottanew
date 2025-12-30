@@ -81,11 +81,16 @@ export default function AddMember() {
     // Filter by date if month and year are selected
     if (selectedMonth && selectedYear) {
       if (member.joinDate) {
-        const joinDate = new Date(member.joinDate);
-        const joinMonth = joinDate.getMonth() + 1;
-        const joinYear = joinDate.getFullYear();
-        if (joinMonth !== selectedMonth || joinYear !== selectedYear) {
-          return false;
+        try {
+          const joinDate = new Date(member.joinDate);
+          const joinMonth = joinDate.getMonth() + 1;
+          const joinYear = joinDate.getFullYear();
+          if (joinMonth !== selectedMonth || joinYear !== selectedYear) {
+            return false;
+          }
+        } catch (error) {
+          // Handle invalid dates gracefully
+          console.warn(`Invalid date for member ${member.id}:`, member.joinDate);
         }
       }
     }
@@ -265,6 +270,16 @@ export default function AddMember() {
     }
   };
 
+  // Handle month selection change
+  const handleMonthChange = (value: string) => {
+    setSelectedMonth(value === "all" ? null : parseInt(value, 10));
+  };
+
+  // Handle year selection change
+  const handleYearChange = (value: string) => {
+    setSelectedYear(value === "all" ? null : parseInt(value, 10));
+  };
+
   if (!isAdmin) {
     return (
       <div className="space-y-6">
@@ -300,7 +315,7 @@ export default function AddMember() {
               <Label htmlFor="filter-month" className="text-xs uppercase tracking-wide">Month</Label>
               <Select
                 value={selectedMonth?.toString() || "all"}
-                onValueChange={(v) => setSelectedMonth(v === "all" ? null : parseInt(v))}
+                onValueChange={handleMonthChange}
               >
                 <SelectTrigger id="filter-month" className="mt-2">
                   <SelectValue placeholder="All months" />
@@ -319,7 +334,7 @@ export default function AddMember() {
               <Label htmlFor="filter-year" className="text-xs uppercase tracking-wide">Year</Label>
               <Select
                 value={selectedYear?.toString() || "all"}
-                onValueChange={(v) => setSelectedYear(v === "all" ? null : parseInt(v))}
+                onValueChange={handleYearChange}
               >
                 <SelectTrigger id="filter-year" className="mt-2">
                   <SelectValue placeholder="All years" />
@@ -384,7 +399,9 @@ export default function AddMember() {
               </TableRow>
             ) : (
               filteredMembers.map((member: any, index: number) => {
-                const joinDate = member.joinDate ? new Date(member.joinDate).toLocaleDateString() : "N/A";
+                const joinDate = member.joinDate 
+                  ? new Date(member.joinDate).toLocaleDateString() 
+                  : "N/A";
                 
                 return (
                   <TableRow key={member.id} className={index % 2 === 0 ? "bg-muted/30" : ""}>
@@ -592,4 +609,3 @@ export default function AddMember() {
     </div>
   );
 }
-
