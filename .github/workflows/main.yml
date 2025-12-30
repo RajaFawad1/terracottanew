@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          cd /var/www/terracotta-new
+          cd /var/www/terracottanew
           git pull origin main
           npm ci --only=production
           npm run build
