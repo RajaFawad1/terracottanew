@@ -64,7 +64,7 @@ const settingsItems = [
 
 export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "member" }) {
   const [location] = useLocation();
-  const { user, member } = useAuth();
+  const { user, member, isAdmin } = useAuth();
   const logout = useLogout();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -335,7 +335,7 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                 )}
               >
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={member?.photoUrl || ""} />
+                  <AvatarImage src={member?.photoUrl || undefined} alt={displayName} />
                   <AvatarFallback className="text-xs bg-primary text-primary-foreground">{initials || "U"}</AvatarFallback>
                 </Avatar>
                 {(isOpen || isHovered) && (
@@ -349,15 +349,19 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                <span>Profile</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive" onClick={() => logout.mutate()}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
+              {!isAdmin && (
+                <>
+                  <DropdownMenuItem>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-destructive" onClick={() => logout.mutate()}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

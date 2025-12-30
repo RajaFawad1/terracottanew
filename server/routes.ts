@@ -245,6 +245,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.post("/api/profile/photo", isAuthenticated, async (req, res) => {
+    try {
+      const { photoUrl } = req.body;
+      
+      if (!photoUrl || typeof photoUrl !== "string") {
+        return res.status(400).json({ message: "Photo data is required" });
+      }
+
+      // Validate that it's a base64 data URL
+      if (!photoUrl.startsWith("data:image/")) {
+        return res.status(400).json({ message: "Invalid image format" });
+      }
+
+      const member = await storage.getMemberByUserId(req.user!.id);
+      if (!member) {
+        return res.status(404).json({ message: "Member not found" });
+      }
+
+      const updatedMember = await storage.updateMember(member.id, { photoUrl });
+
+      try {
+        await storage.createAuditEvent({
+          userId: req.user!.id,
+          action: "Update",
+          entity: "Profile",
+          entityId: member.id,
+          details: "Updated profile photo",
+        });
+      } catch (auditError) {
+        console.error("Audit log error:", auditError);
+        // Don't fail the request if audit logging fails
+      }
+
+      res.json(updatedMember);
+    } catch (error) {
+      console.error("Photo upload error:", error);
+      res.status(500).json({ 
+        message: "Failed to upload photo",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
+
 app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
   try {
     const validation = changePasswordSchema.safeParse(req.body);

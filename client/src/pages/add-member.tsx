@@ -79,20 +79,27 @@ export default function AddMember() {
   // Filter members
   const filteredMembers = members.filter((member: any) => {
     // Filter by date if month and year are selected
-    if (selectedMonth && selectedYear) {
+    if (selectedMonth !== null && selectedMonth !== undefined && selectedYear !== null && selectedYear !== undefined) {
       if (member.joinDate) {
         try {
           const joinDate = new Date(member.joinDate);
-          const joinMonth = joinDate.getMonth() + 1;
-          const joinYear = joinDate.getFullYear();
-          if (joinMonth !== selectedMonth || joinYear !== selectedYear) {
-            return false;
+          if (isNaN(joinDate.getTime())) {
+            // Invalid date, skip date filtering for this member
+            // Continue to search term filtering
+          } else {
+            const joinMonth = joinDate.getMonth() + 1;
+            const joinYear = joinDate.getFullYear();
+            if (joinMonth !== selectedMonth || joinYear !== selectedYear) {
+              return false;
+            }
           }
         } catch (error) {
           // Handle invalid dates gracefully
           console.warn(`Invalid date for member ${member.id}:`, member.joinDate);
+          // Continue to search term filtering
         }
       }
+      // If no joinDate but date filters are active, continue to search term filtering
     }
 
     // Filter by search term
@@ -272,12 +279,32 @@ export default function AddMember() {
 
   // Handle month selection change
   const handleMonthChange = (value: string) => {
-    setSelectedMonth(value === "all" ? null : parseInt(value, 10));
+    try {
+      setSelectedMonth(value === "all" ? null : parseInt(value, 10));
+    } catch (error) {
+      console.error("Error handling month change:", error);
+      setSelectedMonth(null);
+    }
   };
 
   // Handle year selection change
   const handleYearChange = (value: string) => {
-    setSelectedYear(value === "all" ? null : parseInt(value, 10));
+    try {
+      if (value === "all" || !value) {
+        setSelectedYear(null);
+      } else {
+        const parsedYear = parseInt(value, 10);
+        if (!isNaN(parsedYear) && parsedYear >= 1960 && parsedYear <= 2100) {
+          setSelectedYear(parsedYear);
+        } else {
+          console.warn(`Invalid year value: ${value}`);
+          setSelectedYear(null);
+        }
+      }
+    } catch (error) {
+      console.error("Error handling year change:", error);
+      setSelectedYear(null);
+    }
   };
 
   if (!isAdmin) {
@@ -333,13 +360,13 @@ export default function AddMember() {
             <div>
               <Label htmlFor="filter-year" className="text-xs uppercase tracking-wide">Year</Label>
               <Select
-                value={selectedYear?.toString() || "all"}
+                value={selectedYear !== null && selectedYear !== undefined ? selectedYear.toString() : "all"}
                 onValueChange={handleYearChange}
               >
                 <SelectTrigger id="filter-year" className="mt-2">
                   <SelectValue placeholder="All years" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="max-h-[300px]">
                   <SelectItem value="all">All years</SelectItem>
                   {YEARS.map((year) => (
                     <SelectItem key={year} value={year.toString()}>

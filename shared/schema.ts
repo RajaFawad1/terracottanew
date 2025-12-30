@@ -47,6 +47,7 @@ export const members = pgTable("members", {
   lastName: text("last_name").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
+  photoUrl: text("photo_url"),
   contributions: numeric("contributions", { precision: 14, scale: 2 }).notNull().default("0"),
   shares: numeric("shares", { precision: 14, scale: 2 }).notNull().default("0"),
   joinDate: timestamp("join_date").notNull().defaultNow(),

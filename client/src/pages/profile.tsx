@@ -66,6 +66,8 @@ export default function Profile() {
   useEffect(() => {
     if (member?.photoUrl) {
       setPhotoPreview(member.photoUrl);
+    } else {
+      setPhotoPreview(null);
     }
   }, [member?.photoUrl]);
 
@@ -200,35 +202,71 @@ export default function Profile() {
                   onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
-                    
-                    // Set preview immediately
-                    const previewUrl = URL.createObjectURL(file);
-                    setPhotoPreview(previewUrl);
-                    
-                    const formData = new FormData();
-                    formData.append("photo", file);
-                    
-                    try {
-                      const res = await apiRequest("POST", "/api/profile/photo", formData);
-                      if (res.ok) {
-                        toast({ title: "Photo uploaded successfully" });
-                        // Invalidate and refetch user data to get updated photoUrl
-                        await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
-                        await queryClient.refetchQueries({ queryKey: ["/api/auth/user"] });
-                      } else {
-                        // Clear preview on error
-                        setPhotoPreview(null);
-                        throw new Error("Upload failed");
-                      }
-                    } catch (error: any) {
-                      // Clear preview on error
-                      setPhotoPreview(null);
+
+                    // Validate file size (max 5MB)
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+                    if (file.size > maxSize) {
                       toast({
-                        title: "Failed to upload photo",
-                        description: error.message || "Please try again",
+                        title: "File too large",
+                        description: "Please select an image smaller than 5MB",
                         variant: "destructive",
                       });
+                      return;
                     }
+
+                    // Validate file type
+                    if (!file.type.startsWith("image/")) {
+                      toast({
+                        title: "Invalid file type",
+                        description: "Please select an image file",
+                        variant: "destructive",
+                      });
+                      return;
+                    }
+                    
+                    // Convert to base64
+                    const reader = new FileReader();
+                    reader.onload = async (event) => {
+                      const base64String = event.target?.result as string;
+                      if (!base64String) return;
+
+                      // Set preview immediately
+                      setPhotoPreview(base64String);
+                      
+                      try {
+                        const res = await apiRequest("POST", "/api/profile/photo", {
+                          photoUrl: base64String,
+                        });
+                        
+                        if (res.ok) {
+                          toast({ title: "Photo uploaded successfully" });
+                          // Invalidate and refetch user data to get updated photoUrl
+                          await queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
+                          await queryClient.refetchQueries({ queryKey: ["/api/auth/user"] });
+                        } else {
+                          const errorData = await res.json().catch(() => ({ message: "Upload failed" }));
+                          throw new Error(errorData.message || "Upload failed");
+                        }
+                      } catch (error: any) {
+                        // Clear preview on error
+                        setPhotoPreview(member?.photoUrl || null);
+                        toast({
+                          title: "Failed to upload photo",
+                          description: error.message || "Please try again",
+                          variant: "destructive",
+                        });
+                      }
+                    };
+
+                    reader.onerror = () => {
+                      toast({
+                        title: "Failed to read file",
+                        description: "Please try again",
+                        variant: "destructive",
+                      });
+                    };
+
+                    reader.readAsDataURL(file);
                   }}
                 />
                 <Button 
