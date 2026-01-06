@@ -8,6 +8,8 @@ import { Strategy as LocalStrategy } from "passport-local";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 import { z } from "zod";
+import multer from "multer";
+import * as XLSX from "xlsx";
 
 const pgStore = connectPg(session);
 
@@ -51,21 +53,41 @@ const systemSettingsSchema = z.object({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Configure multer for file uploads
+  const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
+  });
+
   // Session configuration
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
 
-  // Neon-compatible session store
+  // Neon-compatible session store with better error handling
   const sessionStore = new pgStore({
     conObject: {
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },
       max: 5,
-      connectionTimeoutMillis: 15000,
+      connectionTimeoutMillis: 10000, // Reduced to 10 seconds
       idleTimeoutMillis: 30000,
+      statement_timeout: 5000, // 5 second statement timeout
     },
     createTableIfMissing: true,
     ttl: sessionTtl,
     tableName: "sessions",
+    errorLog: (err: Error) => {
+      // Only log errors, don't throw - allows server to continue
+      console.error("Session store error (non-fatal):", err.message);
+    },
+  });
+
+  // Try to initialize session store asynchronously, but don't block
+  sessionStore.on("connect", () => {
+    console.log("Session store connected successfully");
+  });
+
+  sessionStore.on("error", (err: Error) => {
+    console.error("Session store error (non-fatal):", err.message);
   });
 
   app.set("trust proxy", 1);
@@ -1006,6 +1028,194 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
     }
   });
 
+  // Upload Income Entries from Excel
+  app.post("/api/income-entries/upload", isAdmin, upload.single("file"), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      // Parse Excel file
+      const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+      if (jsonData.length < 2) {
+        return res.status(400).json({ message: "Excel file must have at least a header row and one data row" });
+      }
+
+      // Validate headers
+      const headers = jsonData[0] as string[];
+      const requiredHeaders = ["Date", "First Name", "Last Name", "Payment Method", "Total Amount"];
+      const headerMap: { [key: string]: number } = {};
+      
+      // Normalize and map headers
+      headers.forEach((header, index) => {
+        if (header !== null && header !== undefined && header !== '') {
+          // Normalize header: trim, lowercase, replace multiple spaces with single space
+          const headerStr = String(header).trim();
+          const headerLower = headerStr.toLowerCase().replace(/\s+/g, ' ');
+          if (headerLower) {
+            headerMap[headerLower] = index;
+          }
+        }
+      });
+
+      // Check for required headers (normalized)
+      const missingHeaders: string[] = [];
+      const normalizedRequiredHeaders = requiredHeaders.map(h => h.toLowerCase().replace(/\s+/g, ' '));
+      
+      for (let i = 0; i < normalizedRequiredHeaders.length; i++) {
+        const reqHeader = normalizedRequiredHeaders[i];
+        if (!(reqHeader in headerMap)) {
+          // Find the original case version for error message
+          missingHeaders.push(requiredHeaders[i]);
+        }
+      }
+
+      if (missingHeaders.length > 0) {
+        const foundHeaders = headers.filter(h => h && h.toString().trim()).map(h => h.toString().trim());
+        return res.status(400).json({ 
+          message: `Missing required columns: ${missingHeaders.join(", ")}. Found columns in your file: ${foundHeaders.join(", ")}` 
+        });
+      }
+
+      // Get all members and payment methods for mapping
+      const members = await storage.getAllMembers();
+      const paymentMethods = await storage.getPaymentMethods();
+      
+      // Create map using first name + last name (case-insensitive)
+      const memberMap = new Map(
+        members.map(m => [`${m.firstName.toLowerCase()}_${m.lastName.toLowerCase()}`, m.id])
+      );
+      const paymentMethodMap = new Map(paymentMethods.map(pm => [pm.name.toLowerCase(), pm.id]));
+
+      const result = {
+        success: 0,
+        failed: 0,
+        duplicates: 0,
+        errors: [] as string[],
+        entries: [] as any[]
+      };
+
+      // Get all existing income entries to check for duplicates
+      const existingEntries = await storage.getIncomeEntries();
+      const duplicateCheck = new Set(
+        existingEntries.map(e => 
+          `${e.date.toISOString().split('T')[0]}_${e.memberId}_${e.totalAmount}_${e.paymentMethodId}`
+        )
+      );
+
+      // Process each row
+      for (let i = 1; i < jsonData.length; i++) {
+        const row = jsonData[i] as any[];
+        if (!row || row.length === 0) continue;
+
+        try {
+          const dateStr = row[headerMap["date"]]?.toString().trim();
+          const firstNameStr = row[headerMap["first name"]]?.toString().trim();
+          const lastNameStr = row[headerMap["last name"]]?.toString().trim();
+          const paymentMethodStr = row[headerMap["payment method"]]?.toString().trim();
+          const totalAmountStr = row[headerMap["total amount"]]?.toString().trim();
+          const taxPercentageStr = row[headerMap["tax percentage"]]?.toString().trim() || "0";
+          const description = row[headerMap["description"]]?.toString().trim() || null;
+
+          // Validate required fields
+          if (!dateStr || !firstNameStr || !lastNameStr || !paymentMethodStr || !totalAmountStr) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Missing required fields`);
+            continue;
+          }
+
+          // Validate and parse date
+          const date = new Date(dateStr);
+          if (isNaN(date.getTime())) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Invalid date format: ${dateStr}`);
+            continue;
+          }
+
+          // Find member by first name + last name
+          const memberKey = `${firstNameStr.toLowerCase()}_${lastNameStr.toLowerCase()}`;
+          const memberId = memberMap.get(memberKey);
+          if (!memberId) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Member not found: ${firstNameStr} ${lastNameStr}`);
+            continue;
+          }
+
+          // Find payment method
+          const paymentMethodId = paymentMethodMap.get(paymentMethodStr.toLowerCase());
+          if (!paymentMethodId) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Payment method not found: ${paymentMethodStr}`);
+            continue;
+          }
+
+          // Parse amounts
+          const totalAmount = parseFloat(totalAmountStr);
+          if (isNaN(totalAmount) || totalAmount <= 0) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Invalid total amount: ${totalAmountStr}`);
+            continue;
+          }
+
+          const taxPercentage = parseFloat(taxPercentageStr) || 0;
+          const taxAmount = (totalAmount * taxPercentage) / 100;
+          const netAmount = totalAmount - taxAmount;
+
+          // Check for duplicates
+          const duplicateKey = `${date.toISOString().split('T')[0]}_${memberId}_${totalAmount}_${paymentMethodId}`;
+          if (duplicateCheck.has(duplicateKey)) {
+            result.duplicates++;
+            continue;
+          }
+
+          // Create entry
+          const entry = await storage.createIncomeEntry({
+            date,
+            memberId,
+            paymentMethodId,
+            totalAmount: totalAmount.toString(),
+            taxPercentage: taxPercentage.toString(),
+            taxAmount: taxAmount.toString(),
+            netAmount: netAmount.toString(),
+            description,
+            createdBy: req.user!.id,
+          });
+
+          duplicateCheck.add(duplicateKey);
+          result.success++;
+          result.entries.push(entry);
+
+          // Create audit event
+          try {
+            await storage.createAuditEvent({
+              userId: req.user!.id,
+              action: "Create",
+              entity: "IncomeEntry",
+              entityId: entry.id,
+              details: `Created income entry from Excel upload: $${entry.netAmount}`,
+            });
+          } catch {
+            // ignore audit errors
+          }
+        } catch (error: any) {
+          result.failed++;
+          result.errors.push(`Row ${i + 1}: ${error.message || "Unknown error"}`);
+        }
+      }
+
+      res.json(result);
+    } catch (error: any) {
+      console.error("Error uploading income entries:", error);
+      res.status(500).json({ 
+        message: "Failed to upload income entries",
+        error: error.message || "Unknown error"
+      });
+    }
+  });
+
   // Expense Entries
   app.get("/api/expense-entries", isAuthenticated, async (req, res) => {
     try {
@@ -1130,6 +1340,207 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json({ message: "Deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Failed to delete expense entry" });
+    }
+  });
+
+  // Upload Expense Entries from Excel
+  app.post("/api/expense-entries/upload", isAdmin, upload.single("file"), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
+
+      // Parse Excel file
+      const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+      if (jsonData.length < 2) {
+        return res.status(400).json({ message: "Excel file must have at least a header row and one data row" });
+      }
+
+      // Validate headers
+      const headers = jsonData[0] as string[];
+      const requiredHeaders = ["Date", "First Name", "Last Name", "Category", "Payment Method", "Total Amount"];
+      const headerMap: { [key: string]: number } = {};
+      
+      // Normalize and map headers
+      headers.forEach((header, index) => {
+        if (header !== null && header !== undefined && header !== '') {
+          // Normalize header: trim, lowercase, replace multiple spaces with single space
+          const headerStr = String(header).trim();
+          const headerLower = headerStr.toLowerCase().replace(/\s+/g, ' ');
+          if (headerLower) {
+            headerMap[headerLower] = index;
+          }
+        }
+      });
+
+      // Check for required headers (normalized)
+      const missingHeaders: string[] = [];
+      const normalizedRequiredHeaders = requiredHeaders.map(h => h.toLowerCase().replace(/\s+/g, ' '));
+      
+      for (let i = 0; i < normalizedRequiredHeaders.length; i++) {
+        const reqHeader = normalizedRequiredHeaders[i];
+        // Use 'in' operator to check if key exists (important: index 0 is falsy but valid!)
+        if (!(reqHeader in headerMap)) {
+          // Find the original case version for error message
+          missingHeaders.push(requiredHeaders[i]);
+        }
+      }
+
+      if (missingHeaders.length > 0) {
+        const foundHeaders = headers.filter(h => h && h.toString().trim()).map(h => h.toString().trim());
+        return res.status(400).json({ 
+          message: `Missing required columns: ${missingHeaders.join(", ")}. Found columns in your file: ${foundHeaders.join(", ")}` 
+        });
+      }
+
+      // Get all members, payment methods, and expense categories for mapping
+      const members = await storage.getAllMembers();
+      const paymentMethods = await storage.getPaymentMethods();
+      const expenseCategories = await storage.getExpenseCategories();
+      
+      // Create map using first name + last name (case-insensitive)
+      const memberMap = new Map(
+        members.map(m => [`${m.firstName.toLowerCase()}_${m.lastName.toLowerCase()}`, m.id])
+      );
+      const paymentMethodMap = new Map(paymentMethods.map(pm => [pm.name.toLowerCase(), pm.id]));
+      const categoryMap = new Map(expenseCategories.map(ec => [ec.name.toLowerCase(), ec.id]));
+
+      const result = {
+        success: 0,
+        failed: 0,
+        duplicates: 0,
+        errors: [] as string[],
+        entries: [] as any[]
+      };
+
+      // Get all existing expense entries to check for duplicates
+      const existingEntries = await storage.getExpenseEntries();
+      const duplicateCheck = new Set(
+        existingEntries.map(e => 
+          `${e.date.toISOString().split('T')[0]}_${e.memberId}_${e.totalAmount}_${e.categoryId}_${e.paymentMethodId}`
+        )
+      );
+
+      // Process each row
+      for (let i = 1; i < jsonData.length; i++) {
+        const row = jsonData[i] as any[];
+        if (!row || row.length === 0) continue;
+
+        try {
+          const dateStr = row[headerMap["date"]]?.toString()?.trim();
+          const firstNameStr = row[headerMap["first name"]]?.toString()?.trim();
+          const lastNameStr = row[headerMap["last name"]]?.toString()?.trim();
+          const categoryStr = row[headerMap["category"]]?.toString()?.trim();
+          const paymentMethodStr = row[headerMap["payment method"]]?.toString()?.trim();
+          const totalAmountStr = row[headerMap["total amount"]]?.toString()?.trim();
+          const taxPercentageStr = row[headerMap["tax percentage"]]?.toString()?.trim() || "0";
+          const description = row[headerMap["description"]]?.toString()?.trim() || null;
+
+          // Validate required fields
+          if (!dateStr || !firstNameStr || !lastNameStr || !categoryStr || !paymentMethodStr || !totalAmountStr) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Missing required fields`);
+            continue;
+          }
+
+          // Validate and parse date
+          const date = new Date(dateStr);
+          if (isNaN(date.getTime())) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Invalid date format: ${dateStr}`);
+            continue;
+          }
+
+          // Find member by first name + last name
+          const memberKey = `${firstNameStr.toLowerCase()}_${lastNameStr.toLowerCase()}`;
+          const memberId = memberMap.get(memberKey);
+          if (!memberId) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Member not found: ${firstNameStr} ${lastNameStr}`);
+            continue;
+          }
+
+          // Find category
+          const categoryId = categoryMap.get(categoryStr.toLowerCase());
+          if (!categoryId) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Category not found: ${categoryStr}`);
+            continue;
+          }
+
+          // Find payment method
+          const paymentMethodId = paymentMethodMap.get(paymentMethodStr.toLowerCase());
+          if (!paymentMethodId) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Payment method not found: ${paymentMethodStr}`);
+            continue;
+          }
+
+          // Parse amounts
+          const totalAmount = parseFloat(totalAmountStr);
+          if (isNaN(totalAmount) || totalAmount <= 0) {
+            result.failed++;
+            result.errors.push(`Row ${i + 1}: Invalid total amount: ${totalAmountStr}`);
+            continue;
+          }
+
+          const taxPercentage = parseFloat(taxPercentageStr) || 0;
+          const taxAmount = (totalAmount * taxPercentage) / 100;
+          const netAmount = totalAmount - taxAmount;
+
+          // Check for duplicates
+          const duplicateKey = `${date.toISOString().split('T')[0]}_${memberId}_${totalAmount}_${categoryId}_${paymentMethodId}`;
+          if (duplicateCheck.has(duplicateKey)) {
+            result.duplicates++;
+            continue;
+          }
+
+          // Create entry
+          const entry = await storage.createExpenseEntry({
+            date,
+            memberId,
+            categoryId,
+            paymentMethodId,
+            totalAmount: totalAmount.toString(),
+            taxPercentage: taxPercentage.toString(),
+            taxAmount: taxAmount.toString(),
+            netAmount: netAmount.toString(),
+            description,
+            createdBy: req.user!.id,
+          });
+
+          duplicateCheck.add(duplicateKey);
+          result.success++;
+          result.entries.push(entry);
+
+          // Create audit event
+          try {
+            await storage.createAuditEvent({
+              userId: req.user!.id,
+              action: "Create",
+              entity: "ExpenseEntry",
+              entityId: entry.id,
+              details: `Created expense entry from Excel upload: $${entry.netAmount}`,
+            });
+          } catch {
+            // ignore audit errors
+          }
+        } catch (error: any) {
+          result.failed++;
+          result.errors.push(`Row ${i + 1}: ${error.message || "Unknown error"}`);
+        }
+      }
+
+      res.json(result);
+    } catch (error: any) {
+      console.error("Error uploading expense entries:", error);
+      res.status(500).json({ 
+        message: "Failed to upload expense entries",
+        error: error.message || "Unknown error"
+      });
     }
   });
 

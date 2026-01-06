@@ -18,6 +18,8 @@ import AuditTrailPage from "@/pages/audit-trail";
 import Setup from "@/pages/setup";
 import Profile from "@/pages/profile";
 import Login from "@/pages/login";
+import UploadIncome from "@/pages/upload-income";
+import UploadExpenses from "@/pages/upload-expenses";
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -31,6 +33,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       {isAdmin && <Route path="/transactions" component={Transactions} />}
+      {isAdmin && <Route path="/transactions/upload-income" component={UploadIncome} />}
+      {isAdmin && <Route path="/transactions/upload-expenses" component={UploadExpenses} />}
       <Route path="/share-price" component={SharePrice} />
       <Route path="/reports/monthly" component={MonthlyReport} />
       <Route path="/reports/annual" component={AnnualReport} />

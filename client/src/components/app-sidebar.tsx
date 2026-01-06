@@ -9,7 +9,8 @@ import {
   User, 
   LogOut,
   ChevronLeft,
-  TrendingUp
+  TrendingUp,
+  Upload
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useMemo, useState } from "react";
@@ -39,12 +40,17 @@ import { Logo } from "@/components/logo";
 
 const financialItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
-  { title: "Transactions", url: "/transactions", icon: ArrowDownUp, adminOnly: true },
+  { title: "Transactions", url: "/transactions", icon: ArrowDownUp, adminOnly: true, hasSubMenu: true },
   { title: "Share Price", url: "/share-price", icon: TrendingUp },
   { title: "Monthly Report", url: "/reports/monthly", icon: FileText },
   { title: "Annual Report", url: "/reports/annual", icon: FileText },
   { title: "Balance Sheet", url: "/balance-sheet", icon: Scale, adminOnly: true },
   { title: "Custom Report", url: "/reports/custom", icon: FileSearch },
+];
+
+const transactionSubItems = [
+  { title: "Upload Income", url: "/transactions/upload-income", icon: Upload },
+  { title: "Upload Expenses", url: "/transactions/upload-expenses", icon: Upload },
 ];
 
 const managementItems = [
@@ -68,6 +74,7 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
   const logout = useLogout();
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const displayName = useMemo(() => {
     const fullName = `${member?.firstName || ""} ${member?.lastName || ""}`.trim();
@@ -141,18 +148,24 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                 {financialItems
                   .filter((item) => userRole === "admin" || !item.adminOnly)
                   .map((item) => {
-                  const isActive = location === item.url;
+                  const isActive = location === item.url || (item.hasSubMenu && transactionSubItems.some(subItem => location === subItem.url));
                   const showContent = isOpen || isHovered;
+                  const isItemHovered = hoveredItem === item.title;
+                  const showSubMenu = item.hasSubMenu && showContent && (isActive || isItemHovered) && item.adminOnly && userRole === "admin";
 
                   return (
-                    <SidebarMenuItem key={item.title}>
+                    <SidebarMenuItem 
+                      key={item.title}
+                      onMouseEnter={() => item.hasSubMenu && setHoveredItem(item.title)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                    >
                       <SidebarMenuButton
                         asChild
-                        isActive={isActive}
+                        isActive={isActive && !item.hasSubMenu}
                           className={cn(
                           "group relative transition-all duration-200 ease-in-out",
                           "hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-sm hover:scale-[1.02]",
-                          isActive
+                          isActive && !item.hasSubMenu
                             ? "bg-black dark:bg-white text-white dark:text-black shadow-md"
                             : "text-sidebar-foreground hover:text-sidebar-foreground",
                           showContent ? "rounded-md mx-2" : "rounded-full mx-auto w-12"
@@ -175,6 +188,42 @@ export function AppSidebar({ userRole = "admin" }: { userRole?: "admin" | "membe
                           </div>
                         </Link>
                       </SidebarMenuButton>
+                      {showSubMenu && (
+                        <div 
+                          className={cn("ml-4 mt-1 space-y-1", isOpen ? "px-3" : "px-2")}
+                          onMouseEnter={() => item.hasSubMenu && setHoveredItem(item.title)}
+                          onMouseLeave={() => setHoveredItem(null)}
+                        >
+                          {transactionSubItems.map((subItem) => {
+                            const isSubActive = location === subItem.url;
+                            return (
+                              <SidebarMenuItem key={subItem.title}>
+                                <SidebarMenuButton
+                                  asChild
+                                  isActive={isSubActive}
+                                  className={cn(
+                                    "group relative transition-all duration-200 ease-in-out",
+                                    "hover:bg-black/10 dark:hover:bg-white/10 hover:shadow-sm hover:scale-[1.02]",
+                                    isSubActive
+                                      ? "bg-black dark:bg-white text-white dark:text-black shadow-md"
+                                      : "text-sidebar-foreground hover:text-sidebar-foreground",
+                                    "rounded-md mx-2"
+                                  )}
+                                >
+                                  <Link href={subItem.url}>
+                                    <div className="flex items-center w-full px-3 py-2">
+                                      <subItem.icon className="h-3 w-3 flex-shrink-0" />
+                                      <span className="ml-3 text-xs font-medium">
+                                        {subItem.title}
+                                      </span>
+                                    </div>
+                                  </Link>
+                                </SidebarMenuButton>
+                              </SidebarMenuItem>
+                            );
+                          })}
+                        </div>
+                      )}
                     </SidebarMenuItem>
                   );
                 })}
