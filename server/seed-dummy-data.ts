@@ -175,7 +175,6 @@ async function seedDummyData() {
 
       await storage.createExpenseEntry({
         date: expenseEntryDates[i],
-        memberId: members[i % members.length].id,
         categoryId: expenseCategories[i % expenseCategories.length].id,
         paymentMethodId: paymentMethods[i % paymentMethods.length].id,
         totalAmount: totalAmount.toString(),

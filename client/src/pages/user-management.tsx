@@ -76,7 +76,7 @@ export default function UserManagement() {
   const [addMemberForm, setAddMemberForm] = useState({
     username: "",
     password: "",
-    role: "member" as "admin" | "member",
+    role: "member" as "admin" | "member" | "non member",
     firstName: "",
     lastName: "",
     email: "",
@@ -134,6 +134,7 @@ export default function UserManagement() {
   });
 
   totalShares = filteredMembers.reduce((sum: number, member: any) => {
+    if (member.role === "non member") return sum;
     return sum + parseFloat(member?.shares || "0");
   }, 0);
 
@@ -151,7 +152,7 @@ export default function UserManagement() {
       setAddMemberForm({
         username: "",
         password: "",
-        role: "member",
+        role: "member" as "member",
         firstName: "",
         lastName: "",
         email: "",
@@ -161,10 +162,10 @@ export default function UserManagement() {
       });
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to add member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to add member",
+        variant: "destructive"
       });
     },
   });
@@ -181,10 +182,10 @@ export default function UserManagement() {
       setEditingMember(null);
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to update member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update member",
+        variant: "destructive"
       });
     },
   });
@@ -200,10 +201,10 @@ export default function UserManagement() {
       toast({ title: "Success", description: "Member deactivated successfully" });
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to deactivate member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to deactivate member",
+        variant: "destructive"
       });
     },
   });
@@ -219,21 +220,21 @@ export default function UserManagement() {
       toast({ title: "Success", description: "Member deleted successfully" });
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to delete member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete member",
+        variant: "destructive"
       });
     },
   });
 
   const handleAddMember = () => {
-    if (!addMemberForm.username || !addMemberForm.password || !addMemberForm.firstName || 
-        !addMemberForm.lastName || !addMemberForm.email) {
-      toast({ 
-        title: "Error", 
-        description: "Please fill all required fields", 
-        variant: "destructive" 
+    if (!addMemberForm.username || !addMemberForm.password || !addMemberForm.firstName ||
+      !addMemberForm.lastName || !addMemberForm.email) {
+      toast({
+        title: "Error",
+        description: "Please fill all required fields",
+        variant: "destructive"
       });
       return;
     }
@@ -268,10 +269,10 @@ export default function UserManagement() {
     if (!editingMember) return;
 
     if (!editMemberForm.firstName || !editMemberForm.lastName || !editMemberForm.email) {
-      toast({ 
-        title: "Error", 
-        description: "Please fill all required fields", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: "Please fill all required fields",
+        variant: "destructive"
       });
       return;
     }
@@ -293,10 +294,10 @@ export default function UserManagement() {
     // userId might be named user_id in the database response
     const userId = member.userId || member.user_id;
     if (!userId) {
-      toast({ 
-        title: "Error", 
-        description: "Cannot deactivate member: user ID not found. Please refresh the page.", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: "Cannot deactivate member: user ID not found. Please refresh the page.",
+        variant: "destructive"
       });
       return;
     }
@@ -488,7 +489,7 @@ export default function UserManagement() {
                             <Ban className="mr-2 h-4 w-4" />
                             Deactivate
                           </DropdownMenuItem>
-                          <DropdownMenuItem 
+                          <DropdownMenuItem
                             onClick={() => handleDeleteMember(member)}
                             className="text-destructive"
                           >
@@ -546,7 +547,7 @@ export default function UserManagement() {
               <Label htmlFor="add-role">Role *</Label>
               <Select
                 value={addMemberForm.role}
-                onValueChange={(value: "admin" | "member") => 
+                onValueChange={(value: "admin" | "member" | "non member") =>
                   setAddMemberForm({ ...addMemberForm, role: value })
                 }
               >
@@ -556,6 +557,7 @@ export default function UserManagement() {
                 <SelectContent>
                   <SelectItem value="member">Member</SelectItem>
                   <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="non member">Non Member</SelectItem>
                 </SelectContent>
               </Select>
             </div>

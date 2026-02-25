@@ -60,7 +60,7 @@ export default function AddMember() {
   const [addMemberForm, setAddMemberForm] = useState({
     username: "",
     password: "",
-    role: "member" as "admin" | "member",
+    role: "member" as "admin" | "member" | "non member",
     firstName: "",
     lastName: "",
     joinDate: "",
@@ -126,7 +126,7 @@ export default function AddMember() {
       setAddMemberForm({
         username: "",
         password: "",
-        role: "member",
+        role: "member" as "member",
         firstName: "",
         lastName: "",
         joinDate: "",
@@ -135,10 +135,10 @@ export default function AddMember() {
       });
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to add member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to add member",
+        variant: "destructive"
       });
     },
   });
@@ -155,10 +155,10 @@ export default function AddMember() {
       setEditingMember(null);
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to update member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update member",
+        variant: "destructive"
       });
     },
   });
@@ -174,10 +174,10 @@ export default function AddMember() {
       toast({ title: "Success", description: "Member deactivated successfully" });
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to deactivate member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to deactivate member",
+        variant: "destructive"
       });
     },
   });
@@ -193,21 +193,21 @@ export default function AddMember() {
       toast({ title: "Success", description: "Member deleted successfully" });
     },
     onError: (error: any) => {
-      toast({ 
-        title: "Error", 
-        description: error.message || "Failed to delete member", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete member",
+        variant: "destructive"
       });
     },
   });
 
   const handleAddMember = () => {
-    if (!addMemberForm.username || !addMemberForm.password || !addMemberForm.firstName || 
-        !addMemberForm.lastName || !addMemberForm.email) {
-      toast({ 
-        title: "Error", 
-        description: "Please fill all required fields", 
-        variant: "destructive" 
+    if (!addMemberForm.username || !addMemberForm.password || !addMemberForm.firstName ||
+      !addMemberForm.lastName || !addMemberForm.email) {
+      toast({
+        title: "Error",
+        description: "Please fill all required fields",
+        variant: "destructive"
       });
       return;
     }
@@ -239,10 +239,10 @@ export default function AddMember() {
     if (!editingMember) return;
 
     if (!editMemberForm.firstName || !editMemberForm.lastName || !editMemberForm.email) {
-      toast({ 
-        title: "Error", 
-        description: "Please fill all required fields", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: "Please fill all required fields",
+        variant: "destructive"
       });
       return;
     }
@@ -261,10 +261,10 @@ export default function AddMember() {
   const handleDeactivateMember = async (member: any) => {
     const userId = member.userId || member.user_id;
     if (!userId) {
-      toast({ 
-        title: "Error", 
-        description: "Cannot deactivate member: user ID not found", 
-        variant: "destructive" 
+      toast({
+        title: "Error",
+        description: "Cannot deactivate member: user ID not found",
+        variant: "destructive"
       });
       return;
     }
@@ -426,10 +426,10 @@ export default function AddMember() {
               </TableRow>
             ) : (
               filteredMembers.map((member: any, index: number) => {
-                const joinDate = member.joinDate 
-                  ? new Date(member.joinDate).toLocaleDateString() 
+                const joinDate = member.joinDate
+                  ? new Date(member.joinDate).toLocaleDateString()
                   : "N/A";
-                
+
                 return (
                   <TableRow key={member.id} className={index % 2 === 0 ? "bg-muted/30" : ""}>
                     <TableCell className="text-muted-foreground">{index + 1}</TableCell>
@@ -504,7 +504,7 @@ export default function AddMember() {
               <Label htmlFor="add-role">Role *</Label>
               <Select
                 value={addMemberForm.role}
-                onValueChange={(value: "admin" | "member") => 
+                onValueChange={(value: "admin" | "member" | "non member") =>
                   setAddMemberForm({ ...addMemberForm, role: value })
                 }
               >
@@ -514,6 +514,7 @@ export default function AddMember() {
                 <SelectContent>
                   <SelectItem value="member">Member</SelectItem>
                   <SelectItem value="admin">Admin</SelectItem>
+                  <SelectItem value="non member">Non Member</SelectItem>
                 </SelectContent>
               </Select>
             </div>

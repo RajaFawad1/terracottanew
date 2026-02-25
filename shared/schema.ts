@@ -4,7 +4,7 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 // Enums
-export const roleEnum = pgEnum("role", ["admin", "member"]);
+export const roleEnum = pgEnum("role", ["admin", "member", "non member"]);
 export const statusEnum = pgEnum("status", ["active", "inactive"]);
 export const transactionTypeEnum = pgEnum("transaction_type", ["income", "expense"]);
 
@@ -179,11 +179,10 @@ export const insertIncomeEntrySchema = createInsertSchema(incomeEntries).omit({
 export type InsertIncomeEntry = z.infer<typeof insertIncomeEntrySchema>;
 export type IncomeEntry = typeof incomeEntries.$inferSelect;
 
-// Expense Entries table
+// Expense Entries table (memberId removed)
 export const expenseEntries = pgTable("expense_entries", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   date: timestamp("date").notNull(),
-  memberId: varchar("member_id").notNull().references(() => members.id),
   categoryId: varchar("category_id").notNull().references(() => expenseCategories.id),
   paymentMethodId: varchar("payment_method_id").notNull().references(() => paymentMethods.id),
   totalAmount: numeric("total_amount", { precision: 14, scale: 2 }).notNull(),

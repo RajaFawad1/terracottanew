@@ -1,5 +1,5 @@
 import { db } from "./db";
-import { eq, and, gte, lte, desc, asc, sql, or, ilike } from "drizzle-orm";
+import { eq, and, gte, lte, desc, asc, sql, or, ilike, ne } from "drizzle-orm";
 import * as schema from "@shared/schema";
 import type {
   User,
@@ -37,47 +37,47 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, data: Partial<User>): Promise<User | undefined>;
   updateUserLastLogin(id: string): Promise<void>;
-  
+
   // Member operations
   getMember(id: string): Promise<Member | undefined>;
   getMemberByUserId(userId: string): Promise<Member | undefined>;
-  getAllMembers(): Promise<Member[]>;
+  getAllMembers(): Promise<any[]>;
   createMember(member: InsertMember): Promise<Member>;
   updateMember(id: string, data: Partial<Member>): Promise<Member | undefined>;
-  getFilteredMembers(month?: number, year?: number): Promise<Member[]>;
-  
+  getFilteredMembers(month?: number, year?: number): Promise<any[]>;
+
   // System Settings operations
   getSystemSettings(): Promise<SystemSettings | undefined>;
   updateSystemSettings(data: Partial<SystemSettings>, updatedBy: string): Promise<SystemSettings>;
-  
+
   // Payment Methods
   getPaymentMethods(): Promise<PaymentMethod[]>;
   getPaymentMethod(id: string): Promise<PaymentMethod | undefined>;
   createPaymentMethod(method: InsertPaymentMethod): Promise<PaymentMethod>;
   updatePaymentMethod(id: string, data: Partial<PaymentMethod>): Promise<PaymentMethod | undefined>;
   deletePaymentMethod(id: string): Promise<void>;
-  
+
   // Income Categories
   getIncomeCategories(): Promise<IncomeCategory[]>;
   getIncomeCategory(id: string): Promise<IncomeCategory | undefined>;
   createIncomeCategory(category: InsertIncomeCategory): Promise<IncomeCategory>;
   updateIncomeCategory(id: string, data: Partial<IncomeCategory>): Promise<IncomeCategory | undefined>;
   deleteIncomeCategory(id: string): Promise<void>;
-  
+
   // Expense Categories
   getExpenseCategories(): Promise<ExpenseCategory[]>;
   getExpenseCategory(id: string): Promise<ExpenseCategory | undefined>;
   createExpenseCategory(category: InsertExpenseCategory): Promise<ExpenseCategory>;
   updateExpenseCategory(id: string, data: Partial<ExpenseCategory>): Promise<ExpenseCategory | undefined>;
   deleteExpenseCategory(id: string): Promise<void>;
-  
+
   // Monthly Profit Goals
   getMonthlyProfitGoals(): Promise<MonthlyProfitGoal[]>;
   getMonthlyProfitGoal(month: number, year: number): Promise<MonthlyProfitGoal | undefined>;
   createMonthlyProfitGoal(goal: InsertMonthlyProfitGoal): Promise<MonthlyProfitGoal>;
   updateMonthlyProfitGoal(id: string, data: Partial<MonthlyProfitGoal>): Promise<MonthlyProfitGoal | undefined>;
   deleteMonthlyProfitGoal(id: string): Promise<void>;
-  
+
   // Income Entries
   getIncomeEntries(memberId?: string): Promise<IncomeEntry[]>;
   getIncomeEntry(id: string): Promise<IncomeEntry | undefined>;
@@ -86,16 +86,16 @@ export interface IStorage {
   deleteIncomeEntry(id: string): Promise<void>;
   getIncomeEntriesFiltered(memberId?: string, startDate?: Date, endDate?: Date, categoryId?: string): Promise<IncomeEntry[]>;
   getTotalIncome(memberId?: string, startDate?: Date, endDate?: Date): Promise<number>;
-  
+
   // Expense Entries
-  getExpenseEntries(memberId?: string): Promise<ExpenseEntry[]>;
+  getExpenseEntries(): Promise<ExpenseEntry[]>;
   getExpenseEntry(id: string): Promise<ExpenseEntry | undefined>;
   createExpenseEntry(entry: InsertExpenseEntry): Promise<ExpenseEntry>;
   updateExpenseEntry(id: string, data: Partial<ExpenseEntry>): Promise<ExpenseEntry | undefined>;
   deleteExpenseEntry(id: string): Promise<void>;
-  getExpenseEntriesFiltered(memberId?: string, startDate?: Date, endDate?: Date, categoryId?: string): Promise<ExpenseEntry[]>;
-  getTotalExpenses(memberId?: string, startDate?: Date, endDate?: Date): Promise<number>;
-  
+  getExpenseEntriesFiltered(startDate?: Date, endDate?: Date, categoryId?: string): Promise<ExpenseEntry[]>;
+  getTotalExpenses(startDate?: Date, endDate?: Date): Promise<number>;
+
   // Monthly Valuation Calculations
   getMonthlyValuation(month: number, year: number): Promise<MonthlyValuation | undefined>;
   getAllMonthlyValuations(): Promise<MonthlyValuation[]>;
@@ -105,18 +105,18 @@ export interface IStorage {
   getTotalInflows(month: number, year: number): Promise<number>;
   getTotalOutflows(month: number, year: number): Promise<number>;
   getTotalSharesForPreviousMonth(month: number, year: number): Promise<number>;
-  
+
   // Member Shares
   createSharesSnapshot(snapshot: InsertMemberSharesSnapshot): Promise<MemberSharesSnapshot>;
   getLatestSharesSnapshots(): Promise<MemberSharesSnapshot[]>;
-  
+
   // Share Transactions
   getShareTransactions(memberId?: string, startDate?: Date, endDate?: Date): Promise<ShareTransaction[]>;
   getShareTransaction(id: string): Promise<ShareTransaction | undefined>;
   createShareTransaction(transaction: InsertShareTransaction): Promise<ShareTransaction>;
   updateShareTransaction(id: string, data: Partial<ShareTransaction>): Promise<ShareTransaction | undefined>;
   deleteShareTransaction(id: string): Promise<void>;
-  
+
   // Audit
   createAuditEvent(event: InsertAuditEvent): Promise<AuditEvent>;
   getAuditEvents(options?: {
@@ -165,8 +165,27 @@ export class DatabaseStorage implements IStorage {
     return member;
   }
 
-  async getAllMembers(): Promise<Member[]> {
-    return await db.select().from(schema.members).orderBy(desc(schema.members.joinDate));
+  async getAllMembers(): Promise<any[]> {
+    return await db
+      .select({
+        id: schema.members.id,
+        userId: schema.members.userId,
+        memberId: schema.members.memberId,
+        firstName: schema.members.firstName,
+        lastName: schema.members.lastName,
+        email: schema.members.email,
+        phone: schema.members.phone,
+        photoUrl: schema.members.photoUrl,
+        contributions: schema.members.contributions,
+        shares: schema.members.shares,
+        joinDate: schema.members.joinDate,
+        createdAt: schema.members.createdAt,
+        updatedAt: schema.members.updatedAt,
+        role: schema.users.role,
+      })
+      .from(schema.members)
+      .innerJoin(schema.users, eq(schema.members.userId, schema.users.id))
+      .orderBy(desc(schema.members.joinDate));
   }
 
   async createMember(insertMember: InsertMember): Promise<Member> {
@@ -183,17 +202,33 @@ export class DatabaseStorage implements IStorage {
     return member;
   }
 
-  async getFilteredMembers(month?: number, year?: number): Promise<Member[]> {
+  async getFilteredMembers(month?: number, year?: number): Promise<any[]> {
     if (!month || !year) {
       return this.getAllMembers();
     }
-    
+
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59);
-    
+
     return await db
-      .select()
+      .select({
+        id: schema.members.id,
+        userId: schema.members.userId,
+        memberId: schema.members.memberId,
+        firstName: schema.members.firstName,
+        lastName: schema.members.lastName,
+        email: schema.members.email,
+        phone: schema.members.phone,
+        photoUrl: schema.members.photoUrl,
+        contributions: schema.members.contributions,
+        shares: schema.members.shares,
+        joinDate: schema.members.joinDate,
+        createdAt: schema.members.createdAt,
+        updatedAt: schema.members.updatedAt,
+        role: schema.users.role,
+      })
       .from(schema.members)
+      .innerJoin(schema.users, eq(schema.members.userId, schema.users.id))
       .where(
         and(
           gte(schema.members.joinDate, startDate),
@@ -211,7 +246,7 @@ export class DatabaseStorage implements IStorage {
 
   async updateSystemSettings(data: Partial<SystemSettings>, updatedBy: string): Promise<SystemSettings> {
     const existing = await this.getSystemSettings();
-    
+
     if (existing) {
       const [updated] = await db
         .update(schema.systemSettings)
@@ -363,39 +398,36 @@ export class DatabaseStorage implements IStorage {
 
   async getIncomeEntriesFiltered(memberId?: string, startDate?: Date, endDate?: Date, categoryId?: string): Promise<IncomeEntry[]> {
     const conditions = [];
-    
+
     if (memberId) conditions.push(eq(schema.incomeEntries.memberId, memberId));
     if (startDate) conditions.push(gte(schema.incomeEntries.date, startDate));
     if (endDate) conditions.push(lte(schema.incomeEntries.date, endDate));
     if (categoryId) conditions.push(eq(schema.incomeEntries.categoryId, categoryId));
-    
+
     if (conditions.length === 0) {
       return this.getIncomeEntries(memberId);
     }
-    
+
     return await db.select().from(schema.incomeEntries).where(and(...conditions)).orderBy(desc(schema.incomeEntries.date));
   }
 
   async getTotalIncome(memberId?: string, startDate?: Date, endDate?: Date): Promise<number> {
     const conditions = [];
-    
+
     if (memberId) conditions.push(eq(schema.incomeEntries.memberId, memberId));
     if (startDate) conditions.push(gte(schema.incomeEntries.date, startDate));
     if (endDate) conditions.push(lte(schema.incomeEntries.date, endDate));
-    
+
     const result = await db
       .select({ total: sql<string>`COALESCE(SUM(${schema.incomeEntries.netAmount}), 0)` })
       .from(schema.incomeEntries)
       .where(conditions.length > 0 ? and(...conditions) : undefined);
-    
+
     return parseFloat(result[0]?.total || "0");
   }
 
   // Expense Entries
-  async getExpenseEntries(memberId?: string): Promise<ExpenseEntry[]> {
-    if (memberId) {
-      return await db.select().from(schema.expenseEntries).where(eq(schema.expenseEntries.memberId, memberId)).orderBy(desc(schema.expenseEntries.date));
-    }
+  async getExpenseEntries(): Promise<ExpenseEntry[]> {
     return await db.select().from(schema.expenseEntries).orderBy(desc(schema.expenseEntries.date));
   }
 
@@ -425,33 +457,31 @@ export class DatabaseStorage implements IStorage {
     await db.delete(schema.expenseEntries).where(eq(schema.expenseEntries.id, cleanId));
   }
 
-  async getExpenseEntriesFiltered(memberId?: string, startDate?: Date, endDate?: Date, categoryId?: string): Promise<ExpenseEntry[]> {
+  async getExpenseEntriesFiltered(startDate?: Date, endDate?: Date, categoryId?: string): Promise<ExpenseEntry[]> {
     const conditions = [];
-    
-    if (memberId) conditions.push(eq(schema.expenseEntries.memberId, memberId));
+
     if (startDate) conditions.push(gte(schema.expenseEntries.date, startDate));
     if (endDate) conditions.push(lte(schema.expenseEntries.date, endDate));
     if (categoryId) conditions.push(eq(schema.expenseEntries.categoryId, categoryId));
-    
+
     if (conditions.length === 0) {
-      return this.getExpenseEntries(memberId);
+      return this.getExpenseEntries();
     }
-    
+
     return await db.select().from(schema.expenseEntries).where(and(...conditions)).orderBy(desc(schema.expenseEntries.date));
   }
 
-  async getTotalExpenses(memberId?: string, startDate?: Date, endDate?: Date): Promise<number> {
+  async getTotalExpenses(startDate?: Date, endDate?: Date): Promise<number> {
     const conditions = [];
-    
-    if (memberId) conditions.push(eq(schema.expenseEntries.memberId, memberId));
+
     if (startDate) conditions.push(gte(schema.expenseEntries.date, startDate));
     if (endDate) conditions.push(lte(schema.expenseEntries.date, endDate));
-    
+
     const result = await db
       .select({ total: sql<string>`COALESCE(SUM(${schema.expenseEntries.netAmount}), 0)` })
       .from(schema.expenseEntries)
       .where(conditions.length > 0 ? and(...conditions) : undefined);
-    
+
     return parseFloat(result[0]?.total || "0");
   }
 
@@ -459,7 +489,7 @@ export class DatabaseStorage implements IStorage {
   async getTotalInflows(month: number, year: number): Promise<number> {
     const startDate = new Date(year, month - 1, 1, 0, 0, 0, 0);
     const endDate = new Date(year, month, 0, 23, 59, 59, 999);
-    
+
     const result = await db
       .select({ total: sql<string>`COALESCE(SUM(${schema.shareTransactions.contributions}), 0)` })
       .from(schema.shareTransactions)
@@ -467,14 +497,14 @@ export class DatabaseStorage implements IStorage {
         gte(schema.shareTransactions.date, startDate),
         lte(schema.shareTransactions.date, endDate)
       ));
-    
+
     return parseFloat(result[0]?.total || "0");
   }
 
   async getTotalOutflows(month: number, year: number): Promise<number> {
     const startDate = new Date(year, month - 1, 1, 0, 0, 0, 0);
     const endDate = new Date(year, month, 0, 23, 59, 59, 999);
-    
+
     // Calculate total outflows as the sum of all total_amount from expense_entries table for the same month
     const result = await db
       .select({ total: sql<string>`COALESCE(SUM(${schema.expenseEntries.totalAmount}), 0)` })
@@ -483,7 +513,7 @@ export class DatabaseStorage implements IStorage {
         gte(schema.expenseEntries.date, startDate),
         lte(schema.expenseEntries.date, endDate)
       ));
-    
+
     return parseFloat(result[0]?.total || "0");
   }
 
@@ -491,45 +521,58 @@ export class DatabaseStorage implements IStorage {
     const previousMonth = month === 1 ? 12 : month - 1;
     const previousYear = month === 1 ? year - 1 : year;
     const endOfPreviousMonth = new Date(previousYear, previousMonth, 0, 23, 59, 59, 999);
-    
+
     // Sum all shares from share_transactions up to the end of previous month
     const result = await db
       .select({ total: sql<string>`COALESCE(SUM(${schema.shareTransactions.shares}), 0)` })
       .from(schema.shareTransactions)
-      .where(lte(schema.shareTransactions.date, endOfPreviousMonth));
-    
+      .innerJoin(schema.members, eq(schema.shareTransactions.memberId, schema.members.id))
+      .innerJoin(schema.users, eq(schema.members.userId, schema.users.id))
+      .where(and(
+        lte(schema.shareTransactions.date, endOfPreviousMonth),
+        ne(schema.users.role, "non member")
+      ));
+
     const sharesFromPreviousMonth = parseFloat(result[0]?.total || "0");
-    
+
     // If there are no shares from previous month (first month scenario),
     // sum all shares from the current month instead
     if (sharesFromPreviousMonth === 0) {
       const currentMonthStart = new Date(year, month - 1, 1, 0, 0, 0, 0);
       const currentMonthEnd = new Date(year, month, 0, 23, 59, 59, 999);
-      
+
       const currentMonthResult = await db
         .select({ total: sql<string>`COALESCE(SUM(${schema.shareTransactions.shares}), 0)` })
         .from(schema.shareTransactions)
+        .innerJoin(schema.members, eq(schema.shareTransactions.memberId, schema.members.id))
+        .innerJoin(schema.users, eq(schema.members.userId, schema.users.id))
         .where(and(
           gte(schema.shareTransactions.date, currentMonthStart),
-          lte(schema.shareTransactions.date, currentMonthEnd)
+          lte(schema.shareTransactions.date, currentMonthEnd),
+          ne(schema.users.role, "non member")
         ));
-      
+
       return parseFloat(currentMonthResult[0]?.total || "0");
     }
-    
+
     return sharesFromPreviousMonth;
   }
-  
+
   // Get cumulative total shares at the end of a specific month
   async getCumulativeTotalSharesAtEndOfMonth(month: number, year: number): Promise<number> {
     const endOfMonth = new Date(year, month, 0, 23, 59, 59, 999);
-    
+
     // Sum all shares from share_transactions up to the end of the month
     const result = await db
       .select({ total: sql<string>`COALESCE(SUM(${schema.shareTransactions.shares}), 0)` })
       .from(schema.shareTransactions)
-      .where(lte(schema.shareTransactions.date, endOfMonth));
-    
+      .innerJoin(schema.members, eq(schema.shareTransactions.memberId, schema.members.id))
+      .innerJoin(schema.users, eq(schema.members.userId, schema.users.id))
+      .where(and(
+        lte(schema.shareTransactions.date, endOfMonth),
+        ne(schema.users.role, "non member")
+      ));
+
     return parseFloat(result[0]?.total || "0");
   }
 
@@ -553,25 +596,25 @@ export class DatabaseStorage implements IStorage {
 
   async calculateAndSaveMonthlyValuation(month: number, year: number): Promise<MonthlyValuation> {
     console.log(`=== Calculating valuation for ${month}/${year} ===`);
-    
+
     // Step 1: Calculate Total Inflows (from share_transactions.contributions)
     const totalInflows = await this.getTotalInflows(month, year);
     console.log(`Total Inflows: $${totalInflows}`);
-    
+
     // Step 2: Calculate Total Outflows (from expense_entries.total_amount)
     const totalOutflows = await this.getTotalOutflows(month, year);
     console.log(`Total Outflows: $${totalOutflows}`);
-    
+
     // Step 3: Calculate Total Flows
     const totalFlows = totalInflows - totalOutflows;
     console.log(`Total Flows: $${totalFlows}`);
-    
+
     // Step 4: Calculate Terracotta Valuation
     const previousMonth = month === 1 ? 12 : month - 1;
     const previousYear = month === 1 ? year - 1 : year;
     const previousValuation = await this.getMonthlyValuation(previousMonth, previousYear);
     console.log(`Previous Valuation (${previousMonth}/${previousYear}):`, previousValuation);
-    
+
     let terracottaValuation: number;
     if (!previousValuation) {
       // First month: valuation is the sum of all contributions (totalInflows)
@@ -583,20 +626,20 @@ export class DatabaseStorage implements IStorage {
       terracottaValuation = previousTerracottaValuation + totalFlows;
       console.log(`Subsequent month - Valuation = Previous ($${previousTerracottaValuation}) + Flows ($${totalFlows}): $${terracottaValuation}`);
     }
-    
+
     // Step 7: Get Total Shares at the end of Previous Month (cumulative)
     const totalSharesPreviousMonth = await this.getTotalSharesForPreviousMonth(month, year);
     console.log(`Total Shares Previous Month: ${totalSharesPreviousMonth}`);
-    
+
     // Step 8: Calculate Terracotta Share Price
-    const terracottaSharePrice = totalSharesPreviousMonth > 0 
-      ? terracottaValuation / totalSharesPreviousMonth 
+    const terracottaSharePrice = totalSharesPreviousMonth > 0
+      ? terracottaValuation / totalSharesPreviousMonth
       : 0;
     console.log(`Share Price = Valuation ($${terracottaValuation}) / Previous Shares (${totalSharesPreviousMonth}): $${terracottaSharePrice}`);
-    
+
     // Step 5 & 9: Save Monthly Valuation Data
     const existing = await this.getMonthlyValuation(month, year);
-    
+
     const valuationData: InsertMonthlyValuation = {
       month,
       year,
@@ -607,7 +650,7 @@ export class DatabaseStorage implements IStorage {
       totalSharesPreviousMonth: totalSharesPreviousMonth.toString(),
       terracottaSharePrice: terracottaSharePrice.toString(),
     };
-    
+
     if (existing) {
       const [updated] = await db
         .update(schema.monthlyValuations)
@@ -668,11 +711,11 @@ export class DatabaseStorage implements IStorage {
 
     // Get the earliest month with data
     const earliestData = await this.getEarliestDataMonth();
-    
+
     // Determine start year and month
     let startYear: number;
     let startMonth: number;
-    
+
     if (earliestData) {
       startYear = earliestData.year;
       startMonth = earliestData.month;
@@ -681,7 +724,7 @@ export class DatabaseStorage implements IStorage {
       startYear = year;
       startMonth = 1;
     }
-    
+
     // Calculate end month (current month if current year, otherwise December of the specified year)
     const endYear = year <= currentYear ? year : currentYear;
     const endMonth = endYear === currentYear ? currentMonth : 12;
@@ -723,15 +766,15 @@ export class DatabaseStorage implements IStorage {
   // Share Transactions
   async getShareTransactions(memberId?: string, startDate?: Date, endDate?: Date): Promise<ShareTransaction[]> {
     const conditions = [];
-    
+
     if (memberId) conditions.push(eq(schema.shareTransactions.memberId, memberId));
     if (startDate) conditions.push(gte(schema.shareTransactions.date, startDate));
     if (endDate) conditions.push(lte(schema.shareTransactions.date, endDate));
-    
+
     if (conditions.length === 0) {
       return await db.select().from(schema.shareTransactions).orderBy(desc(schema.shareTransactions.date));
     }
-    
+
     return await db
       .select()
       .from(schema.shareTransactions)

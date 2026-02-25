@@ -4,6 +4,8 @@ import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
 
+// Server restart trigger
+
 declare module 'http' {
   interface IncomingMessage {
     rawBody: unknown
@@ -74,7 +76,7 @@ app.use((req, res, next) => {
   server.listen({
     port,
     host: "0.0.0.0",
-   
+
   }, () => {
     log(`serving on port ${port}`);
   });

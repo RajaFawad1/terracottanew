@@ -22,7 +22,7 @@ const loginSchema = z.object({
 const createUserSchema = z.object({
   username: z.string().min(3).max(50),
   password: z.string().min(6),
-  role: z.enum(["admin", "member"]),
+  role: z.enum(["admin", "member", "non member"]),
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email(),
@@ -54,7 +54,7 @@ const systemSettingsSchema = z.object({
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Configure multer for file uploads
-  const upload = multer({ 
+  const upload = multer({
     storage: multer.memoryStorage(),
     limits: { fileSize: 10 * 1024 * 1024 } // 10MB limit
   });
@@ -220,30 +220,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validation = updateProfileSchema.safeParse(req.body);
       if (!validation.success) {
         console.error("Validation error:", validation.error);
-        return res.status(400).json({ 
-          message: "Invalid request", 
-          errors: validation.error.errors 
+        return res.status(400).json({
+          message: "Invalid request",
+          errors: validation.error.errors
         });
       }
-  
+
       const member = await storage.getMemberByUserId(req.user!.id);
       if (!member) {
         return res.status(404).json({ message: "Member not found" });
       }
-  
+
       const updateData: any = {
         firstName: validation.data.firstName,
         lastName: validation.data.lastName,
         email: validation.data.email,
       };
-      
+
       // Only add phone if it's provided and not empty
       if (validation.data.phone && validation.data.phone.trim() !== "") {
         updateData.phone = validation.data.phone;
       }
-  
+
       const updatedMember = await storage.updateMember(member.id, updateData);
-  
+
       try {
         await storage.createAuditEvent({
           userId: req.user!.id,
@@ -256,11 +256,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.error("Audit log error:", auditError);
         // Don't fail the request if audit logging fails
       }
-  
+
       res.json(updatedMember);
     } catch (error) {
       console.error("Profile update error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to update profile",
         error: error instanceof Error ? error.message : "Unknown error"
       });
@@ -270,7 +270,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/profile/photo", isAuthenticated, async (req, res) => {
     try {
       const { photoUrl } = req.body;
-      
+
       if (!photoUrl || typeof photoUrl !== "string") {
         return res.status(400).json({ message: "Photo data is required" });
       }
@@ -303,67 +303,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(updatedMember);
     } catch (error) {
       console.error("Photo upload error:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to upload photo",
         error: error instanceof Error ? error.message : "Unknown error"
       });
     }
   });
 
-app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
-  try {
-    const validation = changePasswordSchema.safeParse(req.body);
-    if (!validation.success) {
-      console.error("Validation error:", validation.error);
-      return res.status(400).json({ 
-        message: "Invalid request", 
-        errors: validation.error.errors 
-      });
-    }
-
-    const user = await storage.getUser(req.user!.id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Verify current password
-    const matches = await bcrypt.compare(
-      validation.data.currentPassword, 
-      user.password
-    );
-    
-    if (!matches) {
-      return res.status(400).json({ 
-        message: "Current password is incorrect" 
-      });
-    }
-
-    // Hash and update new password
-    const hashedPassword = await bcrypt.hash(validation.data.newPassword, 10);
-    await storage.updateUser(user.id, { password: hashedPassword });
-
+  app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
     try {
-      await storage.createAuditEvent({
-        userId: req.user!.id,
-        action: "Update",
-        entity: "Auth",
-        entityId: user.id,
-        details: "Changed password",
-      });
-    } catch (auditError) {
-      console.error("Audit log error:", auditError);
-      // Don't fail the request if audit logging fails
-    }
+      const validation = changePasswordSchema.safeParse(req.body);
+      if (!validation.success) {
+        console.error("Validation error:", validation.error);
+        return res.status(400).json({
+          message: "Invalid request",
+          errors: validation.error.errors
+        });
+      }
 
-    res.json({ message: "Password updated successfully" });
-  } catch (error) {
-    console.error("Password change error:", error);
-    res.status(500).json({ 
-      message: "Failed to change password",
-      error: error instanceof Error ? error.message : "Unknown error"
-    });
-  }
-});
+      const user = await storage.getUser(req.user!.id);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Verify current password
+      const matches = await bcrypt.compare(
+        validation.data.currentPassword,
+        user.password
+      );
+
+      if (!matches) {
+        return res.status(400).json({
+          message: "Current password is incorrect"
+        });
+      }
+
+      // Hash and update new password
+      const hashedPassword = await bcrypt.hash(validation.data.newPassword, 10);
+      await storage.updateUser(user.id, { password: hashedPassword });
+
+      try {
+        await storage.createAuditEvent({
+          userId: req.user!.id,
+          action: "Update",
+          entity: "Auth",
+          entityId: user.id,
+          details: "Changed password",
+        });
+      } catch (auditError) {
+        console.error("Audit log error:", auditError);
+        // Don't fail the request if audit logging fails
+      }
+
+      res.json({ message: "Password updated successfully" });
+    } catch (error) {
+      console.error("Password change error:", error);
+      res.status(500).json({
+        message: "Failed to change password",
+        error: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
+  });
 
 
 
@@ -374,21 +374,21 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         action: "Login",
         limit: 50,
       });
-      
+
       // Transform audit events to match the expected LoginEvent interface
       const loginHistory = events.map(event => ({
         id: event.id,
         timestamp: event.timestamp,
         details: event.details || "Login"
       }));
-      
+
       res.json(loginHistory);
     } catch (error) {
       console.error("Login history error:", error);
       res.status(500).json({ message: "Failed to fetch login history" });
     }
   });
-  
+
   // User Management Routes (Admin only)
   app.get("/api/users", isAdmin, async (req, res) => {
     try {
@@ -434,7 +434,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       }
 
       const joinDate = data.joinDate ? new Date(data.joinDate) : new Date();
-      
+
       const member = await storage.createMember({
         userId: user.id,
         memberId: memberId,
@@ -473,7 +473,10 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         members = await storage.getAllMembers();
       }
 
-      const totalShares = members.reduce((sum, m) => sum + parseFloat(m.shares || "0"), 0);
+      const totalShares = members.reduce((sum, m) => {
+        if (m.role === "non member") return sum;
+        return sum + parseFloat(m.shares || "0");
+      }, 0);
       const membersWithPercentages = members.map(m => ({
         ...m,
         totalShares,
@@ -955,7 +958,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json(entry);
     } catch (error: any) {
       console.error("Error creating income entry:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to create income entry",
         error: error.message || "Unknown error"
       });
@@ -1048,7 +1051,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       const headers = jsonData[0] as string[];
       const requiredHeaders = ["Date", "First Name", "Last Name", "Payment Method", "Total Amount"];
       const headerMap: { [key: string]: number } = {};
-      
+
       // Normalize and map headers
       headers.forEach((header, index) => {
         if (header !== null && header !== undefined && header !== '') {
@@ -1064,7 +1067,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       // Check for required headers (normalized)
       const missingHeaders: string[] = [];
       const normalizedRequiredHeaders = requiredHeaders.map(h => h.toLowerCase().replace(/\s+/g, ' '));
-      
+
       for (let i = 0; i < normalizedRequiredHeaders.length; i++) {
         const reqHeader = normalizedRequiredHeaders[i];
         if (!(reqHeader in headerMap)) {
@@ -1075,15 +1078,15 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
       if (missingHeaders.length > 0) {
         const foundHeaders = headers.filter(h => h && h.toString().trim()).map(h => h.toString().trim());
-        return res.status(400).json({ 
-          message: `Missing required columns: ${missingHeaders.join(", ")}. Found columns in your file: ${foundHeaders.join(", ")}` 
+        return res.status(400).json({
+          message: `Missing required columns: ${missingHeaders.join(", ")}. Found columns in your file: ${foundHeaders.join(", ")}`
         });
       }
 
       // Get all members and payment methods for mapping
       const members = await storage.getAllMembers();
       const paymentMethods = await storage.getPaymentMethods();
-      
+
       // Create map using first name + last name (case-insensitive)
       const memberMap = new Map(
         members.map(m => [`${m.firstName.toLowerCase()}_${m.lastName.toLowerCase()}`, m.id])
@@ -1101,7 +1104,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       // Get all existing income entries to check for duplicates
       const existingEntries = await storage.getIncomeEntries();
       const duplicateCheck = new Set(
-        existingEntries.map(e => 
+        existingEntries.map(e =>
           `${e.date.toISOString().split('T')[0]}_${e.memberId}_${e.totalAmount}_${e.paymentMethodId}`
         )
       );
@@ -1209,7 +1212,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json(result);
     } catch (error: any) {
       console.error("Error uploading income entries:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to upload income entries",
         error: error.message || "Unknown error"
       });
@@ -1221,20 +1224,13 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
     try {
       const { startDate, endDate, categoryId } = req.query;
 
-      const memberId =
-        req.user!.role === "member"
-          ? (await storage.getMemberByUserId(req.user!.id))?.id
-          : undefined;
-
       const entries = await storage.getExpenseEntriesFiltered(
-        memberId,
         startDate ? new Date(startDate as string) : undefined,
         endDate ? new Date(endDate as string) : undefined,
         categoryId as string
       );
 
       const total = await storage.getTotalExpenses(
-        memberId,
         startDate ? new Date(startDate as string) : undefined,
         endDate ? new Date(endDate as string) : undefined
       );
@@ -1247,15 +1243,9 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
   app.post("/api/expense-entries", isAdmin, async (req, res) => {
     try {
-      const member = await storage.getMemberByUserId(req.user!.id);
-      if (!member) {
-        return res.status(400).json({ message: "Member profile not found for current user" });
-      }
-
       const entry = await storage.createExpenseEntry({
         ...req.body,
         date: new Date(req.body.date),
-        memberId: member.id,
         totalAmount: req.body.totalAmount.toString(),
         taxPercentage: req.body.taxPercentage.toString(),
         taxAmount: req.body.taxAmount.toString(),
@@ -1286,7 +1276,6 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
       const updateData: any = {
         date: req.body.date ? new Date(req.body.date) : existing.date,
-        memberId: req.body.memberId ?? existing.memberId,
         categoryId: req.body.categoryId ?? existing.categoryId,
         paymentMethodId: req.body.paymentMethodId ?? existing.paymentMethodId,
         totalAmount: (req.body.totalAmount ?? existing.totalAmount).toString(),
@@ -1361,9 +1350,9 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
       // Validate headers
       const headers = jsonData[0] as string[];
-      const requiredHeaders = ["Date", "First Name", "Last Name", "Category", "Payment Method", "Total Amount"];
+      const requiredHeaders = ["Date", "Category", "Description", "Total Amount", "Tax %", "Net Amount", "Tax Amount", "Payment Method"];
       const headerMap: { [key: string]: number } = {};
-      
+
       // Normalize and map headers
       headers.forEach((header, index) => {
         if (header !== null && header !== undefined && header !== '') {
@@ -1379,32 +1368,25 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       // Check for required headers (normalized)
       const missingHeaders: string[] = [];
       const normalizedRequiredHeaders = requiredHeaders.map(h => h.toLowerCase().replace(/\s+/g, ' '));
-      
+
       for (let i = 0; i < normalizedRequiredHeaders.length; i++) {
         const reqHeader = normalizedRequiredHeaders[i];
-        // Use 'in' operator to check if key exists (important: index 0 is falsy but valid!)
         if (!(reqHeader in headerMap)) {
-          // Find the original case version for error message
           missingHeaders.push(requiredHeaders[i]);
         }
       }
 
       if (missingHeaders.length > 0) {
         const foundHeaders = headers.filter(h => h && h.toString().trim()).map(h => h.toString().trim());
-        return res.status(400).json({ 
-          message: `Missing required columns: ${missingHeaders.join(", ")}. Found columns in your file: ${foundHeaders.join(", ")}` 
+        return res.status(400).json({
+          message: `Missing required columns: ${missingHeaders.join(", ")}. Found columns in your file: ${foundHeaders.join(", ")}`
         });
       }
 
-      // Get all members, payment methods, and expense categories for mapping
-      const members = await storage.getAllMembers();
+      // Get all payment methods and expense categories for mapping
       const paymentMethods = await storage.getPaymentMethods();
       const expenseCategories = await storage.getExpenseCategories();
-      
-      // Create map using first name + last name (case-insensitive)
-      const memberMap = new Map(
-        members.map(m => [`${m.firstName.toLowerCase()}_${m.lastName.toLowerCase()}`, m.id])
-      );
+
       const paymentMethodMap = new Map(paymentMethods.map(pm => [pm.name.toLowerCase(), pm.id]));
       const categoryMap = new Map(expenseCategories.map(ec => [ec.name.toLowerCase(), ec.id]));
 
@@ -1419,8 +1401,8 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       // Get all existing expense entries to check for duplicates
       const existingEntries = await storage.getExpenseEntries();
       const duplicateCheck = new Set(
-        existingEntries.map(e => 
-          `${e.date.toISOString().split('T')[0]}_${e.memberId}_${e.totalAmount}_${e.categoryId}_${e.paymentMethodId}`
+        existingEntries.map(e =>
+          `${e.date.toISOString().split('T')[0]}_${e.totalAmount}_${e.categoryId}_${e.paymentMethodId}`
         )
       );
 
@@ -1431,16 +1413,16 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
         try {
           const dateStr = row[headerMap["date"]]?.toString()?.trim();
-          const firstNameStr = row[headerMap["first name"]]?.toString()?.trim();
-          const lastNameStr = row[headerMap["last name"]]?.toString()?.trim();
           const categoryStr = row[headerMap["category"]]?.toString()?.trim();
-          const paymentMethodStr = row[headerMap["payment method"]]?.toString()?.trim();
+          const description = row[headerMap["description"]]?.toString()?.trim() || "";
           const totalAmountStr = row[headerMap["total amount"]]?.toString()?.trim();
-          const taxPercentageStr = row[headerMap["tax percentage"]]?.toString()?.trim() || "0";
-          const description = row[headerMap["description"]]?.toString()?.trim() || null;
+          const taxPercentageStr = row[headerMap["tax %"]]?.toString()?.trim() || "0";
+          const netAmountStr = row[headerMap["net amount"]]?.toString()?.trim();
+          const taxAmountStr = row[headerMap["tax amount"]]?.toString()?.trim();
+          const paymentMethodStr = row[headerMap["payment method"]]?.toString()?.trim();
 
           // Validate required fields
-          if (!dateStr || !firstNameStr || !lastNameStr || !categoryStr || !paymentMethodStr || !totalAmountStr) {
+          if (!dateStr || !categoryStr || !totalAmountStr || !paymentMethodStr) {
             result.failed++;
             result.errors.push(`Row ${i + 1}: Missing required fields`);
             continue;
@@ -1451,15 +1433,6 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
           if (isNaN(date.getTime())) {
             result.failed++;
             result.errors.push(`Row ${i + 1}: Invalid date format: ${dateStr}`);
-            continue;
-          }
-
-          // Find member by first name + last name
-          const memberKey = `${firstNameStr.toLowerCase()}_${lastNameStr.toLowerCase()}`;
-          const memberId = memberMap.get(memberKey);
-          if (!memberId) {
-            result.failed++;
-            result.errors.push(`Row ${i + 1}: Member not found: ${firstNameStr} ${lastNameStr}`);
             continue;
           }
 
@@ -1488,11 +1461,11 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
           }
 
           const taxPercentage = parseFloat(taxPercentageStr) || 0;
-          const taxAmount = (totalAmount * taxPercentage) / 100;
-          const netAmount = totalAmount - taxAmount;
+          const taxAmount = taxAmountStr ? parseFloat(taxAmountStr) : (totalAmount * taxPercentage) / 100;
+          const netAmount = netAmountStr ? parseFloat(netAmountStr) : totalAmount - taxAmount;
 
           // Check for duplicates
-          const duplicateKey = `${date.toISOString().split('T')[0]}_${memberId}_${totalAmount}_${categoryId}_${paymentMethodId}`;
+          const duplicateKey = `${date.toISOString().split('T')[0]}_${totalAmount}_${categoryId}_${paymentMethodId}`;
           if (duplicateCheck.has(duplicateKey)) {
             result.duplicates++;
             continue;
@@ -1501,7 +1474,6 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
           // Create entry
           const entry = await storage.createExpenseEntry({
             date,
-            memberId,
             categoryId,
             paymentMethodId,
             totalAmount: totalAmount.toString(),
@@ -1537,7 +1509,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json(result);
     } catch (error: any) {
       console.error("Error uploading expense entries:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to upload expense entries",
         error: error.message || "Unknown error"
       });
@@ -1579,7 +1551,6 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
       // Get expense entries for the month
       const expenseEntries = await storage.getExpenseEntriesFiltered(
-        memberId,
         startDate,
         endDate
       );
@@ -1645,8 +1616,8 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
     } catch (error: any) {
       console.error("Error fetching monthly report:", error);
       console.error("Error stack:", error.stack);
-      res.status(500).json({ 
-        message: "Failed to fetch monthly report", 
+      res.status(500).json({
+        message: "Failed to fetch monthly report",
         error: error.message || "Unknown error",
         details: process.env.NODE_ENV === "development" ? error.stack : undefined
       });
@@ -1730,7 +1701,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       for (let month = 1; month <= 12; month++) {
         const monthStart = new Date(year, month - 1, 1);
         const monthEnd = new Date(year, month, 0, 23, 59, 59, 999);
-        
+
         const monthIncomeEntries = incomeEntries.filter(entry => {
           if (!entry.date) return false;
           try {
@@ -1743,7 +1714,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
             return false;
           }
         });
-        
+
         const monthExpenseEntries = expenseEntries.filter(entry => {
           if (!entry.date) return false;
           try {
@@ -1794,8 +1765,8 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
     } catch (error: any) {
       console.error("Error fetching annual report:", error);
       console.error("Error stack:", error.stack);
-      res.status(500).json({ 
-        message: "Failed to fetch annual report", 
+      res.status(500).json({
+        message: "Failed to fetch annual report",
         error: error.message || "Unknown error",
         details: process.env.NODE_ENV === "development" ? error.stack : undefined
       });
@@ -1856,11 +1827,11 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       const grossRevenue = incomeEntries.reduce((sum, entry) => sum + parseFloat(entry.totalAmount?.toString() || "0"), 0);
       const totalIncomeTax = incomeEntries.reduce((sum, entry) => sum + parseFloat(entry.taxAmount?.toString() || "0"), 0);
       const netRevenue = incomeEntries.reduce((sum, entry) => sum + parseFloat(entry.netAmount?.toString() || "0"), 0);
-      
+
       const grossExpenses = expenseEntries.reduce((sum, entry) => sum + parseFloat(entry.totalAmount?.toString() || "0"), 0);
       const totalExpenseTax = expenseEntries.reduce((sum, entry) => sum + parseFloat(entry.taxAmount?.toString() || "0"), 0);
       const netExpenses = expenseEntries.reduce((sum, entry) => sum + parseFloat(entry.netAmount?.toString() || "0"), 0);
-      
+
       const grossProfit = grossRevenue - grossExpenses;
       const netIncome = netRevenue - netExpenses;
 
@@ -1872,7 +1843,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         const total = parseFloat(entry.totalAmount?.toString() || "0");
         const net = parseFloat(entry.netAmount?.toString() || "0");
         const tax = parseFloat(entry.taxAmount?.toString() || "0");
-        
+
         const existing = incomeBreakdown.get(categoryName) || { total: 0, net: 0, tax: 0 };
         incomeBreakdown.set(categoryName, {
           total: existing.total + total,
@@ -1888,7 +1859,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         const total = parseFloat(entry.totalAmount?.toString() || "0");
         const net = parseFloat(entry.netAmount?.toString() || "0");
         const tax = parseFloat(entry.taxAmount?.toString() || "0");
-        
+
         const existing = expenseBreakdown.get(categoryName) || { total: 0, net: 0, tax: 0 };
         expenseBreakdown.set(categoryName, {
           total: existing.total + total,
@@ -1915,7 +1886,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
       // Calculate daily breakdown for graphs
       const dailyBreakdown = new Map<string, { netIncome: number; netExpenses: number }>();
-      
+
       incomeEntries.forEach(entry => {
         if (!entry.date) return;
         try {
@@ -1975,8 +1946,8 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
     } catch (error: any) {
       console.error("Error fetching custom report:", error);
       console.error("Error stack:", error.stack);
-      res.status(500).json({ 
-        message: "Failed to fetch custom report", 
+      res.status(500).json({
+        message: "Failed to fetch custom report",
         error: error.message || "Unknown error",
         details: process.env.NODE_ENV === "development" ? error.stack : undefined
       });
@@ -1988,29 +1959,29 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
   app.get("/api/share-price", isAuthenticated, async (req, res) => {
     try {
       console.log("=== /api/share-price endpoint called ===");
-      
+
       const now = new Date();
       const currentMonth = now.getMonth() + 1;
       const currentYear = now.getFullYear();
-      
+
       console.log(`Current date: ${now}, Month: ${currentMonth}, Year: ${currentYear}`);
-      
+
       // Calculate valuations for all months from earliest data month to current month
       console.log("Calculating all monthly valuations...");
       await storage.calculateAllMonthlyValuations(currentYear);
-      
+
       // Get all historical valuations
       console.log("Getting all monthly valuations...");
       const allValuations = await storage.getAllMonthlyValuations();
       console.log(`Found ${allValuations.length} historical valuations`);
-      
+
       // Get current month's valuation
       const currentValuation = await storage.getMonthlyValuation(currentMonth, currentYear);
       if (!currentValuation) {
         throw new Error(`Failed to calculate valuation for current month ${currentMonth}/${currentYear}`);
       }
       console.log("Current valuation object:", currentValuation);
-      
+
       // Format history for response
       const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       const history = allValuations.map(v => ({
@@ -2024,7 +1995,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         totalFlows: parseFloat(v.totalFlows.toString()),
         totalSharesPreviousMonth: parseFloat(v.totalSharesPreviousMonth.toString()),
       }));
-  
+
       const response = {
         current: {
           valuation: parseFloat(currentValuation.terracottaValuation.toString()),
@@ -2036,12 +2007,12 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         },
         history: history
       };
-      
+
       console.log("Final API response:", JSON.stringify(response, null, 2));
       console.log("=== /api/share-price endpoint completed ===\n");
-      
+
       return res.json(response);
-  
+
     } catch (error) {
       console.error("Error in /api/share-price:", error);
       return res.status(500).json({ error: "Failed to calculate share price" });
@@ -2055,7 +2026,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       const endDate = req.query.endDate ? new Date(req.query.endDate as string) : undefined;
 
       const transactions = await storage.getShareTransactions(memberId, startDate, endDate);
-      
+
       // Join with members to get member names
       const transactionsWithMembers = await Promise.all(
         transactions.map(async (transaction) => {
@@ -2066,7 +2037,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
           };
         })
       );
-      
+
       res.json(transactionsWithMembers);
     } catch (error: any) {
       console.error("Error fetching share transactions:", error);
@@ -2076,6 +2047,16 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
 
   app.post("/api/share-transactions", isAdmin, async (req, res) => {
     try {
+      const targetMember = await storage.getMember(req.body.memberId);
+      if (!targetMember) {
+        return res.status(404).json({ message: "Member not found" });
+      }
+
+      const user = await storage.getUser(targetMember.userId);
+      if (user?.role === "non member") {
+        return res.status(400).json({ message: "Cannot add shares or contributions to a non-member account." });
+      }
+
       const transactionData: any = {
         date: new Date(req.body.date),
         memberId: req.body.memberId,
@@ -2093,7 +2074,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         const currentShares = parseFloat(member.shares || "0");
         const newContributions = currentContributions + parseFloat(req.body.contributions || "0");
         const newShares = currentShares + parseFloat(req.body.shares || "0");
-        
+
         await storage.updateMember(req.body.memberId, {
           contributions: newContributions.toString(),
           shares: newShares.toString(),
@@ -2111,7 +2092,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json(transaction);
     } catch (error: any) {
       console.error("Error creating share transaction:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to create share transaction",
         error: error.message || "Unknown error"
       });
@@ -2147,7 +2128,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
           const currentShares = parseFloat(member.shares || "0");
           const adjustedContributions = currentContributions - oldContributions + newContributions;
           const adjustedShares = currentShares - oldShares + newShares;
-          
+
           await storage.updateMember(transaction.memberId, {
             contributions: adjustedContributions.toString(),
             shares: adjustedShares.toString(),
@@ -2166,7 +2147,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json(updatedTransaction);
     } catch (error: any) {
       console.error("Error updating share transaction:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to update share transaction",
         error: error.message || "Unknown error"
       });
@@ -2189,7 +2170,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
         const transactionShares = parseFloat(transaction.shares || "0");
         const adjustedContributions = Math.max(0, currentContributions - transactionContributions);
         const adjustedShares = Math.max(0, currentShares - transactionShares);
-        
+
         await storage.updateMember(transaction.memberId, {
           contributions: adjustedContributions.toString(),
           shares: adjustedShares.toString(),
@@ -2209,7 +2190,7 @@ app.post("/api/auth/change-password", isAuthenticated, async (req, res) => {
       res.json({ message: "Share transaction deleted successfully" });
     } catch (error: any) {
       console.error("Error deleting share transaction:", error);
-      res.status(500).json({ 
+      res.status(500).json({
         message: "Failed to delete share transaction",
         error: error.message || "Unknown error"
       });

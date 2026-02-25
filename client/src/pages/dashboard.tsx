@@ -42,11 +42,19 @@ export default function Dashboard() {
 
   // Take totals from share_transactions table
   const totalContributions = (shareTransactions as any[]).reduce(
-    (sum, tx) => sum + parseFloat(tx.contributions || "0"),
+    (sum, tx) => {
+      const m = (members as any[]).find((member: any) => member.id === tx.memberId);
+      if (m?.role === "non member") return sum;
+      return sum + parseFloat(tx.contributions || "0");
+    },
     0
   );
   const totalShares = (shareTransactions as any[]).reduce(
-    (sum, tx) => sum + parseFloat(tx.shares || "0"),
+    (sum, tx) => {
+      const m = (members as any[]).find((member: any) => member.id === tx.memberId);
+      if (m?.role === "non member") return sum;
+      return sum + parseFloat(tx.shares || "0");
+    },
     0
   );
 
@@ -55,8 +63,8 @@ export default function Dashboard() {
     typeof currentSharePriceRaw === "number"
       ? currentSharePriceRaw
       : typeof currentSharePriceRaw === "string"
-      ? parseFloat(currentSharePriceRaw)
-      : 0;
+        ? parseFloat(currentSharePriceRaw)
+        : 0;
 
   const currentMember = member;
   const memberShares = currentMember ? parseFloat(currentMember.shares || "0") : 0;
@@ -271,23 +279,23 @@ export default function Dashboard() {
           <CardTitle>Recent Activity</CardTitle>
         </CardHeader>
         <CardContent>
-            <div className="space-y-3">
-              {memberIncomeEntries
-                .slice(0, 5)
-                .map((entry: any, index: number) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between py-3 border-b last:border-0"
-                  >
-                    <div className="flex-1">
-                      <p className="font-medium text-sm">Income Entry</p>
-                      <p className="text-xs text-muted-foreground">{entry.date}</p>
-                    </div>
-                    <div className="font-mono font-bold text-base text-green-600 dark:text-green-400">
-                      +{parseFloat(entry.netAmount || "0").toLocaleString()}
-                    </div>
+          <div className="space-y-3">
+            {memberIncomeEntries
+              .slice(0, 5)
+              .map((entry: any, index: number) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between py-3 border-b last:border-0"
+                >
+                  <div className="flex-1">
+                    <p className="font-medium text-sm">Income Entry</p>
+                    <p className="text-xs text-muted-foreground">{entry.date}</p>
                   </div>
-                ))}
+                  <div className="font-mono font-bold text-base text-green-600 dark:text-green-400">
+                    +{parseFloat(entry.netAmount || "0").toLocaleString()}
+                  </div>
+                </div>
+              ))}
             {memberIncomeEntries.length === 0 && (
               <p className="text-center text-muted-foreground py-8">No recent activity</p>
             )}

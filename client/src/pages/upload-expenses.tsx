@@ -16,13 +16,6 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import * as XLSX from "xlsx";
 
-interface Member {
-  id: string;
-  memberId: string;
-  firstName: string;
-  lastName: string;
-}
-
 interface UploadResult {
   success: number;
   failed: number;
@@ -39,10 +32,6 @@ export default function UploadExpenses() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
-
-  const { data: members = [] } = useQuery<Member[]>({
-    queryKey: ["/api/members"],
-  });
 
   const { data: paymentMethods = [] } = useQuery({
     queryKey: ["/api/payment-methods"],
@@ -90,16 +79,16 @@ export default function UploadExpenses() {
 
         // Validate headers
         const headers = jsonData[0] as string[];
-        const requiredHeaders = ["Date", "First Name", "Last Name", "Category", "Payment Method", "Total Amount"];
-        
+        const requiredHeaders = ["Date", "Category", "Description", "Total Amount", "Tax %", "Net Amount", "Tax Amount", "Payment Method"];
+
         // Normalize headers for comparison (trim, lowercase, normalize spaces)
         const normalizedHeaders = headers
           .filter(h => h)
           .map(h => h.toString().trim().toLowerCase().replace(/\s+/g, ' '));
-        
-        const normalizedRequired = requiredHeaders.map(h => h.toLowerCase());
+
+        const normalizedRequired = requiredHeaders.map(h => h.toLowerCase().replace(/\s+/g, ' '));
         const missingHeaders: string[] = [];
-        
+
         for (const reqHeader of normalizedRequired) {
           if (!normalizedHeaders.includes(reqHeader)) {
             // Find original case version
@@ -130,13 +119,13 @@ export default function UploadExpenses() {
             // Normalize header: trim, lowercase, normalize spaces
             const headerLower = header.toString().trim().toLowerCase().replace(/\s+/g, ' ');
             if (headerLower === "date") rowData.date = row[index];
-            else if (headerLower === "first name") rowData.firstName = row[index];
-            else if (headerLower === "last name") rowData.lastName = row[index];
             else if (headerLower === "category") rowData.category = row[index];
-            else if (headerLower === "payment method") rowData.paymentMethod = row[index];
-            else if (headerLower === "total amount") rowData.totalAmount = row[index];
-            else if (headerLower === "tax percentage") rowData.taxPercentage = row[index];
             else if (headerLower === "description") rowData.description = row[index];
+            else if (headerLower === "total amount") rowData.totalAmount = row[index];
+            else if (headerLower === "tax %") rowData.taxPercentage = row[index];
+            else if (headerLower === "net amount") rowData.netAmount = row[index];
+            else if (headerLower === "tax amount") rowData.taxAmount = row[index];
+            else if (headerLower === "payment method") rowData.paymentMethod = row[index];
           });
           parsedData.push(rowData);
         }
@@ -174,7 +163,7 @@ export default function UploadExpenses() {
       const result: UploadResult = await response.json();
 
       setUploadResult(result);
-      
+
       if (result.success > 0) {
         toast({
           title: "Upload successful",
@@ -203,8 +192,8 @@ export default function UploadExpenses() {
 
   const downloadTemplate = () => {
     const templateData = [
-      ["Date", "First Name", "Last Name", "Category", "Payment Method", "Total Amount", "Tax Percentage", "Description"],
-      ["2024-01-15", "Admin", "User", "Maintenance", "Bank Transfer", "500.00", "10", "Sample expense entry"],
+      ["Date", "Category", "Description", "Total Amount", "Tax %", "Net Amount", "Tax Amount", "Payment Method"],
+      ["2024-01-15", "Maintenance", "Sample expense entry", "500.00", "10", "450.00", "50.00", "Bank Transfer"],
     ];
 
     const ws = XLSX.utils.aoa_to_sheet(templateData);
@@ -236,18 +225,13 @@ export default function UploadExpenses() {
                 <strong>Required Columns:</strong>
                 <ul className="list-disc list-inside mt-1 space-y-1 text-muted-foreground">
                   <li>Date (YYYY-MM-DD format)</li>
-                  <li>First Name (exact name from system)</li>
-                  <li>Last Name (exact name from system)</li>
                   <li>Category (exact name from system)</li>
-                  <li>Payment Method (exact name from system)</li>
-                  <li>Total Amount (numeric)</li>
-                </ul>
-              </div>
-              <div>
-                <strong>Optional Columns:</strong>
-                <ul className="list-disc list-inside mt-1 space-y-1 text-muted-foreground">
-                  <li>Tax Percentage (numeric, default: 0)</li>
                   <li>Description (text)</li>
+                  <li>Total Amount (numeric)</li>
+                  <li>Tax % (numeric, default: 0)</li>
+                  <li>Net Amount (numeric)</li>
+                  <li>Tax Amount (numeric)</li>
+                  <li>Payment Method (exact name from system)</li>
                 </ul>
               </div>
             </div>
@@ -299,26 +283,26 @@ export default function UploadExpenses() {
                   <TableHeader>
                     <TableRow>
                       <TableHead>Date</TableHead>
-                      <TableHead>First Name</TableHead>
-                      <TableHead>Last Name</TableHead>
                       <TableHead>Category</TableHead>
-                      <TableHead>Payment Method</TableHead>
+                      <TableHead>Description</TableHead>
                       <TableHead>Total Amount</TableHead>
                       <TableHead>Tax %</TableHead>
-                      <TableHead>Description</TableHead>
+                      <TableHead>Net Amount</TableHead>
+                      <TableHead>Tax Amount</TableHead>
+                      <TableHead>Payment Method</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {previewData.slice(0, 5).map((row, idx) => (
                       <TableRow key={idx}>
                         <TableCell>{row.date?.toString()}</TableCell>
-                        <TableCell>{row.firstName?.toString()}</TableCell>
-                        <TableCell>{row.lastName?.toString()}</TableCell>
                         <TableCell>{row.category?.toString()}</TableCell>
-                        <TableCell>{row.paymentMethod?.toString()}</TableCell>
+                        <TableCell>{row.description?.toString() || "-"}</TableCell>
                         <TableCell>{row.totalAmount?.toString()}</TableCell>
                         <TableCell>{row.taxPercentage?.toString() || "0"}</TableCell>
-                        <TableCell>{row.description?.toString() || "-"}</TableCell>
+                        <TableCell>{row.netAmount?.toString()}</TableCell>
+                        <TableCell>{row.taxAmount?.toString()}</TableCell>
+                        <TableCell>{row.paymentMethod?.toString()}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

@@ -6,7 +6,7 @@ declare global {
     interface User {
       id: string;
       username: string;
-      role: "admin" | "member";
+      role: "admin" | "member" | "non member";
     }
   }
 }
